@@ -415,6 +415,8 @@ const runTranslationButton = document.getElementById("run-translation");
 const translationStatus = document.getElementById("translation-status");
 const stepsProgressCount = document.getElementById("steps-progress-count");
 const stepsProgressDetail = document.getElementById("steps-progress-detail");
+const progressCircle = document.getElementById("progress-circle");
+const progressCircleFill = document.getElementById("progress-circle-fill");
 const savedPathwaysCount = document.getElementById("saved-pathways-count");
 const savedPathwaysDetail = document.getElementById("saved-pathways-detail");
 const teacherVoteList = document.getElementById("teacher-vote-list");
@@ -826,12 +828,16 @@ function renderSteps() {
   );
   const completedCount = currentStepKeys.filter((itemKey) => completedSteps.has(itemKey)).length;
   const totalCount = currentStepKeys.length;
+  const progressRatio = totalCount === 0 ? 0 : completedCount / totalCount;
+  const progressPercent = Math.round(progressRatio * 100);
 
   stepsProgressCount.textContent = `${completedCount} completed`;
   stepsProgressDetail.textContent =
     completedCount === 0
       ? "Choose a few small steps to show how momentum builds over time."
       : `${completedCount} of ${totalCount} possible steps completed in this pathway view.`;
+  progressCircle.dataset.progress = String(progressPercent);
+  progressCircleFill.style.strokeDashoffset = String(100.53 - (100.53 * progressPercent) / 100);
 }
 
 function renderAll() {

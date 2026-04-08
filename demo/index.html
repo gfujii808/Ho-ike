@@ -231,7 +231,15 @@
             </div>
             <div class="steps-summary">
               <span class="panel-label">Student Progress</span>
-              <strong id="steps-progress-count">0 completed</strong>
+              <div class="progress-inline">
+                <div class="progress-circle" id="progress-circle" aria-hidden="true">
+                  <svg class="progress-circle-svg" viewBox="0 0 44 44" role="presentation">
+                    <circle class="progress-circle-track" cx="22" cy="22" r="16"></circle>
+                    <circle class="progress-circle-fill" id="progress-circle-fill" cx="22" cy="22" r="16"></circle>
+                  </svg>
+                </div>
+                <strong id="steps-progress-count">0 completed</strong>
+              </div>
               <small id="steps-progress-detail">Choose a few small steps to show how momentum builds over time.</small>
             </div>
             <div id="steps-panel" class="steps-panel"></div>

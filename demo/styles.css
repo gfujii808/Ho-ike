@@ -356,6 +356,44 @@ button:hover {
   background: rgba(255, 255, 255, 0.72);
 }
 
+.progress-inline {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 8px 0 4px;
+}
+
+.progress-circle {
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+}
+
+.progress-circle-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.progress-circle-track,
+.progress-circle-fill {
+  fill: none;
+  stroke-width: 6;
+}
+
+.progress-circle-track {
+  stroke: #e7eaee;
+}
+
+.progress-circle-fill {
+  stroke: #4b5b45;
+  stroke-linecap: round;
+  stroke-dasharray: 100.53;
+  stroke-dashoffset: 100.53;
+  transition: stroke-dashoffset 220ms ease;
+}
+
 .steps-summary strong {
   font-size: 1.2rem;
   color: var(--sea);
