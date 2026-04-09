@@ -388,6 +388,49 @@ const promptIdeas = [
   "What do students misunderstand about this kind of work?"
 ];
 
+const interestCatalog = [
+  "drawing and design",
+  "gaming",
+  "sports",
+  "music",
+  "coding",
+  "helping people",
+  "fixing things",
+  "storytelling",
+  "being outdoors",
+  "working with animals",
+  "leadership",
+  "community service"
+];
+
+const routeCatalog = {
+  cleanEnergy: [
+    "Start with a school club, makerspace, or campus event focused on sustainability or engineering.",
+    "Explore trade, apprenticeship, or technician routes alongside community college or university options.",
+    "Volunteer on school or community resilience projects to build local experience before choosing a degree path."
+  ],
+  environment: [
+    "Begin with volunteer projects, mālama ʻāina workdays, fishpond programs, or science clubs.",
+    "Look at certificates, field technician roles, community college pathways, and university study as parallel options.",
+    "Build credibility through observation logs, citizen science, or community stewardship work even before formal training."
+  ],
+  communications: [
+    "Start with media clubs, yearbook, social media projects, or helping a local group communicate clearly.",
+    "A portfolio, freelance work, internships, certificates, and entrepreneurship can all matter alongside college.",
+    "Creative careers can grow from self-taught practice, community work, paid gigs, or formal study."
+  ],
+  defenseTech: [
+    "Begin with coding clubs, robotics, cybersecurity challenges, or small tool-building projects.",
+    "Certificates, military or public-service pathways, community college, apprenticeships, and university routes can all lead in.",
+    "Employers often care about projects, reliability, teamwork, and problem-solving as much as one single academic route."
+  ],
+  general: [
+    "Start where you already show curiosity: a club, service project, hobby, family responsibility, or part-time role.",
+    "Community college, university, certificates, apprenticeships, paid training, entrepreneurship, and volunteering can all be valid routes.",
+    "You do not need one perfect pipeline right away. Real pathways can stay flexible while you keep learning what fits."
+  ]
+};
+
 const cohorts = [
   {
     name: "PueoPod",
@@ -408,6 +451,8 @@ const translationLog = document.getElementById("translation-log");
 const voicesList = document.getElementById("voices-list");
 const stepsPanel = document.getElementById("steps-panel");
 const promptList = document.getElementById("prompt-list");
+const interestList = document.getElementById("interest-list");
+const pathwayRoutes = document.getElementById("pathway-routes");
 const questionBox = document.getElementById("question-box");
 const questionStatus = document.getElementById("question-status");
 const studentHandle = document.getElementById("student-handle");
@@ -458,6 +503,7 @@ const savedPathways = new Set(persistedState.savedPathways || []);
 const classroomVotes = new Map(persistedState.classroomVotes || []);
 const selectedPathways = new Map(persistedState.selectedPathways || []);
 const submittedQuestions = persistedState.submittedQuestions || [];
+const selectedInterests = new Set(persistedState.selectedInterests || []);
 let currentHandle = persistedState.studentHandle || cohorts[0].handles[0];
 
 function getCohortForHandle(handle) {
@@ -474,6 +520,7 @@ function persistState() {
     classroomVotes: [...classroomVotes.entries()],
     selectedPathways: [...selectedPathways.entries()],
     submittedQuestions,
+    selectedInterests: [...selectedInterests],
     studentHandle: currentHandle,
     questionDraft: questionBox.value,
     assignmentTitleInput: titleInput.value,
@@ -691,10 +738,10 @@ function renderAssignments() {
       selectedAssignment = enrichAssignment(assignment);
       titleInput.value = assignment.title;
       subjectInput.value = assignment.className.includes("Biology")
-        ? "Science / Biology"
+        ? "Science"
         : assignment.className.includes("English")
-          ? "English / Media"
-          : "STEM / Math";
+          ? "Art and Media"
+          : "Math";
       renderAll();
       translationStatus.textContent = `Loaded preset example: ${assignment.title}.`;
       persistState();
@@ -789,6 +836,53 @@ function renderPathways() {
 
   pathwayList.appendChild(picker);
   pathwayList.appendChild(detail);
+}
+
+function renderInterestsAndRoutes() {
+  interestList.innerHTML = "";
+  pathwayRoutes.innerHTML = "";
+
+  interestCatalog.forEach((interest) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = `interest-chip${selectedInterests.has(interest) ? " is-active" : ""}`;
+    button.textContent = interest;
+    button.addEventListener("click", () => {
+      if (selectedInterests.has(interest)) {
+        selectedInterests.delete(interest);
+      } else {
+        selectedInterests.add(interest);
+      }
+      renderInterestsAndRoutes();
+      persistState();
+    });
+    interestList.appendChild(button);
+  });
+
+  const selectedName = getSelectedPathwayName();
+  const selectedPathway =
+    selectedAssignment.pathways.find((pathway) => pathway.name === selectedName) ||
+    selectedAssignment.pathways[0];
+  const sectorRoutes = routeCatalog[selectedAssignment.sectorId] || routeCatalog.general;
+
+  const interestLine = [...selectedInterests].length
+    ? `Based on your interests in ${[...selectedInterests].join(", ")}, here are valid ways into ${selectedPathway.name}.`
+    : `Here are multiple valid ways into ${selectedPathway.name}. Add hobbies or interests above to personalize this more.`;
+
+  const summary = document.createElement("div");
+  summary.className = "route-summary";
+  summary.innerHTML = `<p>${interestLine}</p>`;
+  pathwayRoutes.appendChild(summary);
+
+  const list = document.createElement("div");
+  list.className = "route-list";
+  sectorRoutes.forEach((route) => {
+    const card = document.createElement("article");
+    card.className = "route-card";
+    card.innerHTML = `<p>${route}</p>`;
+    list.appendChild(card);
+  });
+  pathwayRoutes.appendChild(list);
 }
 
 function openVoiceDialog(voice) {
@@ -1020,6 +1114,7 @@ function renderAll() {
   renderProfessionalWhy();
   renderTranslationLog();
   renderPathways();
+  renderInterestsAndRoutes();
   updateSavedPathwaysSummary();
   renderVoices();
   renderTeacherView();
@@ -1032,7 +1127,7 @@ async function runTranslation() {
   const subject = subjectInput.value;
 
   if (!rawTitle) {
-    translationStatus.textContent = "Paste an assignment title first so Hōʻike has something to translate.";
+    translationStatus.textContent = "Paste an assignment title, activity, or interest first so Hōʻike has something to translate.";
     titleInput.focus();
     return;
   }

@@ -307,6 +307,56 @@ body[data-view-mode="classroom"] [data-view-surface="explainer"] {
   gap: 14px;
 }
 
+.interest-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 18px;
+}
+
+.interest-card {
+  padding: 18px;
+  border-radius: var(--radius-md);
+  background: var(--paper-soft);
+  border: 1px solid var(--line);
+}
+
+.interest-list,
+.route-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.interest-list {
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+.interest-chip {
+  padding: 12px 14px;
+  border-radius: 999px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  text-align: center;
+}
+
+.interest-chip.is-active {
+  background: #e7e2d5;
+  border-color: rgba(85, 107, 79, 0.26);
+}
+
+.route-summary p,
+.route-card p {
+  margin: 0;
+}
+
+.route-card {
+  padding: 16px;
+  border-radius: var(--radius-md);
+  background: var(--card);
+  border: 1px solid var(--line);
+}
+
 .generator-shell,
 .translation-log {
   margin-bottom: 18px;
@@ -938,6 +988,10 @@ dialog::backdrop {
   }
 
   .pathway-picker {
+    grid-template-columns: 1fr;
+  }
+
+  .interest-shell {
     grid-template-columns: 1fr;
   }
 }

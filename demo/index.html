@@ -80,17 +80,17 @@
           <div class="section-heading">
             <div>
               <p class="eyebrow">Step 1</p>
-              <h2>Translate a school task</h2>
+              <h2>Translate an activity</h2>
             </div>
             <p class="section-copy">
-              Judges can paste any assignment title to trigger the Hōʻike
+              Paste an assignment title, activity, or interest to trigger the Hōʻike
               translation flow, or use a preset example for a faster walkthrough.
             </p>
           </div>
           <div class="generator-shell">
             <div class="generator-grid">
               <label class="generator-field" for="assignment-title-input">
-                <span class="input-label">Paste assignment title</span>
+                <span class="input-label">Paste assignment title, activity, or interest</span>
                 <input
                   id="assignment-title-input"
                   class="text-input"
@@ -101,12 +101,16 @@
               <label class="generator-field" for="assignment-subject-input">
                 <span class="input-label">Course area</span>
                 <select id="assignment-subject-input" class="select-input">
-                  <option value="STEM / Math">STEM / Math</option>
-                  <option value="Science / Biology">Science / Biology</option>
-                  <option value="Computer Science / Engineering">Computer Science / Engineering</option>
-                  <option value="English / Media">English / Media</option>
-                  <option value="CTE / Career Exploration">CTE / Career Exploration</option>
-                  <option value="Social Studies / Community">Social Studies / Community</option>
+                  <option value="English">English</option>
+                  <option value="Art and Media">Art and Media</option>
+                  <option value="Computer Science and Technology">Computer Science and Technology</option>
+                  <option value="Math">Math</option>
+                  <option value="Science">Science</option>
+                  <option value="Engineering">Engineering</option>
+                  <option value="Social Studies">Social Studies</option>
+                  <option value="History">History</option>
+                  <option value="Community">Community</option>
+                  <option value="Other">Other</option>
                 </select>
               </label>
             </div>
@@ -115,7 +119,7 @@
                 Run AI Translation
               </button>
               <span id="translation-status" class="status-text">
-                Paste any assignment title to show a live translation moment in the pitch demo.
+                Paste any assignment title, activity, or interest to show a live translation moment in the pitch demo.
               </span>
             </div>
           </div>
@@ -148,6 +152,34 @@
             </div>
             <div id="pathway-list" class="pathway-list"></div>
           </article>
+        </section>
+
+        <section class="card reveal">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Step 3B</p>
+              <h2>Interests and Different Ways In</h2>
+            </div>
+            <p class="section-copy">
+              Hobbies, community interests, and non-college routes count too.
+              Hōʻike should show multiple valid ways into a field, not just a
+              university pipeline.
+            </p>
+          </div>
+          <div class="interest-shell">
+            <div class="interest-card">
+              <span class="panel-label">What you already like</span>
+              <p class="section-copy">
+                Pick a few interests or hobbies. Hōʻike treats these as real clues
+                about possible pathways.
+              </p>
+              <div id="interest-list" class="interest-list"></div>
+            </div>
+            <div class="interest-card">
+              <span class="panel-label">Multiple ways in</span>
+              <div id="pathway-routes" class="pathway-routes"></div>
+            </div>
+          </div>
         </section>
 
         <section class="card reveal">
