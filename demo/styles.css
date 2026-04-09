@@ -1,14 +1,15 @@
 :root {
-  --sea: #8ca37f;
-  --reef: #aab89a;
-  --mist: #bfd090;
-  --sand: #c3d0a5;
-  --gold: #869077;
-  --leaf: #8faa92;
-  --ink: #4b5b45;
-  --paper: rgba(244, 246, 236, 0.9);
-  --line: rgba(75, 91, 69, 0.12);
-  --shadow: 0 24px 60px rgba(92, 108, 83, 0.14);
+  --forest: #556b4f;
+  --moss: #788768;
+  --sage: #a6b19b;
+  --clay: #8b7355;
+  --bark: #5e4d3f;
+  --ink: #413a33;
+  --paper: #f7f5ee;
+  --paper-soft: #f1ede3;
+  --card: #f8f6ef;
+  --line: rgba(94, 77, 63, 0.16);
+  --shadow: 0 18px 36px rgba(65, 58, 51, 0.08);
   --radius-lg: 26px;
   --radius-md: 18px;
   --radius-sm: 12px;
@@ -25,12 +26,9 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
-  font-family: "Avenir Next", "Segoe UI", "Helvetica Neue", sans-serif;
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
   color: var(--ink);
-  background:
-    radial-gradient(circle at top left, rgba(170, 184, 154, 0.24), transparent 24%),
-    radial-gradient(circle at 82% 15%, rgba(143, 170, 146, 0.28), transparent 28%),
-    linear-gradient(160deg, #edf1e5 0%, #d9e0c6 40%, #c4d1af 100%);
+  background: #ece8dc;
 }
 
 body::before {
@@ -38,11 +36,7 @@ body::before {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  background-image:
-    radial-gradient(circle, rgba(75, 91, 69, 0.05) 1px, transparent 1px),
-    linear-gradient(120deg, rgba(255, 255, 255, 0.18), transparent 50%);
-  background-size: 22px 22px, 100% 100%;
-  opacity: 0.5;
+  background: transparent;
 }
 
 .page-shell {
@@ -65,9 +59,8 @@ body::before {
 .hero-panel,
 .card,
 .dialog-shell {
-  backdrop-filter: blur(16px);
   background: var(--paper);
-  border: 1px solid rgba(255, 255, 255, 0.72);
+  border: 1px solid var(--line);
   box-shadow: var(--shadow);
 }
 
@@ -87,19 +80,20 @@ body::before {
   font-weight: 700;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--reef);
+  color: var(--moss);
 }
 
 h1,
 h2,
 h3 {
-  font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
-  letter-spacing: -0.02em;
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+  letter-spacing: -0.015em;
+  font-weight: 700;
 }
 
 h1 {
   margin: 0;
-  font-size: clamp(2.3rem, 4vw, 4.2rem);
+  font-size: clamp(2.6rem, 4.8vw, 4.8rem);
   line-height: 0.98;
 }
 
@@ -135,8 +129,8 @@ li,
   width: 34px;
   height: 34px;
   border-radius: 999px;
-  background: rgba(79, 143, 99, 0.14);
-  box-shadow: inset 0 0 0 1px rgba(31, 81, 56, 0.08);
+  background: #ebe7dc;
+  box-shadow: inset 0 0 0 1px rgba(94, 77, 63, 0.08);
   font-size: 1rem;
 }
 
@@ -149,7 +143,7 @@ li,
 .note-card {
   padding: 18px;
   border-radius: var(--radius-md);
-  background: rgba(255, 255, 255, 0.74);
+  background: var(--paper-soft);
   border: 1px solid var(--line);
 }
 
@@ -164,7 +158,7 @@ li,
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--reef);
+  color: var(--moss);
 }
 
 .note-card strong {
@@ -176,7 +170,7 @@ li,
 .note-card small {
   display: block;
   margin-top: 10px;
-  color: rgba(22, 49, 57, 0.82);
+  color: rgba(65, 58, 51, 0.8);
 }
 
 button {
@@ -196,7 +190,7 @@ button:hover {
 .voice-action {
   margin-top: 14px;
   padding: 11px 16px;
-  background: rgba(79, 143, 99, 0.14);
+  background: #e7e2d5;
   color: var(--ink);
 }
 
@@ -221,6 +215,7 @@ button:hover {
   gap: 18px;
 }
 
+.view-toggle-shell,
 .view-card,
 .steps-summary,
 .student-surface,
@@ -228,6 +223,7 @@ button:hover {
   padding: 18px;
   border-radius: var(--radius-md);
   border: 1px solid var(--line);
+  background: var(--paper-soft);
 }
 
 .view-card p,
@@ -236,15 +232,37 @@ button:hover {
   line-height: 1.6;
 }
 
-.student-view-card,
 .student-surface {
-  background: linear-gradient(135deg, rgba(79, 143, 99, 0.12), rgba(228, 243, 231, 0.82));
+  background: var(--paper-soft);
 }
 
-.demo-view-card,
 .demo-surface {
-  background: linear-gradient(135deg, rgba(207, 180, 106, 0.1), rgba(251, 248, 238, 0.82));
+  background: #ece7da;
   border-style: dashed;
+}
+
+body[data-view-mode="classroom"] [data-view-surface="explainer"] {
+  display: none;
+}
+
+.toggle-buttons {
+  display: inline-flex;
+  gap: 8px;
+  margin-top: 10px;
+  padding: 6px;
+  border-radius: 999px;
+  background: #ebe7dc;
+}
+
+.toggle-button {
+  padding: 10px 16px;
+  background: transparent;
+  color: var(--ink);
+}
+
+.toggle-button.is-active {
+  background: var(--forest);
+  color: var(--paper);
 }
 
 .card {
@@ -277,7 +295,7 @@ button:hover {
 .section-copy {
   margin: 0;
   max-width: 40rem;
-  color: rgba(22, 49, 57, 0.82);
+  color: rgba(65, 58, 51, 0.82);
 }
 
 .assignment-list,
@@ -294,7 +312,7 @@ button:hover {
   margin-bottom: 18px;
   padding: 18px;
   border-radius: var(--radius-md);
-  background: rgba(255, 255, 255, 0.76);
+  background: var(--paper-soft);
   border: 1px solid var(--line);
 }
 
@@ -315,7 +333,7 @@ button:hover {
   padding: 14px 16px;
   border-radius: 16px;
   border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.84);
+  background: #fcfbf7;
   color: var(--ink);
   font: inherit;
 }
@@ -336,7 +354,7 @@ button:hover {
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--reef);
+  color: var(--moss);
 }
 
 .mini-label {
@@ -353,7 +371,7 @@ button:hover {
   flex-direction: column;
   gap: 6px;
   margin-bottom: 16px;
-  background: rgba(255, 255, 255, 0.72);
+  background: var(--paper-soft);
 }
 
 .progress-inline {
@@ -383,11 +401,11 @@ button:hover {
 }
 
 .progress-circle-track {
-  stroke: #e7eaee;
+  stroke: #ddd8cd;
 }
 
 .progress-circle-fill {
-  stroke: #4b5b45;
+  stroke: var(--forest);
   stroke-linecap: round;
   stroke-dasharray: 100.53;
   stroke-dashoffset: 100.53;
@@ -396,12 +414,12 @@ button:hover {
 
 .steps-summary strong {
   font-size: 1.2rem;
-  color: var(--sea);
+  color: var(--forest);
 }
 
 .translation-log strong,
 .translation-log b {
-  color: var(--sea);
+  color: var(--forest);
 }
 
 .log-list {
@@ -418,7 +436,7 @@ button:hover {
   padding: 18px 20px;
   border-radius: var(--radius-md);
   text-align: left;
-  background: rgba(255, 255, 255, 0.68);
+  background: var(--card);
   border: 1px solid var(--line);
 }
 
@@ -427,7 +445,8 @@ button:hover {
 .voice-card h3 {
   display: block;
   margin: 0 0 6px;
-  font-family: "Iowan Old Style", "Palatino Linotype", serif;
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+  font-weight: 700;
 }
 
 .assignment-button p,
@@ -438,14 +457,14 @@ button:hover {
 }
 
 .assignment-button.active {
-  background: linear-gradient(135deg, rgba(79, 143, 99, 0.18), rgba(207, 180, 106, 0.14));
-  border-color: rgba(79, 143, 99, 0.26);
+  background: #e7e2d5;
+  border-color: rgba(85, 107, 79, 0.26);
 }
 
 .rich-panel {
   padding: 20px;
   border-radius: var(--radius-md);
-  background: rgba(255, 255, 255, 0.66);
+  background: #fcfbf7;
   border: 1px solid var(--line);
 }
 
@@ -455,7 +474,7 @@ button:hover {
 }
 
 .pathway-list {
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: 1fr;
 }
 
 .pathway-card,
@@ -463,8 +482,44 @@ button:hover {
 .steps-group {
   padding: 20px;
   border-radius: var(--radius-md);
-  background: rgba(255, 255, 255, 0.72);
+  background: var(--card);
   border: 1px solid var(--line);
+}
+
+.pathway-card {
+  padding: 20px;
+}
+
+.pathway-picker {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.pathway-option {
+  padding: 16px;
+  border-radius: var(--radius-md);
+  text-align: left;
+  background: var(--card);
+  border: 1px solid var(--line);
+  color: var(--ink);
+}
+
+.pathway-option strong {
+  display: block;
+  margin-top: 6px;
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.pathway-option.is-active {
+  background: #e7e2d5;
+  border-color: rgba(85, 107, 79, 0.26);
+}
+
+.pathway-detail-card {
+  margin-top: 2px;
 }
 
 .pathway-actions {
@@ -477,20 +532,20 @@ button:hover {
 .save-pathway-button {
   margin-top: 0;
   padding: 11px 16px;
-  background: rgba(79, 143, 99, 0.16);
+  background: #e7e2d5;
   color: var(--ink);
 }
 
 .save-pathway-button.is-saved {
-  background: rgba(61, 106, 82, 0.18);
-  color: var(--leaf);
+  background: #d9d2c3;
+  color: var(--forest);
 }
 
 .pathway-meta {
   margin-bottom: 8px;
 }
 
-.pathway-card ul,
+.pathway-detail-card ul,
 .steps-group ul {
   margin: 12px 0 0;
   padding-left: 18px;
@@ -511,7 +566,7 @@ button:hover {
   inset: 0 auto auto 0;
   width: 100%;
   height: 7px;
-  background: linear-gradient(90deg, var(--gold), var(--reef));
+  background: var(--moss);
 }
 
 .voice-header {
@@ -523,11 +578,11 @@ button:hover {
 }
 
 .voice-chip {
-  color: var(--leaf);
+  color: var(--forest);
 }
 
 .voice-meta {
-  color: rgba(22, 49, 57, 0.82);
+  color: rgba(65, 58, 51, 0.82);
 }
 
 .voice-actions {
@@ -548,7 +603,7 @@ button:hover {
 .teacher-vote-card {
   padding: 18px;
   border-radius: var(--radius-md);
-  background: rgba(255, 255, 255, 0.74);
+  background: var(--paper-soft);
   border: 1px solid var(--line);
 }
 
@@ -561,7 +616,7 @@ button:hover {
 .teacher-summary-card small {
   display: block;
   margin-top: 10px;
-  color: rgba(22, 49, 57, 0.82);
+  color: rgba(65, 58, 51, 0.82);
 }
 
 .teacher-summary-card .primary-action {
@@ -587,7 +642,7 @@ button:hover {
 .teacher-vote-meta strong {
   display: block;
   font-size: 1.6rem;
-  color: var(--sea);
+  color: var(--forest);
 }
 
 .teacher-vote-meta span {
@@ -597,7 +652,7 @@ button:hover {
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--reef);
+  color: var(--moss);
 }
 
 .prompt-list {
@@ -619,7 +674,7 @@ textarea {
   resize: vertical;
   border-radius: 18px;
   border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.74);
+  background: #fcfbf7;
   color: var(--ink);
 }
 
@@ -633,8 +688,8 @@ textarea {
 .primary-action {
   align-self: start;
   padding: 12px 18px;
-  background: linear-gradient(135deg, var(--sea), var(--reef));
-  color: white;
+  background: var(--forest);
+  color: var(--paper);
 }
 
 .steps-panel {
@@ -664,14 +719,14 @@ textarea {
   width: 100%;
   padding: 12px 14px;
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.76);
-  border: 1px solid rgba(16, 63, 71, 0.08);
+  background: #fcfbf7;
+  border: 1px solid rgba(94, 77, 63, 0.08);
   text-align: left;
 }
 
 .step-toggle.is-complete {
-  background: rgba(228, 243, 231, 0.92);
-  border-color: rgba(61, 106, 82, 0.24);
+  background: #ece8dc;
+  border-color: rgba(85, 107, 79, 0.24);
 }
 
 .step-marker {
@@ -681,15 +736,15 @@ textarea {
   width: 22px;
   height: 22px;
   border-radius: 999px;
-  background: rgba(31, 127, 143, 0.12);
-  color: var(--reef);
+  background: #e7e2d5;
+  color: var(--moss);
   font-size: 0.82rem;
   font-weight: 700;
 }
 
 .step-toggle.is-complete .step-marker {
-  background: var(--leaf);
-  color: white;
+  background: var(--forest);
+  color: var(--paper);
 }
 
 .step-copy {
@@ -700,8 +755,8 @@ textarea {
   margin: -4px 0 18px;
   padding: 10px 12px;
   border-radius: 12px;
-  background: rgba(79, 143, 99, 0.12);
-  color: rgba(23, 52, 39, 0.82);
+  background: #ebe7dc;
+  color: rgba(65, 58, 51, 0.82);
   font-size: 0.94rem;
 }
 
@@ -713,8 +768,7 @@ dialog {
 }
 
 dialog::backdrop {
-  background: rgba(18, 47, 54, 0.38);
-  backdrop-filter: blur(8px);
+  background: rgba(65, 58, 51, 0.32);
 }
 
 .dialog-shell {
@@ -728,7 +782,7 @@ dialog::backdrop {
   top: 18px;
   right: 18px;
   padding: 8px 12px;
-  background: rgba(15, 95, 112, 0.1);
+  background: #ebe7dc;
 }
 
 .dialog-shell h3 {
@@ -801,6 +855,10 @@ dialog::backdrop {
   .generator-actions {
     flex-direction: column;
     align-items: start;
+  }
+
+  .pathway-picker {
+    grid-template-columns: 1fr;
   }
 }
 

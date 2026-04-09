@@ -12,21 +12,29 @@ AI Showcase requires a URL. Recommended option: host the demo as a static page a
 
 ## Recommended Description
 
-Hōʻike Explorer is a Codex-built prototype for HIDOE students. It takes a class assignment and translates it into a Professional Why, local pathway exploration, Local Voices, and guided next steps. Instead of telling students to “just network,” it gives first-gen students a safer way to see how their skills could serve Hawaiʻi and ask better questions about local futures.
+Hōʻike Explorer is a Codex-built browser prototype for HIDOE students. It translates class assignments into a Professional Why, Hawaiʻi pathway exploration, local professional discovery, and guided next steps. Instead of telling first-gen students to “just network,” it reduces informational frictions by giving them safer prompt starters and clearer local futures inside a familiar school workflow.
 
-Character count: `374`
+Character count: `446`
 
 ## Alternate Description
 
-I built Hōʻike Explorer with Codex to help Hawaiʻi students see local futures more clearly before leaving feels inevitable. Paste in a class assignment and Hōʻike translates it into a Professional Why, local growth-sector pathways, a Hawaiʻi professional to learn from, and moderated “Talk Story” prompt starters. It turns hidden career scripts into visible, actionable next steps for students inside their school workflow.
+I built Hōʻike Explorer with Codex using a vibe-coding workflow. Paste in a class assignment and Hōʻike translates it into a Professional Why, Hawaiʻi growth-sector pathway exploration, local professional discovery, and moderated `Talk Story` prompt starters. It unhides the hidden curriculum of career navigation and turns vague ambition into visible, actionable next steps for students.
 
-Character count: `423`
+Character count: `439`
+
+## Stronger Round 1 Option
+
+Hawaiʻi students are often told to explore careers without being shown the script. Hōʻike Explorer is a Codex-built browser prototype that translates class assignments into a Professional Why, Hawaiʻi pathway exploration, local professionals to learn from, and guided `Talk Story` prompts. Built with a vibe-coding workflow, it reduces informational frictions for first-gen students and makes local futures more visible, desirable, and attainable.
+
+Character count: `477`
 
 ## Submission Notes
 
 - Select the `Built with Codex` checkbox.
+- Keep the live URL public and demo-ready before the April 30, 2026 deadline.
 - In the description, explicitly say what you built yourself: the demo flow, the translation logic, the Local Voices concept, the guided prompt experience, and the privacy model.
 - Keep the tone product-focused: problem, who it helps, how it works, and why it matters.
+- If you mention Hawaiʻi labor-market counts, use only figures you have personally verified and can defend.
 
 ## Resume / Profile Bullet
 

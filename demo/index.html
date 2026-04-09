@@ -16,7 +16,7 @@
             <span class="flora-glyph">🍃</span>
             <span class="flora-glyph">🌺</span>
           </div>
-          <h1>Unhiding the hidden curriculum so local futures in Hawaiʻi feel reachable.</h1>
+          <h1>Revealing the hidden curriculum for attainable local futures in Hawai'i.</h1>
           <p class="lede">
             This lightweight MVP shows how Hōʻike translates schoolwork into
             strengths, stories, and local pathway exploration, introduces
@@ -54,20 +54,23 @@
 
       <main class="dashboard">
         <section class="view-toggle reveal">
-          <div class="view-card student-view-card">
-            <span class="panel-label">Student View</span>
-            <p>
-              These panels represent what you would actually use inside Hōʻike:
-              the assignment translation, local pathway exploration, Local Voices,
-              guided questions, saved pathways, and trackable small steps.
-            </p>
+          <div class="view-toggle-shell">
+            <span class="panel-label">View Mode</span>
+            <div class="toggle-buttons" role="tablist" aria-label="View mode">
+              <button id="student-view-button" class="toggle-button is-active" type="button" aria-pressed="true">
+                Classroom View
+              </button>
+              <button id="explainer-view-button" class="toggle-button" type="button" aria-pressed="false">
+                Explainer View
+              </button>
+            </div>
           </div>
-          <div class="view-card demo-view-card">
-            <span class="panel-label">Demo / Judge View</span>
-            <p>
-              Highlighted explainer panels such as the `AI Translation Log` are for
-              judges and reviewers. They expose the behind-the-scenes logic to make
-              the Codex-powered translation moment legible.
+          <div class="view-card" id="view-mode-copy">
+            <span class="panel-label">Current View</span>
+            <p id="view-mode-description">
+              Classroom View shows the school-facing experience: assignment
+              translation, pathway exploration, Local Voices, guided questions,
+              teacher-managed classroom signals, and trackable small steps.
             </p>
           </div>
         </section>
@@ -127,10 +130,10 @@
                 <h2>Professional Why</h2>
               </div>
             </div>
-            <div class="student-surface">
+            <div class="student-surface" data-view-surface="student">
               <div id="professional-why" class="rich-panel"></div>
             </div>
-            <div class="demo-surface">
+            <div class="demo-surface" data-view-surface="explainer">
               <div id="translation-log" class="translation-log"></div>
             </div>
           </article>

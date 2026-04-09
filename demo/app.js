@@ -415,6 +415,9 @@ const runTranslationButton = document.getElementById("run-translation");
 const translationStatus = document.getElementById("translation-status");
 const stepsProgressCount = document.getElementById("steps-progress-count");
 const stepsProgressDetail = document.getElementById("steps-progress-detail");
+const studentViewButton = document.getElementById("student-view-button");
+const explainerViewButton = document.getElementById("explainer-view-button");
+const viewModeDescription = document.getElementById("view-mode-description");
 const progressCircle = document.getElementById("progress-circle");
 const progressCircleFill = document.getElementById("progress-circle-fill");
 const savedPathwaysCount = document.getElementById("saved-pathways-count");
@@ -426,9 +429,26 @@ const teacherInviteButton = document.getElementById("teacher-invite-button");
 const teacherInviteStatus = document.getElementById("teacher-invite-status");
 
 let selectedAssignment = enrichAssignment(assignments[0]);
+let currentViewMode = "classroom";
 const completedSteps = new Set();
 const savedPathways = new Set();
 const classroomVotes = new Map();
+const selectedPathways = new Map();
+
+function setViewMode(mode) {
+  currentViewMode = mode;
+  document.body.dataset.viewMode = mode;
+
+  const isClassroom = mode === "classroom";
+  studentViewButton.classList.toggle("is-active", isClassroom);
+  studentViewButton.setAttribute("aria-pressed", String(isClassroom));
+  explainerViewButton.classList.toggle("is-active", !isClassroom);
+  explainerViewButton.setAttribute("aria-pressed", String(!isClassroom));
+
+  viewModeDescription.textContent = isClassroom
+    ? "Classroom View shows the school-facing experience: assignment translation, pathway exploration, Local Voices, guided questions, teacher-managed classroom signals, and trackable small steps."
+    : "Explainer View is for reviewers. It keeps the classroom flow visible, but also reveals demo-only context like the AI Translation Log so the Codex reasoning and design choices are easy to understand.";
+}
 
 function getAssignmentKey() {
   return `${selectedAssignment.id}:${selectedAssignment.title}:${selectedAssignment.className}`;
@@ -440,6 +460,10 @@ function getStepKey(label, item) {
 
 function getPathwayKey(pathwayName) {
   return `${getAssignmentKey()}::pathway::${pathwayName}`;
+}
+
+function getSelectedPathwayName() {
+  return selectedPathways.get(getAssignmentKey()) || selectedAssignment.pathways[0]?.name;
 }
 
 function getVoiceVoteKey(voiceId) {
@@ -629,36 +653,59 @@ function renderTranslationLog() {
 function renderPathways() {
   pathwayList.innerHTML = "";
 
+  const selectedName = getSelectedPathwayName();
+  const selectedPathway =
+    selectedAssignment.pathways.find((pathway) => pathway.name === selectedName) ||
+    selectedAssignment.pathways[0];
+
+  const picker = document.createElement("div");
+  picker.className = "pathway-picker";
+
   selectedAssignment.pathways.forEach((pathway) => {
-    const card = document.createElement("article");
-    card.className = "pathway-card";
-    const pathwayKey = getPathwayKey(pathway.name);
-    const isSaved = savedPathways.has(pathwayKey);
-    card.innerHTML = `
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = `pathway-option${pathway.name === selectedPathway.name ? " is-active" : ""}`;
+    button.innerHTML = `
       <span class="pathway-meta">Pathway</span>
-      <h3>${pathway.name}</h3>
-      <p><strong>Explore if:</strong> ${pathway.fit}</p>
-      <p><strong>Local value:</strong> ${pathway.community}</p>
-      <ul>
-        <li>${pathway.nextStep}</li>
-      </ul>
-      <div class="pathway-actions">
-        <button class="save-pathway-button${isSaved ? " is-saved" : ""}" type="button">
-          ${isSaved ? "Saved" : "Save pathway"}
-        </button>
-      </div>
+      <strong>${pathway.name}</strong>
     `;
-    card.querySelector(".save-pathway-button").addEventListener("click", () => {
-      if (savedPathways.has(pathwayKey)) {
-        savedPathways.delete(pathwayKey);
-      } else {
-        savedPathways.add(pathwayKey);
-      }
+    button.addEventListener("click", () => {
+      selectedPathways.set(getAssignmentKey(), pathway.name);
       renderPathways();
-      updateSavedPathwaysSummary();
     });
-    pathwayList.appendChild(card);
+    picker.appendChild(button);
   });
+
+  const detail = document.createElement("article");
+  detail.className = "pathway-card pathway-detail-card";
+  const pathwayKey = getPathwayKey(selectedPathway.name);
+  const isSaved = savedPathways.has(pathwayKey);
+  detail.innerHTML = `
+    <span class="pathway-meta">Selected Pathway</span>
+    <h3>${selectedPathway.name}</h3>
+    <p><strong>Explore if:</strong> ${selectedPathway.fit}</p>
+    <p><strong>Local value:</strong> ${selectedPathway.community}</p>
+    <ul>
+      <li>${selectedPathway.nextStep}</li>
+    </ul>
+    <div class="pathway-actions">
+      <button class="save-pathway-button${isSaved ? " is-saved" : ""}" type="button">
+        ${isSaved ? "Saved" : "Save pathway"}
+      </button>
+    </div>
+  `;
+  detail.querySelector(".save-pathway-button").addEventListener("click", () => {
+    if (savedPathways.has(pathwayKey)) {
+      savedPathways.delete(pathwayKey);
+    } else {
+      savedPathways.add(pathwayKey);
+    }
+    renderPathways();
+    updateSavedPathwaysSummary();
+  });
+
+  pathwayList.appendChild(picker);
+  pathwayList.appendChild(detail);
 }
 
 function openVoiceDialog(voice) {
@@ -902,6 +949,9 @@ teacherInviteButton.addEventListener("click", () => {
     `Classroom conversation request prepared for ${topVote.voice.name}. In a real pilot, this would route through a teacher-managed approval and scheduling workflow.`;
 });
 
+studentViewButton.addEventListener("click", () => setViewMode("classroom"));
+explainerViewButton.addEventListener("click", () => setViewMode("explainer"));
+
 runTranslationButton.addEventListener("click", runTranslation);
 
 titleInput.addEventListener("keydown", (event) => {
@@ -925,4 +975,5 @@ dialog.addEventListener("click", (event) => {
 });
 
 titleInput.value = assignments[0].title;
+setViewMode(currentViewMode);
 renderAll();
