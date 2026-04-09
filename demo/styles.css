@@ -594,7 +594,7 @@ body[data-view-mode="classroom"] [data-view-surface="explainer"] {
 
 .teacher-shell {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
   margin-bottom: 18px;
 }
@@ -718,6 +718,11 @@ textarea {
   margin-top: 16px;
 }
 
+.question-helper {
+  margin: 8px 0 0;
+  color: rgba(65, 58, 51, 0.78);
+}
+
 .primary-action {
   align-self: start;
   padding: 12px 18px;
@@ -732,6 +737,28 @@ textarea {
 
 .steps-label {
   margin-bottom: 2px;
+}
+
+.steps-summary-toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  list-style: none;
+}
+
+.steps-summary-toggle::-webkit-details-marker {
+  display: none;
+}
+
+.steps-chevron {
+  color: var(--moss);
+  font-size: 1.2rem;
+  transition: transform 180ms ease;
+}
+
+.steps-group[open] .steps-chevron {
+  transform: rotate(180deg);
 }
 
 .steps-checklist {
@@ -826,6 +853,26 @@ dialog::backdrop {
 .dialog-shell p,
 .dialog-shell li {
   line-height: 1.65;
+}
+
+.toast {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  padding: 12px 16px;
+  border-radius: 14px;
+  background: var(--forest);
+  color: var(--paper);
+  box-shadow: var(--shadow);
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.toast.is-visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .reveal {

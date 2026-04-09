@@ -388,14 +388,18 @@ const promptIdeas = [
   "What do students misunderstand about this kind of work?"
 ];
 
-const handlePool = [
-  "HappyCow01",
-  "NorthShoreSky14",
-  "MangoVoyager22",
-  "TaroTrail08",
-  "ReefSignal17",
-  "CanoeSpark31"
+const cohorts = [
+  {
+    name: "PueoPod",
+    handles: ["CuriousPueo", "BoldPueo", "CalmPueo", "BrightPueo", "SteadyPueo", "SwiftPueo"]
+  },
+  {
+    name: "MangoGrove",
+    handles: ["SunnyMango", "KindMango", "BraveMango", "FreshMango", "GoldenMango", "LivelyMango"]
+  }
 ];
+
+const allHandles = cohorts.flatMap((cohort) => cohort.handles);
 
 const assignmentList = document.getElementById("assignment-list");
 const pathwayList = document.getElementById("pathway-list");
@@ -407,6 +411,7 @@ const promptList = document.getElementById("prompt-list");
 const questionBox = document.getElementById("question-box");
 const questionStatus = document.getElementById("question-status");
 const studentHandle = document.getElementById("student-handle");
+const studentCohort = document.getElementById("student-cohort");
 const dialog = document.getElementById("voice-dialog");
 const dialogContent = document.getElementById("dialog-content");
 const titleInput = document.getElementById("assignment-title-input");
@@ -422,12 +427,12 @@ const progressCircle = document.getElementById("progress-circle");
 const progressCircleFill = document.getElementById("progress-circle-fill");
 const savedPathwaysCount = document.getElementById("saved-pathways-count");
 const savedPathwaysDetail = document.getElementById("saved-pathways-detail");
+const teacherClassAlias = document.getElementById("teacher-class-alias");
 const teacherVoteList = document.getElementById("teacher-vote-list");
 const teacherTopVoice = document.getElementById("teacher-top-voice");
 const teacherTopVoiceDetail = document.getElementById("teacher-top-voice-detail");
-const teacherInviteButton = document.getElementById("teacher-invite-button");
-const teacherInviteStatus = document.getElementById("teacher-invite-status");
 const teacherQuestionQueue = document.getElementById("teacher-question-queue");
+const toast = document.getElementById("toast");
 
 const STORAGE_KEY = "hoike-demo-state-v1";
 const TRANSLATION_DELAY_MS = 700;
@@ -453,7 +458,11 @@ const savedPathways = new Set(persistedState.savedPathways || []);
 const classroomVotes = new Map(persistedState.classroomVotes || []);
 const selectedPathways = new Map(persistedState.selectedPathways || []);
 const submittedQuestions = persistedState.submittedQuestions || [];
-let currentHandle = persistedState.studentHandle || handlePool[0];
+let currentHandle = persistedState.studentHandle || cohorts[0].handles[0];
+
+function getCohortForHandle(handle) {
+  return cohorts.find((cohort) => cohort.handles.includes(handle)) || cohorts[0];
+}
 
 function persistState() {
   const state = {
@@ -468,8 +477,7 @@ function persistState() {
     studentHandle: currentHandle,
     questionDraft: questionBox.value,
     assignmentTitleInput: titleInput.value,
-    assignmentSubjectInput: subjectInput.value,
-    teacherInviteStatus: teacherInviteStatus.textContent
+    assignmentSubjectInput: subjectInput.value
   };
 
   window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
@@ -477,6 +485,15 @@ function persistState() {
 
 function makeQuestionId() {
   return `q-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+}
+
+function showToast(message) {
+  toast.textContent = message;
+  toast.classList.add("is-visible");
+  window.clearTimeout(showToast.timeoutId);
+  showToast.timeoutId = window.setTimeout(() => {
+    toast.classList.remove("is-visible");
+  }, 2200);
 }
 
 function setViewMode(mode) {
@@ -493,6 +510,13 @@ function setViewMode(mode) {
     ? "Classroom View shows the school-facing experience: assignment translation, pathway exploration, Local Voices, guided questions, teacher-managed classroom signals, and trackable small steps."
     : "Explainer View is for reviewers. It keeps the classroom flow visible, but also reveals demo-only context like the AI Translation Log so the Codex reasoning and design choices are easy to understand.";
   persistState();
+}
+
+function syncIdentitySurfaces() {
+  const cohort = getCohortForHandle(currentHandle);
+  studentHandle.textContent = currentHandle;
+  studentCohort.textContent = `Class cohort: ${cohort.name}`;
+  teacherClassAlias.textContent = cohort.name;
 }
 
 function getAssignmentKey() {
@@ -512,7 +536,7 @@ function getSelectedPathwayName() {
 }
 
 function getVoiceVoteKey(voiceId) {
-  return `${getAssignmentKey()}::voice-vote::${voiceId}`;
+  return `global::voice-vote::${voiceId}`;
 }
 
 async function requestTranslation(title, subject) {
@@ -639,15 +663,15 @@ function buildGeneratedAssignment(title, subject) {
 }
 
 function updateSavedPathwaysSummary() {
-  const currentSavedNames = selectedAssignment.pathways
-    .filter((pathway) => savedPathways.has(getPathwayKey(pathway.name)))
-    .map((pathway) => pathway.name);
+  const allSavedNames = [...savedPathways]
+    .map((pathwayKey) => pathwayKey.split("::pathway::")[1])
+    .filter(Boolean);
 
-  savedPathwaysCount.textContent = `${currentSavedNames.length} saved`;
+  savedPathwaysCount.textContent = `${allSavedNames.length} saved`;
   savedPathwaysDetail.textContent =
-    currentSavedNames.length === 0
-      ? "Save a pathway to keep track of the ideas you want to revisit."
-      : `Saved here: ${currentSavedNames.join(" • ")}`;
+    allSavedNames.length === 0
+      ? "Saved pathways from across assignments appear here so the dashboard keeps your running interests visible."
+      : `Saved across the dashboard: ${allSavedNames.join(" • ")}`;
   persistState();
 }
 
@@ -809,7 +833,7 @@ function renderVoices() {
       <div class="voice-actions">
         <button class="voice-action" type="button" data-action="watch">Watch intro</button>
         <button class="voice-action" type="button" data-action="ask">Use as question starter</button>
-        <button class="voice-action" type="button" data-action="vote">Vote to invite with PenguinPod</button>
+        <button class="voice-action" type="button" data-action="vote">Vote to invite with ${getCohortForHandle(currentHandle).name}</button>
       </div>
     `;
 
@@ -820,7 +844,7 @@ function renderVoices() {
       classroomVotes.set(voteKey, (classroomVotes.get(voteKey) || 0) + 1);
       renderTeacherView();
       questionStatus.textContent =
-        `Added a PenguinPod interest vote for ${voice.name}. A teacher can now see that classroom signal.`;
+        `Added a ${getCohortForHandle(currentHandle).name} interest vote for ${voice.name}. A teacher can now see that classroom signal.`;
       persistState();
     });
     voicesList.appendChild(card);
@@ -831,9 +855,8 @@ function renderTeacherView() {
   teacherVoteList.innerHTML = "";
   teacherQuestionQueue.innerHTML = "";
 
-  const rankedVoices = selectedAssignment.voices
-    .map((voiceId) => {
-      const voice = voices[voiceId];
+  const rankedVoices = Object.entries(voices)
+    .map(([voiceId, voice]) => {
       const votes = classroomVotes.get(getVoiceVoteKey(voiceId)) || 0;
       return { voice, votes };
     })
@@ -847,10 +870,13 @@ function renderTeacherView() {
   } else {
     teacherTopVoice.textContent = `${topVote.voice.name} (${topVote.votes} votes)`;
     teacherTopVoiceDetail.textContent =
-      `PenguinPod is showing the strongest interest in ${topVote.voice.role.toLowerCase()} pathways right now.`;
+      `${getCohortForHandle(currentHandle).name} is showing the strongest interest in ${topVote.voice.role.toLowerCase()} pathways right now.`;
   }
 
   rankedVoices.forEach(({ voice, votes }) => {
+    if (votes < 1) {
+      return;
+    }
     const card = document.createElement("article");
     card.className = "teacher-vote-card";
     card.innerHTML = `
@@ -863,13 +889,15 @@ function renderTeacherView() {
         <strong>${votes}</strong>
         <span>class votes</span>
       </div>
+      <button class="voice-action" type="button">Request visit</button>
     `;
+    card.querySelector("button").addEventListener("click", () => {
+      showToast(`Request prepared for ${voice.name}`);
+    });
     teacherVoteList.appendChild(card);
   });
 
-  const queueItems = submittedQuestions.filter(
-    (item) => item.assignmentKey === getAssignmentKey() && item.status === "pending"
-  );
+  const queueItems = submittedQuestions.filter((item) => item.status === "pending");
 
   if (!queueItems.length) {
     teacherQuestionQueue.innerHTML = `
@@ -891,10 +919,9 @@ function renderTeacherView() {
     `;
     row.querySelector("button").addEventListener("click", () => {
       item.status = "approved";
-      teacherInviteStatus.textContent =
-        "A guided student question was approved for professional follow-up in the moderation queue.";
       renderTeacherView();
       persistState();
+      showToast("Question approved for follow-up");
     });
     teacherQuestionQueue.appendChild(row);
   });
@@ -927,10 +954,16 @@ function renderSteps() {
   ];
 
   groups.forEach(([label, items]) => {
-    const section = document.createElement("section");
+    const section = document.createElement("details");
     section.className = "steps-group";
+    if (label === "Do Now") {
+      section.open = true;
+    }
     section.innerHTML = `
-      <span class="steps-label">${label}</span>
+      <summary class="steps-summary-toggle">
+        <span class="steps-label">${label}</span>
+        <span class="steps-chevron" aria-hidden="true">⌄</span>
+      </summary>
       <ul class="steps-checklist"></ul>
     `;
 
@@ -1014,9 +1047,9 @@ async function runTranslation() {
 }
 
 document.getElementById("generate-handle").addEventListener("click", () => {
-  const next = handlePool[Math.floor(Math.random() * handlePool.length)];
+  const next = allHandles[Math.floor(Math.random() * allHandles.length)];
   currentHandle = next;
-  studentHandle.textContent = next;
+  syncIdentitySurfaces();
   persistState();
 });
 
@@ -1036,31 +1069,11 @@ document.getElementById("submit-question").addEventListener("click", () => {
   });
   questionStatus.textContent =
     "Sent to moderated review. In the MVP, staff review the question before a professional sees it.";
+  questionBox.value = "";
   renderTeacherView();
   persistState();
+  showToast("Message sent to moderator");
 });
-
-teacherInviteButton.addEventListener("click", () => {
-  const rankedVoices = selectedAssignment.voices
-    .map((voiceId) => {
-      const voice = voices[voiceId];
-      const votes = classroomVotes.get(getVoiceVoteKey(voiceId)) || 0;
-      return { voice, votes };
-    })
-    .sort((left, right) => right.votes - left.votes || left.voice.name.localeCompare(right.voice.name));
-
-  const topVote = rankedVoices[0];
-  if (!topVote || topVote.votes === 0) {
-    teacherInviteStatus.textContent =
-      "Invite flow ready. Add a few PenguinPod votes first so the teacher can see which professional the class is most interested in.";
-    return;
-  }
-
-  teacherInviteStatus.textContent =
-    `Classroom conversation request prepared for ${topVote.voice.name}. In a real pilot, this would route through a teacher-managed approval and scheduling workflow.`;
-  persistState();
-});
-
 studentViewButton.addEventListener("click", () => setViewMode("classroom"));
 explainerViewButton.addEventListener("click", () => setViewMode("explainer"));
 
@@ -1090,11 +1103,9 @@ dialog.addEventListener("click", (event) => {
   }
 });
 
-studentHandle.textContent = currentHandle;
+syncIdentitySurfaces();
 titleInput.value = persistedState.assignmentTitleInput || selectedAssignment.title;
 subjectInput.value = persistedState.assignmentSubjectInput || subjectInput.value;
 questionBox.value = persistedState.questionDraft || "";
-teacherInviteStatus.textContent =
-  persistedState.teacherInviteStatus || teacherInviteStatus.textContent;
 setViewMode(currentViewMode);
 renderAll();

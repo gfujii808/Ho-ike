@@ -26,13 +26,14 @@
           <div class="hero-notes">
             <div class="note-card">
               <span>Student identity</span>
-              <strong id="student-handle">HappyCow01</strong>
+              <strong id="student-handle">CuriousPueo</strong>
               <button id="generate-handle" type="button">Generate new handle</button>
+              <small id="student-cohort">Class cohort: PueoPod</small>
             </div>
             <div class="note-card">
               <span>Saved pathways</span>
               <strong id="saved-pathways-count">0 saved</strong>
-              <small id="saved-pathways-detail">Save a pathway to keep track of the ideas you want to revisit.</small>
+              <small id="saved-pathways-detail">Saved pathways from across assignments appear here so the dashboard keeps your running interests visible.</small>
             </div>
             <div class="note-card">
               <span>Privacy model</span>
@@ -179,18 +180,13 @@
           <div class="teacher-shell">
             <div class="teacher-summary-card">
               <span class="panel-label">Class alias</span>
-              <strong>PenguinPod</strong>
-              <small>Pseudonymous cohort space for classroom voting and shared exploration.</small>
+              <strong id="teacher-class-alias">PueoPod</strong>
+              <small>Demo cohorts use pseudonymous class spaces like `PueoPod` and `MangoGrove` for shared exploration.</small>
             </div>
             <div class="teacher-summary-card">
               <span class="panel-label">Most requested professional</span>
               <strong id="teacher-top-voice">No votes yet</strong>
               <small id="teacher-top-voice-detail">When students vote on Local Voices, teachers can see who the class wants to hear from most.</small>
-            </div>
-            <div class="teacher-summary-card">
-              <span class="panel-label">Teacher action</span>
-              <button id="teacher-invite-button" class="primary-action" type="button">Request classroom conversation</button>
-              <small id="teacher-invite-status">This stays teacher-managed so students are not handling logistics or direct outreach.</small>
             </div>
           </div>
           <div class="teacher-queue-card">
@@ -217,8 +213,10 @@
               Prompt starters reduce intimidation and route questions into a moderated
               workflow instead of open direct messages.
             </p>
-            <div id="prompt-list" class="prompt-list"></div>
             <label class="input-label" for="question-box">Question draft</label>
+            <p class="question-helper">
+              Start from a prompt, edit it in your own words, and send it to teacher moderation when it feels ready.
+            </p>
             <textarea
               id="question-box"
               rows="6"
@@ -232,6 +230,7 @@
                 Questions are reviewed by school or program staff before a professional reply.
               </span>
             </div>
+            <div id="prompt-list" class="prompt-list"></div>
           </article>
 
           <article class="card reveal">
@@ -266,6 +265,8 @@
         <div id="dialog-content"></div>
       </form>
     </dialog>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
     <script src="./app.js"></script>
   </body>
