@@ -427,13 +427,57 @@ const teacherTopVoice = document.getElementById("teacher-top-voice");
 const teacherTopVoiceDetail = document.getElementById("teacher-top-voice-detail");
 const teacherInviteButton = document.getElementById("teacher-invite-button");
 const teacherInviteStatus = document.getElementById("teacher-invite-status");
+const teacherQuestionQueue = document.getElementById("teacher-question-queue");
 
-let selectedAssignment = enrichAssignment(assignments[0]);
-let currentViewMode = "classroom";
-const completedSteps = new Set();
-const savedPathways = new Set();
-const classroomVotes = new Map();
-const selectedPathways = new Map();
+const STORAGE_KEY = "hoike-demo-state-v1";
+const TRANSLATION_DELAY_MS = 700;
+
+function loadPersistedState() {
+  try {
+    return JSON.parse(window.localStorage.getItem(STORAGE_KEY) || "{}");
+  } catch (_error) {
+    return {};
+  }
+}
+
+const persistedState = loadPersistedState();
+
+let selectedAssignment = persistedState.customAssignment
+  ? enrichAssignment(persistedState.customAssignment)
+  : enrichAssignment(
+      assignments.find((assignment) => assignment.id === persistedState.selectedAssignmentId) || assignments[0]
+    );
+let currentViewMode = persistedState.viewMode || "classroom";
+const completedSteps = new Set(persistedState.completedSteps || []);
+const savedPathways = new Set(persistedState.savedPathways || []);
+const classroomVotes = new Map(persistedState.classroomVotes || []);
+const selectedPathways = new Map(persistedState.selectedPathways || []);
+const submittedQuestions = persistedState.submittedQuestions || [];
+let currentHandle = persistedState.studentHandle || handlePool[0];
+
+function persistState() {
+  const state = {
+    selectedAssignmentId: selectedAssignment.id === "generated" ? null : selectedAssignment.id,
+    customAssignment: selectedAssignment.id === "generated" ? selectedAssignment : null,
+    viewMode: currentViewMode,
+    completedSteps: [...completedSteps],
+    savedPathways: [...savedPathways],
+    classroomVotes: [...classroomVotes.entries()],
+    selectedPathways: [...selectedPathways.entries()],
+    submittedQuestions,
+    studentHandle: currentHandle,
+    questionDraft: questionBox.value,
+    assignmentTitleInput: titleInput.value,
+    assignmentSubjectInput: subjectInput.value,
+    teacherInviteStatus: teacherInviteStatus.textContent
+  };
+
+  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+function makeQuestionId() {
+  return `q-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+}
 
 function setViewMode(mode) {
   currentViewMode = mode;
@@ -448,6 +492,7 @@ function setViewMode(mode) {
   viewModeDescription.textContent = isClassroom
     ? "Classroom View shows the school-facing experience: assignment translation, pathway exploration, Local Voices, guided questions, teacher-managed classroom signals, and trackable small steps."
     : "Explainer View is for reviewers. It keeps the classroom flow visible, but also reveals demo-only context like the AI Translation Log so the Codex reasoning and design choices are easy to understand.";
+  persistState();
 }
 
 function getAssignmentKey() {
@@ -468,6 +513,11 @@ function getSelectedPathwayName() {
 
 function getVoiceVoteKey(voiceId) {
   return `${getAssignmentKey()}::voice-vote::${voiceId}`;
+}
+
+async function requestTranslation(title, subject) {
+  await new Promise((resolve) => window.setTimeout(resolve, TRANSLATION_DELAY_MS));
+  return buildGeneratedAssignment(title, subject);
 }
 
 function normalize(text) {
@@ -598,6 +648,7 @@ function updateSavedPathwaysSummary() {
     currentSavedNames.length === 0
       ? "Save a pathway to keep track of the ideas you want to revisit."
       : `Saved here: ${currentSavedNames.join(" • ")}`;
+  persistState();
 }
 
 function renderAssignments() {
@@ -615,8 +666,14 @@ function renderAssignments() {
     button.addEventListener("click", () => {
       selectedAssignment = enrichAssignment(assignment);
       titleInput.value = assignment.title;
+      subjectInput.value = assignment.className.includes("Biology")
+        ? "Science / Biology"
+        : assignment.className.includes("English")
+          ? "English / Media"
+          : "STEM / Math";
       renderAll();
       translationStatus.textContent = `Loaded preset example: ${assignment.title}.`;
+      persistState();
     });
     assignmentList.appendChild(button);
   });
@@ -672,6 +729,7 @@ function renderPathways() {
     button.addEventListener("click", () => {
       selectedPathways.set(getAssignmentKey(), pathway.name);
       renderPathways();
+      persistState();
     });
     picker.appendChild(button);
   });
@@ -702,6 +760,7 @@ function renderPathways() {
     }
     renderPathways();
     updateSavedPathwaysSummary();
+    persistState();
   });
 
   pathwayList.appendChild(picker);
@@ -762,6 +821,7 @@ function renderVoices() {
       renderTeacherView();
       questionStatus.textContent =
         `Added a PenguinPod interest vote for ${voice.name}. A teacher can now see that classroom signal.`;
+      persistState();
     });
     voicesList.appendChild(card);
   });
@@ -769,6 +829,7 @@ function renderVoices() {
 
 function renderTeacherView() {
   teacherVoteList.innerHTML = "";
+  teacherQuestionQueue.innerHTML = "";
 
   const rankedVoices = selectedAssignment.voices
     .map((voiceId) => {
@@ -804,6 +865,38 @@ function renderTeacherView() {
       </div>
     `;
     teacherVoteList.appendChild(card);
+  });
+
+  const queueItems = submittedQuestions.filter(
+    (item) => item.assignmentKey === getAssignmentKey() && item.status === "pending"
+  );
+
+  if (!queueItems.length) {
+    teacherQuestionQueue.innerHTML = `
+      <p class="queue-empty">No pending questions yet. When students send guided questions, they appear here for teacher or program review.</p>
+    `;
+    return;
+  }
+
+  queueItems.forEach((item) => {
+    const row = document.createElement("article");
+    row.className = "queue-item";
+    row.innerHTML = `
+      <div>
+        <span class="voice-chip">${item.handle}</span>
+        <p class="voice-meta">${item.assignmentTitle}</p>
+        <p>${item.text}</p>
+      </div>
+      <button class="voice-action" type="button">Approve</button>
+    `;
+    row.querySelector("button").addEventListener("click", () => {
+      item.status = "approved";
+      teacherInviteStatus.textContent =
+        "A guided student question was approved for professional follow-up in the moderation queue.";
+      renderTeacherView();
+      persistState();
+    });
+    teacherQuestionQueue.appendChild(row);
   });
 }
 
@@ -862,6 +955,7 @@ function renderSteps() {
           completedSteps.add(itemKey);
         }
         renderSteps();
+        persistState();
       });
 
       checklist.appendChild(row);
@@ -885,6 +979,7 @@ function renderSteps() {
       : `${completedCount} of ${totalCount} possible steps completed in this pathway view.`;
   progressCircle.dataset.progress = String(progressPercent);
   progressCircleFill.style.strokeDashoffset = String(100.53 - (100.53 * progressPercent) / 100);
+  persistState();
 }
 
 function renderAll() {
@@ -899,7 +994,7 @@ function renderAll() {
   renderSteps();
 }
 
-function runTranslation() {
+async function runTranslation() {
   const rawTitle = titleInput.value.trim();
   const subject = subjectInput.value;
 
@@ -909,14 +1004,20 @@ function runTranslation() {
     return;
   }
 
-  selectedAssignment = buildGeneratedAssignment(rawTitle, subject);
+  translationStatus.textContent = "Running translation service...";
+  runTranslationButton.disabled = true;
+  selectedAssignment = await requestTranslation(rawTitle, subject);
   renderAll();
   translationStatus.textContent = `Translated "${rawTitle}" into ${selectedAssignment.translationLog.sectorLabel}.`;
+  runTranslationButton.disabled = false;
+  persistState();
 }
 
 document.getElementById("generate-handle").addEventListener("click", () => {
   const next = handlePool[Math.floor(Math.random() * handlePool.length)];
+  currentHandle = next;
   studentHandle.textContent = next;
+  persistState();
 });
 
 document.getElementById("submit-question").addEventListener("click", () => {
@@ -925,8 +1026,18 @@ document.getElementById("submit-question").addEventListener("click", () => {
     return;
   }
 
+  submittedQuestions.push({
+    id: makeQuestionId(),
+    handle: currentHandle,
+    assignmentKey: getAssignmentKey(),
+    assignmentTitle: selectedAssignment.title,
+    text: questionBox.value.trim(),
+    status: "pending"
+  });
   questionStatus.textContent =
     "Sent to moderated review. In the MVP, staff review the question before a professional sees it.";
+  renderTeacherView();
+  persistState();
 });
 
 teacherInviteButton.addEventListener("click", () => {
@@ -947,12 +1058,17 @@ teacherInviteButton.addEventListener("click", () => {
 
   teacherInviteStatus.textContent =
     `Classroom conversation request prepared for ${topVote.voice.name}. In a real pilot, this would route through a teacher-managed approval and scheduling workflow.`;
+  persistState();
 });
 
 studentViewButton.addEventListener("click", () => setViewMode("classroom"));
 explainerViewButton.addEventListener("click", () => setViewMode("explainer"));
 
 runTranslationButton.addEventListener("click", runTranslation);
+
+questionBox.addEventListener("input", persistState);
+subjectInput.addEventListener("change", persistState);
+titleInput.addEventListener("input", persistState);
 
 titleInput.addEventListener("keydown", (event) => {
   if (event.key === "Enter") {
@@ -974,6 +1090,11 @@ dialog.addEventListener("click", (event) => {
   }
 });
 
-titleInput.value = assignments[0].title;
+studentHandle.textContent = currentHandle;
+titleInput.value = persistedState.assignmentTitleInput || selectedAssignment.title;
+subjectInput.value = persistedState.assignmentSubjectInput || subjectInput.value;
+questionBox.value = persistedState.questionDraft || "";
+teacherInviteStatus.textContent =
+  persistedState.teacherInviteStatus || teacherInviteStatus.textContent;
 setViewMode(currentViewMode);
 renderAll();

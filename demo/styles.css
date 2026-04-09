@@ -627,6 +627,39 @@ body[data-view-mode="classroom"] [data-view-surface="explainer"] {
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 }
 
+.teacher-queue-card {
+  margin-bottom: 18px;
+  padding: 18px;
+  border-radius: var(--radius-md);
+  background: var(--paper-soft);
+  border: 1px solid var(--line);
+}
+
+.teacher-question-queue {
+  display: grid;
+  gap: 12px;
+}
+
+.queue-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: start;
+  padding: 16px;
+  border-radius: var(--radius-md);
+  background: var(--card);
+  border: 1px solid var(--line);
+}
+
+.queue-item p + p {
+  margin-top: 8px;
+}
+
+.queue-empty {
+  margin: 0;
+  color: rgba(65, 58, 51, 0.78);
+}
+
 .teacher-vote-card {
   display: flex;
   justify-content: space-between;
