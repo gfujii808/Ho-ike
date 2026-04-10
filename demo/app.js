@@ -93,6 +93,11 @@ const sectorCatalog = {
       `"${title}" is more than an academic exercise. In Hawaiʻi, the same habits show up in solar layout planning, energy auditing, battery sizing, and the cost models behind resilience projects.`,
     whyImpact:
       "The translation is not only about a job title. It helps you see where analysis, design, and care for place can overlap in a future that serves home.",
+    localValueTokens: [
+      "Hawaiʻi growth area",
+      "clean energy and resilience work",
+      "community projects and sector partnerships"
+    ],
     pathways: [
       {
         name: "Clean Energy Planner",
@@ -140,6 +145,11 @@ const sectorCatalog = {
       `"${title}" teaches more than lab procedure. In Hawaiʻi, these same habits show up in reef monitoring, watershed stewardship, public health labs, and community-based conservation work.`,
     whyImpact:
       "You can connect analysis, fieldwork, and care for place instead of seeing science as something only done somewhere else.",
+    localValueTokens: [
+      "place-based stewardship",
+      "local monitoring and health pathways",
+      "field, lab, and community science options"
+    ],
     pathways: [
       {
         name: "Environmental Monitoring",
@@ -187,6 +197,11 @@ const sectorCatalog = {
       `"${title}" is not just about presentation. In Hawaiʻi, storytelling supports public information, nonprofit outreach, education, cultural interpretation, and digital experiences that help communities understand important issues.`,
     whyImpact:
       "You can see creative work as useful, local, and community-serving instead of secondary to so-called real careers.",
+    localValueTokens: [
+      "communication as community infrastructure",
+      "portfolio and project-based entry points",
+      "school, nonprofit, and public storytelling work"
+    ],
     pathways: [
       {
         name: "Community Communications",
@@ -234,6 +249,11 @@ const sectorCatalog = {
       `"${title}" is not only about getting the code to run. In Hawaiʻi, the same habits show up in cybersecurity, infrastructure protection, defense-tech operations, and digital systems that communities rely on every day.`,
     whyImpact:
       "You can see technical problem-solving as a local public-interest pathway, not only as a ticket to leave.",
+    localValueTokens: [
+      "technical public-interest work",
+      "systems and infrastructure pathways",
+      "projects, certificates, and college options"
+    ],
     pathways: [
       {
         name: "Cyber Operations",
@@ -281,6 +301,11 @@ const sectorCatalog = {
       `"${title}" can still be translated into real strengths. Hōʻike looks for the habits inside the assignment, like research, collaboration, analysis, or communication, and connects them to ways you can contribute in Hawaiʻi.`,
     whyImpact:
       "Even when the pathway is not obvious yet, you can start with strengths, values, and small actions instead of waiting until your future feels fully decided.",
+    localValueTokens: [
+      "multiple ways in",
+      "college, certificate, apprenticeship, or community route",
+      "aligned with Hawaiʻi's 55 by '25 attainment goal"
+    ],
     pathways: [
       {
         name: "Community Innovation",
@@ -443,6 +468,20 @@ const cohorts = [
 ];
 
 const allHandles = cohorts.flatMap((cohort) => cohort.handles);
+const handleProfiles = {
+  CuriousPueo: ["being outdoors", "community service", "storytelling"],
+  BoldPueo: ["sports", "leadership", "helping people"],
+  CalmPueo: ["music", "working with animals", "being outdoors"],
+  BrightPueo: ["coding", "gaming", "fixing things"],
+  SteadyPueo: ["helping people", "community service", "leadership"],
+  SwiftPueo: ["sports", "coding", "being outdoors"],
+  SunnyMango: ["drawing and design", "music", "community service"],
+  KindMango: ["helping people", "storytelling", "working with animals"],
+  BraveMango: ["sports", "leadership", "community service"],
+  FreshMango: ["being outdoors", "working with animals", "helping people"],
+  GoldenMango: ["coding", "drawing and design", "storytelling"],
+  LivelyMango: ["music", "gaming", "sports"]
+};
 
 const assignmentList = document.getElementById("assignment-list");
 const pathwayList = document.getElementById("pathway-list");
@@ -457,6 +496,8 @@ const questionBox = document.getElementById("question-box");
 const questionStatus = document.getElementById("question-status");
 const studentHandle = document.getElementById("student-handle");
 const studentCohort = document.getElementById("student-cohort");
+const cohortSelect = document.getElementById("cohort-select");
+const starterInterestProfile = document.getElementById("starter-interest-profile");
 const dialog = document.getElementById("voice-dialog");
 const dialogContent = document.getElementById("dialog-content");
 const titleInput = document.getElementById("assignment-title-input");
@@ -465,7 +506,9 @@ const runTranslationButton = document.getElementById("run-translation");
 const translationStatus = document.getElementById("translation-status");
 const stepsProgressCount = document.getElementById("steps-progress-count");
 const stepsProgressDetail = document.getElementById("steps-progress-detail");
+const stepsContext = document.getElementById("steps-context");
 const studentViewButton = document.getElementById("student-view-button");
+const instructorViewButton = document.getElementById("instructor-view-button");
 const explainerViewButton = document.getElementById("explainer-view-button");
 const viewModeDescription = document.getElementById("view-mode-description");
 const progressCircle = document.getElementById("progress-circle");
@@ -473,6 +516,10 @@ const progressCircleFill = document.getElementById("progress-circle-fill");
 const savedPathwaysCount = document.getElementById("saved-pathways-count");
 const savedPathwaysDetail = document.getElementById("saved-pathways-detail");
 const teacherClassAlias = document.getElementById("teacher-class-alias");
+const teacherSaveTotal = document.getElementById("teacher-save-total");
+const teacherSaveTotalDetail = document.getElementById("teacher-save-total-detail");
+const teacherPendingCount = document.getElementById("teacher-pending-count");
+const teacherPendingDetail = document.getElementById("teacher-pending-detail");
 const teacherVoteList = document.getElementById("teacher-vote-list");
 const teacherTopVoice = document.getElementById("teacher-top-voice");
 const teacherTopVoiceDetail = document.getElementById("teacher-top-voice-detail");
@@ -491,23 +538,182 @@ function loadPersistedState() {
 }
 
 const persistedState = loadPersistedState();
+const normalizedPersistedViewMode =
+  persistedState.viewMode === "classroom" ? "student" : persistedState.viewMode;
+const initialCohortName =
+  persistedState.selectedCohortName && cohorts.some((cohort) => cohort.name === persistedState.selectedCohortName)
+    ? persistedState.selectedCohortName
+    : cohorts[0].name;
 
 let selectedAssignment = persistedState.customAssignment
   ? enrichAssignment(persistedState.customAssignment)
   : enrichAssignment(
       assignments.find((assignment) => assignment.id === persistedState.selectedAssignmentId) || assignments[0]
     );
-let currentViewMode = persistedState.viewMode || "classroom";
+let currentViewMode = normalizedPersistedViewMode || "student";
 const completedSteps = new Set(persistedState.completedSteps || []);
-const savedPathways = new Set(persistedState.savedPathways || []);
+let selectedCohortName = initialCohortName;
+const cohortSavedPathways = persistedState.cohortSavedPathways || {};
 const classroomVotes = new Map(persistedState.classroomVotes || []);
 const selectedPathways = new Map(persistedState.selectedPathways || []);
 const submittedQuestions = persistedState.submittedQuestions || [];
 const selectedInterests = new Set(persistedState.selectedInterests || []);
-let currentHandle = persistedState.studentHandle || cohorts[0].handles[0];
+const currentCohort = cohorts.find((cohort) => cohort.name === selectedCohortName) || cohorts[0];
+let currentHandle =
+  persistedState.studentHandle && currentCohort.handles.includes(persistedState.studentHandle)
+    ? persistedState.studentHandle
+    : currentCohort.handles[0];
+
+if (!persistedState.selectedInterests?.length) {
+  (handleProfiles[currentHandle] || []).forEach((interest) => selectedInterests.add(interest));
+}
+
+const cohortBaseline = {
+  PueoPod: {
+    saved: 8,
+    pending: 0,
+    votes: {
+      leilani: 6,
+      keoni: 8,
+      malia: 3,
+      noa: 2
+    }
+  },
+  MangoGrove: {
+    saved: 5,
+    pending: 0,
+    votes: {
+      leilani: 2,
+      keoni: 3,
+      malia: 7,
+      noa: 4
+    }
+  }
+};
 
 function getCohortForHandle(handle) {
   return cohorts.find((cohort) => cohort.handles.includes(handle)) || cohorts[0];
+}
+
+function getCurrentCohort() {
+  return cohorts.find((cohort) => cohort.name === selectedCohortName) || cohorts[0];
+}
+
+function getSavedPathwaysForCurrentCohort() {
+  return new Set(cohortSavedPathways[selectedCohortName] || []);
+}
+
+function hasSavedPathway(pathwayKey) {
+  return getSavedPathwaysForCurrentCohort().has(pathwayKey);
+}
+
+function setSavedPathway(pathwayKey, shouldSave) {
+  const saved = getSavedPathwaysForCurrentCohort();
+  if (shouldSave) {
+    saved.add(pathwayKey);
+  } else {
+    saved.delete(pathwayKey);
+  }
+  cohortSavedPathways[selectedCohortName] = [...saved];
+}
+
+function toggleSavedPathway(pathwayKey) {
+  const saved = getSavedPathwaysForCurrentCohort();
+  const shouldSave = !saved.has(pathwayKey);
+  setSavedPathway(pathwayKey, shouldSave);
+}
+
+function getPathwayEmoji(pathwayName) {
+  const emojiMap = {
+    "Clean Energy Planner": "☀️",
+    "Construction Technology": "🏗️",
+    "Operations and Data Roles": "📊",
+    "Environmental Monitoring": "🌊",
+    "Healthcare Diagnostics": "🩺",
+    "Agri-Tech and Sensors": "🚜",
+    "Community Communications": "📣",
+    "Creative Technology": "🎨",
+    "Education and Outreach Design": "📚",
+    "Cyber Operations": "🛡️",
+    "Software and Automation": "🤖",
+    "Infrastructure and Mission Systems": "🛰️",
+    "Community Innovation": "🌱",
+    "Education and Outreach": "🤝",
+    "Project and Team Support": "🧩"
+  };
+
+  return emojiMap[pathwayName] || "✨";
+}
+
+function getVoiceAvatar(voiceId) {
+  const avatarMap = {
+    leilani: "☀️",
+    keoni: "🌊",
+    malia: "🎨",
+    noa: "🛡️"
+  };
+
+  return avatarMap[voiceId] || "🌺";
+}
+
+function getInterestEmoji(interest) {
+  const emojiMap = {
+    "being outdoors": "🌿",
+    gaming: "🎮",
+    storytelling: "📝",
+    music: "🎵",
+    "fixing things": "🛠️",
+    "helping people": "🤝",
+    "community service": "🏝️",
+    science: "🧪",
+    design: "🎨",
+    coding: "💻",
+    sports: "🏄",
+    farming: "🚜",
+    animals: "🐢"
+  };
+
+  return emojiMap[interest] || "✨";
+}
+
+function getSubjectEmoji(subject) {
+  const normalized = normalize(subject);
+  if (normalized.includes("english")) return "📚";
+  if (normalized.includes("art")) return "🎨";
+  if (normalized.includes("media")) return "🎬";
+  if (normalized.includes("computer")) return "💻";
+  if (normalized.includes("technology")) return "🧠";
+  if (normalized.includes("math")) return "➗";
+  if (normalized.includes("science")) return "🧪";
+  if (normalized.includes("engineering")) return "🛠️";
+  if (normalized.includes("social")) return "🌍";
+  if (normalized.includes("history")) return "🏛️";
+  if (normalized.includes("community")) return "🤝";
+  return "✨";
+}
+
+function getHandleInterests(handle = currentHandle) {
+  return handleProfiles[handle] || [];
+}
+
+function renderStarterInterestProfile() {
+  const starterInterests = getHandleInterests();
+  starterInterestProfile.innerHTML = `
+    <span class="starter-profile-label">Starter profile</span>
+    <div class="starter-profile-chips">
+      ${starterInterests
+        .map(
+          (interest) =>
+            `<span class="starter-profile-chip">${getInterestEmoji(interest)} ${interest}</span>`
+        )
+        .join("")}
+    </div>
+  `;
+}
+
+function applyHandleInterestProfile() {
+  selectedInterests.clear();
+  getHandleInterests().forEach((interest) => selectedInterests.add(interest));
 }
 
 function persistState() {
@@ -516,12 +722,13 @@ function persistState() {
     customAssignment: selectedAssignment.id === "generated" ? selectedAssignment : null,
     viewMode: currentViewMode,
     completedSteps: [...completedSteps],
-    savedPathways: [...savedPathways],
+    cohortSavedPathways,
     classroomVotes: [...classroomVotes.entries()],
     selectedPathways: [...selectedPathways.entries()],
     submittedQuestions,
     selectedInterests: [...selectedInterests],
     studentHandle: currentHandle,
+    selectedCohortName,
     questionDraft: questionBox.value,
     assignmentTitleInput: titleInput.value,
     assignmentSubjectInput: subjectInput.value
@@ -547,23 +754,32 @@ function setViewMode(mode) {
   currentViewMode = mode;
   document.body.dataset.viewMode = mode;
 
-  const isClassroom = mode === "classroom";
-  studentViewButton.classList.toggle("is-active", isClassroom);
-  studentViewButton.setAttribute("aria-pressed", String(isClassroom));
-  explainerViewButton.classList.toggle("is-active", !isClassroom);
-  explainerViewButton.setAttribute("aria-pressed", String(!isClassroom));
+  const isStudent = mode === "student";
+  const isInstructor = mode === "instructor";
+  const isExplainer = mode === "explainer";
 
-  viewModeDescription.textContent = isClassroom
-    ? "Classroom View shows the school-facing experience: assignment translation, pathway exploration, Local Voices, guided questions, teacher-managed classroom signals, and trackable small steps."
-    : "Explainer View is for reviewers. It keeps the classroom flow visible, but also reveals demo-only context like the AI Translation Log so the Codex reasoning and design choices are easy to understand.";
+  studentViewButton.classList.toggle("is-active", isStudent);
+  studentViewButton.setAttribute("aria-pressed", String(isStudent));
+  instructorViewButton.classList.toggle("is-active", isInstructor);
+  instructorViewButton.setAttribute("aria-pressed", String(isInstructor));
+  explainerViewButton.classList.toggle("is-active", isExplainer);
+  explainerViewButton.setAttribute("aria-pressed", String(isExplainer));
+
+  viewModeDescription.textContent = isStudent
+    ? "Student View focuses on activity translation, pathway exploration, Local Voices, guided questions, and trackable small steps."
+    : isInstructor
+      ? "Instructor View highlights classroom snapshot signals, invite demand, moderation, and the same pathway context students see."
+      : "Explainer View is for reviewers. It keeps the student and instructor flow visible, while also revealing the Codex-style scan, local-value reasoning, and demo scaffolding.";
   persistState();
 }
 
 function syncIdentitySurfaces() {
-  const cohort = getCohortForHandle(currentHandle);
+  const cohort = getCurrentCohort();
   studentHandle.textContent = currentHandle;
   studentCohort.textContent = `Class cohort: ${cohort.name}`;
   teacherClassAlias.textContent = cohort.name;
+  cohortSelect.value = cohort.name;
+  renderStarterInterestProfile();
 }
 
 function getAssignmentKey() {
@@ -582,8 +798,15 @@ function getSelectedPathwayName() {
   return selectedPathways.get(getAssignmentKey()) || selectedAssignment.pathways[0]?.name;
 }
 
-function getVoiceVoteKey(voiceId) {
-  return `global::voice-vote::${voiceId}`;
+function getSelectedPathway() {
+  return (
+    selectedAssignment.pathways.find((pathway) => pathway.name === getSelectedPathwayName()) ||
+    selectedAssignment.pathways[0]
+  );
+}
+
+function getVoiceVoteKey(voiceId, cohortName = selectedCohortName) {
+  return `${cohortName}::voice-vote::${voiceId}`;
 }
 
 async function requestTranslation(title, subject) {
@@ -646,7 +869,11 @@ function detectSector(title, subject) {
 
 function buildTranslationLog(assignment) {
   if (assignment.translationLog) {
-    return assignment.translationLog;
+    const sector = sectorCatalog[assignment.sectorId] || sectorCatalog.general;
+    return {
+      localValueTokens: sector.localValueTokens,
+      ...assignment.translationLog
+    };
   }
 
   const sector = sectorCatalog[assignment.sectorId] || sectorCatalog.general;
@@ -657,6 +884,7 @@ function buildTranslationLog(assignment) {
     matchedKeywords: detection.matchedKeywords.length ? detection.matchedKeywords : sector.defaultSignals,
     skillSignals: sector.skillSignals,
     sectorLabel: sector.label,
+    localValueTokens: sector.localValueTokens,
     alternateSectors: detection.rankings
       .slice(1, 3)
       .map((ranking) => sectorCatalog[ranking.id].label),
@@ -695,10 +923,11 @@ function buildGeneratedAssignment(title, subject) {
     voices: sector.voices,
     steps: sector.steps,
     translationLog: {
-      sourceLabel: "Codex-style translation flow",
+      sourceLabel: "OpenAI Codex-guided activity scan",
       matchedKeywords: detection.matchedKeywords.length ? detection.matchedKeywords : sector.defaultSignals,
       skillSignals: sector.skillSignals,
       sectorLabel: sector.label,
+      localValueTokens: sector.localValueTokens,
       alternateSectors: detection.rankings
         .slice(1, 3)
         .map((ranking) => sectorCatalog[ranking.id].label),
@@ -710,15 +939,16 @@ function buildGeneratedAssignment(title, subject) {
 }
 
 function updateSavedPathwaysSummary() {
-  const allSavedNames = [...savedPathways]
+  const allSavedNames = [...getSavedPathwaysForCurrentCohort()]
     .map((pathwayKey) => pathwayKey.split("::pathway::")[1])
     .filter(Boolean);
 
   savedPathwaysCount.textContent = `${allSavedNames.length} saved`;
   savedPathwaysDetail.textContent =
     allSavedNames.length === 0
-      ? "Saved pathways from across assignments appear here so the dashboard keeps your running interests visible."
+      ? "Saved pathways from across activities appear here so your dashboard keeps your running interests visible."
       : `Saved across the dashboard: ${allSavedNames.join(" • ")}`;
+  renderTeacherView();
   persistState();
 }
 
@@ -730,9 +960,12 @@ function renderAssignments() {
     button.type = "button";
     button.className = `assignment-button${assignment.id === selectedAssignment.id ? " active" : ""}`;
     button.innerHTML = `
+      <div class="assignment-button-top">
+        <span class="assignment-icon-badge">${getSubjectEmoji(assignment.className)}</span>
+        <span class="assignment-class-chip">${assignment.className}</span>
+      </div>
       <strong>${assignment.title}</strong>
       <p>${assignment.summary}</p>
-      <small>${assignment.className}</small>
     `;
     button.addEventListener("click", () => {
       selectedAssignment = enrichAssignment(assignment);
@@ -751,26 +984,60 @@ function renderAssignments() {
 }
 
 function renderProfessionalWhy() {
+  const log = selectedAssignment.translationLog;
+  const signalChips = unique([...(log.matchedKeywords || []), ...(log.skillSignals || [])]).slice(0, 6);
+  const selectedInterestList = [...selectedInterests];
+  const interestMarkup = selectedInterestList.length
+    ? `
+      <div class="signal-cluster interest-influence">
+        <span class="signal-label">💡 Also using your interests</span>
+        <div class="signal-list">
+          ${selectedInterestList
+            .map((interest) => `<span class="signal-chip signal-chip-interest">${getInterestEmoji(interest)} ${interest}</span>`)
+            .join("")}
+        </div>
+      </div>
+    `
+    : "";
+
   professionalWhy.innerHTML = `
-    <span class="translation-pill">${selectedAssignment.translationSource}</span>
+    <div class="rich-panel-header">
+      <span class="translation-pill">✨ ${selectedAssignment.translationSource}</span>
+      <span class="translation-pill translation-pill-secondary">OpenAI Codex-guided scan</span>
+    </div>
     <h3>${selectedAssignment.whyTitle}</h3>
+    <p class="rich-panel-highlight">Big idea: this activity can become a clue about what feels energizing, what strengths are emerging, and how those strengths could matter in Hawaiʻi.</p>
     <p>${selectedAssignment.whyBody}</p>
     <p>${selectedAssignment.whyImpact}</p>
+    <div class="signal-cluster">
+      <span class="signal-label">✨ What Hōʻike spotted</span>
+      <div class="signal-list">
+        ${signalChips.map((signal) => `<span class="signal-chip">${signal}</span>`).join("")}
+      </div>
+    </div>
+    ${interestMarkup}
   `;
 }
 
 function renderTranslationLog() {
   const log = selectedAssignment.translationLog;
+  const localValueTokens = log.localValueTokens || [];
   const alternateSectorLine = log.alternateSectors.length
     ? `<li><strong>Also plausible:</strong> ${log.alternateSectors.join(" • ")}</li>`
     : "";
+  const localValueLine = localValueTokens.length
+    ? `<li><strong>Local value cues:</strong> ${localValueTokens.join(" • ")}</li>`
+    : "";
 
   translationLog.innerHTML = `
-    <span class="log-label">Demo / Judge View: AI Translation Log</span>
+    <span class="log-label">Demo / Judge View: OpenAI Codex Translation Log</span>
     <ul class="log-list">
+      <li><strong>Scan source:</strong> ${log.sourceLabel}</li>
+      <li><strong>Workflow:</strong> read activity → infer strengths → map local sector → surface safer next steps</li>
       <li><strong>Signals read:</strong> ${log.matchedKeywords.join(" • ")}</li>
       <li><strong>Strengths inferred:</strong> ${log.skillSignals.join(" • ")}</li>
       <li><strong>Best fit:</strong> ${log.sectorLabel}</li>
+      ${localValueLine}
       ${alternateSectorLine}
       <li><strong>Local voices queued:</strong> ${log.localVoices.join(" • ")}</li>
       <li><strong>What Hōʻike is doing:</strong> ${log.identityLine}</li>
@@ -781,42 +1048,63 @@ function renderTranslationLog() {
 function renderPathways() {
   pathwayList.innerHTML = "";
 
-  const selectedName = getSelectedPathwayName();
-  const selectedPathway =
-    selectedAssignment.pathways.find((pathway) => pathway.name === selectedName) ||
-    selectedAssignment.pathways[0];
+  const selectedPathway = getSelectedPathway();
 
   const picker = document.createElement("div");
   picker.className = "pathway-picker";
 
   selectedAssignment.pathways.forEach((pathway) => {
-    const button = document.createElement("button");
-    button.type = "button";
-    button.className = `pathway-option${pathway.name === selectedPathway.name ? " is-active" : ""}`;
-    button.innerHTML = `
-      <span class="pathway-meta">Pathway</span>
-      <strong>${pathway.name}</strong>
+    const pathwayKey = getPathwayKey(pathway.name);
+    const isSaved = hasSavedPathway(pathwayKey);
+    const pathwayLabel = `${getPathwayEmoji(pathway.name)} ${pathway.name}`;
+    const card = document.createElement("article");
+    card.className = `pathway-option${pathway.name === selectedPathway.name ? " is-active" : ""}`;
+    card.innerHTML = `
+      <div class="pathway-option-top">
+        <span class="pathway-meta">Pathway option</span>
+        <button class="mini-save-button${isSaved ? " is-saved" : ""}" type="button">
+          ${isSaved ? "Saved" : "Save"}
+        </button>
+      </div>
+      <strong>${pathwayLabel}</strong>
+      <span class="pathway-option-hint">${pathway.name === selectedPathway.name ? "Open below" : "Tap to open details"}</span>
+      <button class="pathway-select-button" type="button">
+        ${pathway.name === selectedPathway.name ? "Selected now" : "See details"}
+      </button>
     `;
-    button.addEventListener("click", () => {
+    card.querySelector(".pathway-select-button").addEventListener("click", () => {
       selectedPathways.set(getAssignmentKey(), pathway.name);
       renderPathways();
+      renderInterestsAndRoutes();
+      renderSteps();
       persistState();
     });
-    picker.appendChild(button);
+    card.querySelector(".mini-save-button").addEventListener("click", (event) => {
+      event.stopPropagation();
+      toggleSavedPathway(pathwayKey);
+      renderPathways();
+      updateSavedPathwaysSummary();
+      persistState();
+    });
+    picker.appendChild(card);
   });
 
   const detail = document.createElement("article");
   detail.className = "pathway-card pathway-detail-card";
   const pathwayKey = getPathwayKey(selectedPathway.name);
-  const isSaved = savedPathways.has(pathwayKey);
+  const isSaved = hasSavedPathway(pathwayKey);
+  const localValueTokens = (sectorCatalog[selectedAssignment.sectorId] || sectorCatalog.general).localValueTokens;
   detail.innerHTML = `
-    <span class="pathway-meta">Selected Pathway</span>
-    <h3>${selectedPathway.name}</h3>
+    <span class="pathway-meta">🪄 Selected pathway</span>
+    <h3>${getPathwayEmoji(selectedPathway.name)} ${selectedPathway.name}</h3>
     <p><strong>Explore if:</strong> ${selectedPathway.fit}</p>
     <p><strong>Local value:</strong> ${selectedPathway.community}</p>
-    <ul>
-      <li>${selectedPathway.nextStep}</li>
-    </ul>
+    <div class="token-group">
+      ${localValueTokens.map((token) => `<span class="token-chip">${token}</span>`).join("")}
+    </div>
+    <p class="pathway-note">
+      Pathway-specific actions move into Small Steps, where Hōʻike ties them back to your original activity and keeps them trackable.
+    </p>
     <div class="pathway-actions">
       <button class="save-pathway-button${isSaved ? " is-saved" : ""}" type="button">
         ${isSaved ? "Saved" : "Save pathway"}
@@ -824,11 +1112,7 @@ function renderPathways() {
     </div>
   `;
   detail.querySelector(".save-pathway-button").addEventListener("click", () => {
-    if (savedPathways.has(pathwayKey)) {
-      savedPathways.delete(pathwayKey);
-    } else {
-      savedPathways.add(pathwayKey);
-    }
+    toggleSavedPathway(pathwayKey);
     renderPathways();
     updateSavedPathwaysSummary();
     persistState();
@@ -846,7 +1130,10 @@ function renderInterestsAndRoutes() {
     const button = document.createElement("button");
     button.type = "button";
     button.className = `interest-chip${selectedInterests.has(interest) ? " is-active" : ""}`;
-    button.textContent = interest;
+    button.innerHTML = `
+      <span class="interest-chip-icon">${getInterestEmoji(interest)}</span>
+      <span class="interest-chip-copy">${interest}</span>
+    `;
     button.addEventListener("click", () => {
       if (selectedInterests.has(interest)) {
         selectedInterests.delete(interest);
@@ -859,10 +1146,7 @@ function renderInterestsAndRoutes() {
     interestList.appendChild(button);
   });
 
-  const selectedName = getSelectedPathwayName();
-  const selectedPathway =
-    selectedAssignment.pathways.find((pathway) => pathway.name === selectedName) ||
-    selectedAssignment.pathways[0];
+  const selectedPathway = getSelectedPathway();
   const sectorRoutes = routeCatalog[selectedAssignment.sectorId] || routeCatalog.general;
 
   const interestLine = [...selectedInterests].length
@@ -871,7 +1155,7 @@ function renderInterestsAndRoutes() {
 
   const summary = document.createElement("div");
   summary.className = "route-summary";
-  summary.innerHTML = `<p>${interestLine}</p>`;
+  summary.innerHTML = `<p>💡 ${interestLine}</p>`;
   pathwayRoutes.appendChild(summary);
 
   const list = document.createElement("div");
@@ -887,6 +1171,7 @@ function renderInterestsAndRoutes() {
 
 function openVoiceDialog(voice) {
   dialogContent.innerHTML = `
+    <div class="dialog-avatar">${getVoiceAvatar(voice.id)}</div>
     <span class="voice-chip">${voice.location} • ${voice.runtime} intro</span>
     <h3>${voice.name}</h3>
     <p><strong>${voice.role}</strong></p>
@@ -912,33 +1197,49 @@ function renderVoices() {
 
   selectedAssignment.voices.forEach((voiceId) => {
     const voice = voices[voiceId];
+    const cohortBaselineVotes = cohortBaseline[selectedCohortName]?.votes?.[voice.id] || 0;
+    const voteCount = cohortBaselineVotes + (classroomVotes.get(getVoiceVoteKey(voice.id, selectedCohortName)) || 0);
     const card = document.createElement("article");
     card.className = "voice-card";
     card.innerHTML = `
       <div class="voice-header">
-        <div>
-          <span class="voice-chip">${voice.location}</span>
-          <h3>${voice.name}</h3>
-          <p class="voice-meta">${voice.role}</p>
+        <div class="voice-header-main">
+          <span class="voice-avatar">${getVoiceAvatar(voice.id)}</span>
+          <div>
+            <span class="voice-chip">📍 ${voice.location}</span>
+            <h3>${voice.name}</h3>
+            <p class="voice-meta">${voice.role}</p>
+          </div>
         </div>
-        <span class="voice-chip">${voice.runtime}</span>
+        <div class="voice-header-side">
+          <span class="voice-chip">${voice.runtime}</span>
+          <span class="voice-role-chip">${voice.tags[0]}</span>
+        </div>
       </div>
       <p>${voice.summary}</p>
+      <div class="voice-highlight">
+        <strong>What they love:</strong> ${voice.favoriteThing}
+      </div>
+      <p class="voice-try-now"><strong>Try now:</strong> ${voice.tryNow}</p>
+      <div class="voice-vote-row">
+        <span class="voice-chip">🗳️ ${voteCount} ${selectedCohortName} vote${voteCount === 1 ? "" : "s"}</span>
+      </div>
       <div class="voice-actions">
         <button class="voice-action" type="button" data-action="watch">Watch intro</button>
         <button class="voice-action" type="button" data-action="ask">Use as question starter</button>
-        <button class="voice-action" type="button" data-action="vote">Vote to invite with ${getCohortForHandle(currentHandle).name}</button>
+        <button class="voice-action" type="button" data-action="vote">Vote to invite</button>
       </div>
     `;
 
     card.querySelector('[data-action="watch"]').addEventListener("click", () => openVoiceDialog(voice));
     card.querySelector('[data-action="ask"]').addEventListener("click", () => useVoicePrompt(voice));
     card.querySelector('[data-action="vote"]').addEventListener("click", () => {
-      const voteKey = getVoiceVoteKey(voice.id);
+      const voteKey = getVoiceVoteKey(voice.id, selectedCohortName);
       classroomVotes.set(voteKey, (classroomVotes.get(voteKey) || 0) + 1);
+      renderVoices();
       renderTeacherView();
       questionStatus.textContent =
-        `Added a ${getCohortForHandle(currentHandle).name} interest vote for ${voice.name}. A teacher can now see that classroom signal.`;
+        `Added a ${selectedCohortName} invite vote for ${voice.name}. A teacher can now see that classroom signal.`;
       persistState();
     });
     voicesList.appendChild(card);
@@ -948,13 +1249,30 @@ function renderVoices() {
 function renderTeacherView() {
   teacherVoteList.innerHTML = "";
   teacherQuestionQueue.innerHTML = "";
+  const currentCohortName = selectedCohortName;
 
   const rankedVoices = Object.entries(voices)
     .map(([voiceId, voice]) => {
-      const votes = classroomVotes.get(getVoiceVoteKey(voiceId)) || 0;
+      const baselineVotes = cohortBaseline[currentCohortName]?.votes?.[voiceId] || 0;
+      const votes = baselineVotes + (classroomVotes.get(getVoiceVoteKey(voiceId, currentCohortName)) || 0);
       return { voice, votes };
     })
     .sort((left, right) => right.votes - left.votes || left.voice.name.localeCompare(right.voice.name));
+  const queueItems = submittedQuestions.filter(
+    (item) => item.status === "pending" && item.cohortName === currentCohortName
+  );
+  const totalSaved = (cohortBaseline[currentCohortName]?.saved || 0) + getSavedPathwaysForCurrentCohort().size;
+
+  teacherSaveTotal.textContent = String(totalSaved);
+  teacherSaveTotalDetail.textContent =
+    totalSaved === 0
+      ? "Bookmarks across the class show which possibilities students want to keep coming back to."
+      : `${totalSaved} pathway save${totalSaved === 1 ? "" : "s"} are helping this class build a running map of interests.`;
+  teacherPendingCount.textContent = String((cohortBaseline[currentCohortName]?.pending || 0) + queueItems.length);
+  teacherPendingDetail.textContent =
+    queueItems.length === 0
+      ? "Guided questions stay in review until a teacher or program staff member clears them."
+      : `${queueItems.length} question draft${queueItems.length === 1 ? "" : "s"} are ready for teacher review or revision.`;
 
   const topVote = rankedVoices[0];
   if (!topVote || topVote.votes === 0) {
@@ -964,7 +1282,7 @@ function renderTeacherView() {
   } else {
     teacherTopVoice.textContent = `${topVote.voice.name} (${topVote.votes} votes)`;
     teacherTopVoiceDetail.textContent =
-      `${getCohortForHandle(currentHandle).name} is showing the strongest interest in ${topVote.voice.role.toLowerCase()} pathways right now.`;
+      `${currentCohortName} is showing the strongest interest in ${topVote.voice.role.toLowerCase()} pathways right now.`;
   }
 
   rankedVoices.forEach(({ voice, votes }) => {
@@ -974,24 +1292,32 @@ function renderTeacherView() {
     const card = document.createElement("article");
     card.className = "teacher-vote-card";
     card.innerHTML = `
-      <div>
-        <span class="voice-chip">${voice.location}</span>
+      <div class="teacher-vote-copy">
+        <span class="voice-chip">🎤 ${voice.location}</span>
         <h3>${voice.name}</h3>
         <p class="voice-meta">${voice.role}</p>
+        <p class="teacher-vote-description">Students are signaling interest in this pathway for a possible classroom talk story, career-day visit, or moderated Q&A.</p>
       </div>
-      <div class="teacher-vote-meta">
-        <strong>${votes}</strong>
-        <span>class votes</span>
+      <div class="teacher-vote-side">
+        <div class="teacher-vote-meta">
+          <strong>${votes}</strong>
+          <span>${currentCohortName} votes</span>
+          <small>Talk story signal</small>
+        </div>
+        <div class="teacher-vote-actions">
+          <button class="voice-action" type="button">Invite to talk story</button>
+          <button class="voice-action teacher-secondary-action" type="button">Preview prompts</button>
+        </div>
       </div>
-      <button class="voice-action" type="button">Request visit</button>
     `;
-    card.querySelector("button").addEventListener("click", () => {
+    card.querySelector(".voice-action").addEventListener("click", () => {
       showToast(`Request prepared for ${voice.name}`);
+    });
+    card.querySelector(".teacher-secondary-action").addEventListener("click", () => {
+      showToast(`Loaded classroom prompt ideas for ${voice.name}`);
     });
     teacherVoteList.appendChild(card);
   });
-
-  const queueItems = submittedQuestions.filter((item) => item.status === "pending");
 
   if (!queueItems.length) {
     teacherQuestionQueue.innerHTML = `
@@ -1004,18 +1330,35 @@ function renderTeacherView() {
     const row = document.createElement("article");
     row.className = "queue-item";
     row.innerHTML = `
-      <div>
+      <div class="queue-copy">
         <span class="voice-chip">${item.handle}</span>
-        <p class="voice-meta">${item.assignmentTitle}</p>
+        <div class="queue-tags">
+          <span class="moderation-pill">Pending</span>
+          <span class="moderation-pill">${item.assignmentTitle}</span>
+        </div>
         <p>${item.text}</p>
+        <small>This message will stay pseudonymous and teacher-reviewed before it reaches any participating professional.</small>
+        <div class="queue-actions">
+          <button class="voice-action queue-revise" type="button">Ask to revise</button>
+          <button class="voice-action queue-route" type="button">Route to talk story</button>
+          <button class="voice-action queue-approve" type="button">Approve</button>
+        </div>
       </div>
-      <button class="voice-action" type="button">Approve</button>
     `;
-    row.querySelector("button").addEventListener("click", () => {
+    row.querySelector(".queue-approve").addEventListener("click", () => {
       item.status = "approved";
       renderTeacherView();
       persistState();
       showToast("Question approved for follow-up");
+    });
+    row.querySelector(".queue-revise").addEventListener("click", () => {
+      item.status = "needs-revision";
+      renderTeacherView();
+      persistState();
+      showToast("Revision request drafted");
+    });
+    row.querySelector(".queue-route").addEventListener("click", () => {
+      showToast("Question routed into a classroom talk story workflow");
     });
     teacherQuestionQueue.appendChild(row);
   });
@@ -1040,8 +1383,23 @@ function renderPrompts() {
 
 function renderSteps() {
   stepsPanel.innerHTML = "";
+  const selectedPathway = getSelectedPathway();
+  const sectorRoutes = routeCatalog[selectedAssignment.sectorId] || routeCatalog.general;
+  const pathwaySpecificSteps = [
+    `Because you explored "${selectedPathway.name}" from "${selectedAssignment.title}", try this next: ${selectedPathway.nextStep}`,
+    ...sectorRoutes.slice(0, 2).map((route) => `Connected to "${selectedAssignment.title}": ${route}`)
+  ];
+
+  stepsContext.innerHTML = `
+    <div class="steps-context-card">
+      <span class="panel-label">Linked To Your Selection</span>
+      <strong>${getPathwayEmoji(selectedPathway.name)} ${selectedPathway.name}</strong>
+      <p>These next moves were generated from your original activity, "${selectedAssignment.title}", and your selected pathway.</p>
+    </div>
+  `;
 
   const groups = [
+    ["Linked to Your Activity", pathwaySpecificSteps],
     ["Do Now", selectedAssignment.steps.now],
     ["Try This Week", selectedAssignment.steps.week],
     ["Explore Next", selectedAssignment.steps.next]
@@ -1050,7 +1408,7 @@ function renderSteps() {
   groups.forEach(([label, items]) => {
     const section = document.createElement("details");
     section.className = "steps-group";
-    if (label === "Do Now") {
+    if (label === "Linked to Your Activity" || label === "Do Now") {
       section.open = true;
     }
     section.innerHTML = `
@@ -1136,15 +1494,36 @@ async function runTranslation() {
   runTranslationButton.disabled = true;
   selectedAssignment = await requestTranslation(rawTitle, subject);
   renderAll();
-  translationStatus.textContent = `Translated "${rawTitle}" into ${selectedAssignment.translationLog.sectorLabel}.`;
+  translationStatus.textContent = `OpenAI Codex-guided scan complete: "${rawTitle}" now maps to ${selectedAssignment.translationLog.sectorLabel}.`;
   runTranslationButton.disabled = false;
   persistState();
 }
 
 document.getElementById("generate-handle").addEventListener("click", () => {
-  const next = allHandles[Math.floor(Math.random() * allHandles.length)];
+  const cohortHandles = getCurrentCohort().handles;
+  const next = cohortHandles[Math.floor(Math.random() * cohortHandles.length)];
   currentHandle = next;
+  applyHandleInterestProfile();
   syncIdentitySurfaces();
+  renderProfessionalWhy();
+  renderInterestsAndRoutes();
+  renderSteps();
+  renderVoices();
+  renderTeacherView();
+  persistState();
+});
+
+cohortSelect.addEventListener("change", () => {
+  selectedCohortName = cohortSelect.value;
+  currentHandle = getCurrentCohort().handles[0];
+  applyHandleInterestProfile();
+  syncIdentitySurfaces();
+  updateSavedPathwaysSummary();
+  renderProfessionalWhy();
+  renderInterestsAndRoutes();
+  renderSteps();
+  renderVoices();
+  renderTeacherView();
   persistState();
 });
 
@@ -1157,6 +1536,7 @@ document.getElementById("submit-question").addEventListener("click", () => {
   submittedQuestions.push({
     id: makeQuestionId(),
     handle: currentHandle,
+    cohortName: selectedCohortName,
     assignmentKey: getAssignmentKey(),
     assignmentTitle: selectedAssignment.title,
     text: questionBox.value.trim(),
@@ -1169,7 +1549,8 @@ document.getElementById("submit-question").addEventListener("click", () => {
   persistState();
   showToast("Message sent to moderator");
 });
-studentViewButton.addEventListener("click", () => setViewMode("classroom"));
+studentViewButton.addEventListener("click", () => setViewMode("student"));
+instructorViewButton.addEventListener("click", () => setViewMode("instructor"));
 explainerViewButton.addEventListener("click", () => setViewMode("explainer"));
 
 runTranslationButton.addEventListener("click", runTranslation);

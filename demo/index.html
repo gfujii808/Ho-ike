@@ -12,29 +12,64 @@
         <div class="hero-copy reveal">
           <p class="eyebrow">Hōʻike Explorer</p>
           <div class="flora-row" aria-hidden="true">
-            <span class="flora-glyph">🌿</span>
-            <span class="flora-glyph">🍃</span>
+            <span class="flora-glyph">✨</span>
             <span class="flora-glyph">🌺</span>
+            <span class="flora-glyph">🌊</span>
+            <span class="flora-glyph">🌱</span>
           </div>
           <h1>Revealing the hidden curriculum for attainable local futures in Hawai'i.</h1>
           <p class="lede">
-            This lightweight MVP shows how Hōʻike translates schoolwork into
-            strengths, stories, and local pathway exploration, introduces
-            students to real professionals, and gives them safer next steps than
-            generic "go network" advice.
+            Hōʻike turns assignments, hobbies, and community activities into
+            attainable dreams that can grow into meaningful futures here in Hawai'i.
           </p>
+          <div class="hero-sticker-row" aria-label="Key product ideas">
+            <span class="hero-sticker">📝 Start with you</span>
+            <span class="hero-sticker">🌺 Find your signals</span>
+            <span class="hero-sticker">🎥 Meet Local Voices</span>
+          </div>
           <div class="hero-notes">
             <div class="note-card">
               <span>Student identity</span>
               <strong id="student-handle">CuriousPueo</strong>
+              <label class="mini-control" for="cohort-select">Class space</label>
+              <select id="cohort-select" class="select-input compact-select">
+                <option value="PueoPod">PueoPod</option>
+                <option value="MangoGrove">MangoGrove</option>
+              </select>
+              <div id="starter-interest-profile" class="starter-interest-profile"></div>
               <button id="generate-handle" type="button">Generate new handle</button>
               <small id="student-cohort">Class cohort: PueoPod</small>
             </div>
             <div class="note-card">
-              <span>Saved pathways</span>
+              <span>Saved ideas</span>
               <strong id="saved-pathways-count">0 saved</strong>
-              <small id="saved-pathways-detail">Saved pathways from across assignments appear here so the dashboard keeps your running interests visible.</small>
+              <small id="saved-pathways-detail">Saved pathways from across activities appear here so your dashboard keeps your running interests visible.</small>
             </div>
+          </div>
+        </div>
+        <div class="hero-panel reveal">
+          <div class="panel-label">How Hōʻike works</div>
+          <div class="hero-visual-board" aria-hidden="true">
+            <article class="hero-visual-card hero-visual-coral">
+              <span class="hero-visual-emoji">🧠</span>
+              <strong>Translate what already feels like you</strong>
+            </article>
+            <article class="hero-visual-card hero-visual-mint">
+              <span class="hero-visual-emoji">🧭</span>
+              <strong>Compare pathways without pressure</strong>
+            </article>
+            <article class="hero-visual-card hero-visual-sky">
+              <span class="hero-visual-emoji">💬</span>
+              <strong>Ask safer questions with support</strong>
+            </article>
+          </div>
+          <ol>
+            <li>Paste any assignment, activity, or interest.</li>
+            <li>See how a Codex-style translation turns it into strengths and local possibilities.</li>
+            <li>Browse Local Voices and draft a question with support.</li>
+            <li>Save possibilities and take one small next step.</li>
+          </ol>
+          <div class="hero-notes hero-notes-in-panel hero-notes-single">
             <div class="note-card">
               <span>Privacy model</span>
               <strong>Pseudonymous by default</strong>
@@ -42,16 +77,30 @@
             </div>
           </div>
         </div>
-          <div class="hero-panel reveal">
-          <div class="panel-label">How the demo works</div>
-          <ol>
-            <li>Paste any assignment title or pick a preset example.</li>
-            <li>See the Professional Why and Hawaiʻi pathway exploration routes.</li>
-            <li>Browse Local Voices and try the guided question flow.</li>
-            <li>Choose one small next step.</li>
-          </ol>
-        </div>
       </header>
+
+      <nav class="journey-map reveal" aria-label="Hōʻike journey">
+        <a class="journey-step" href="#step-1">
+          <span class="journey-icon">📝</span>
+          <span>Start</span>
+        </a>
+        <a class="journey-step" href="#step-2">
+          <span class="journey-icon">🌺</span>
+          <span>Signals</span>
+        </a>
+        <a class="journey-step" href="#step-3">
+          <span class="journey-icon">🧭</span>
+          <span>Pathways</span>
+        </a>
+        <a class="journey-step" href="#step-4">
+          <span class="journey-icon">🎥</span>
+          <span>Local Voices</span>
+        </a>
+        <a class="journey-step" href="#step-6">
+          <span class="journey-icon">✅</span>
+          <span>Small Steps</span>
+        </a>
+      </nav>
 
       <main class="dashboard">
         <section class="view-toggle reveal">
@@ -59,32 +108,76 @@
             <span class="panel-label">View Mode</span>
             <div class="toggle-buttons" role="tablist" aria-label="View mode">
               <button id="student-view-button" class="toggle-button is-active" type="button" aria-pressed="true">
-                Classroom View
+                🎒 Student View
+              </button>
+              <button id="instructor-view-button" class="toggle-button" type="button" aria-pressed="false">
+                🏫 Instructor View
               </button>
               <button id="explainer-view-button" class="toggle-button" type="button" aria-pressed="false">
-                Explainer View
+                🔎 Explainer View
               </button>
             </div>
           </div>
           <div class="view-card" id="view-mode-copy">
             <span class="panel-label">Current View</span>
             <p id="view-mode-description">
-              Classroom View shows the school-facing experience: assignment
-              translation, pathway exploration, Local Voices, guided questions,
-              teacher-managed classroom signals, and trackable small steps.
+              Student View shows activity translation, pathway exploration, Local Voices, guided questions, and trackable small steps.
             </p>
           </div>
         </section>
 
-        <section class="card assignment-card reveal">
+        <section class="card section-sky reveal explainer-context" data-view-surface="explainer">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Explainer Context</p>
+              <h2>Why this matters in Hawaiʻi</h2>
+            </div>
+            <p class="section-copy">
+              Reviewer mode keeps the product visible, but adds the local research logic behind the prototype.
+            </p>
+          </div>
+          <div class="explainer-card-grid">
+            <article class="explainer-mini-card">
+              <span class="panel-label">Brain drain</span>
+              <strong>Young, educated Hawaiʻi-born residents are disproportionately leaving.</strong>
+              <p>DBEDT’s 2021 report describes recent population decline as driven in large part by net domestic outmigration and notes that outmigrants are more likely to be young and educated.</p>
+              <a href="https://files.hawaii.gov/dbedt/economic/reports/Brain_Drain_Hawaii_Born_Population.pdf" target="_blank" rel="noreferrer">DBEDT report</a>
+            </article>
+            <article class="explainer-mini-card">
+              <span class="panel-label">Hidden curriculum</span>
+              <strong>Hōʻike targets informational frictions, not just job awareness.</strong>
+              <p>Research frames the hidden curriculum as two frictions: knowing certain actions exist and believing those actions are worth taking. That is why Hōʻike gives scripts, prompts, and next steps instead of only listing careers.</p>
+              <a href="https://mgcuna.github.io/website/JMP_latest.pdf" target="_blank" rel="noreferrer">Hidden curriculum paper</a>
+            </article>
+            <article class="explainer-mini-card">
+              <span class="panel-label">Local futures</span>
+              <strong>Construction, ag-tech, and emerging tech all matter for local retention.</strong>
+              <p>Hawaiʻi Business highlights major 2026 construction activity and growing attention to technology, while the governor’s office points to increased use of drones, field sensors, GPS livestock tracking, and other farm technologies.</p>
+              <a href="https://www.hawaiibusiness.com/hawaiis-economic-outlook-2026/" target="_blank" rel="noreferrer">Economic outlook</a>
+              <a href="https://governor.hawaii.gov/newsroom/dab-news-release-farm-technology-increasing-according-to-national-statistical-report/" target="_blank" rel="noreferrer">Ag-tech update</a>
+            </article>
+            <article class="explainer-mini-card">
+              <span class="panel-label">Decision support</span>
+              <strong>Students need support before the moment of choice, not only after they pick a pathway.</strong>
+              <p>JFF argues that career planning is not linear and that young people need information, experiences, and advice before high-stakes decisions. ACT finds students value multiple paths, flexibility, and stronger fit between interests, values, and future choices. JFF’s nondegree research also shows many youth would have considered pathway programs if they had known more about them.</p>
+              <a href="https://www.jff.org/idea/career-decision-making-support-for-youth-before-the-moment-of-choice/" target="_blank" rel="noreferrer">JFF guide</a>
+              <a href="https://www.act.org/content/dam/act/unsecured/documents/R2509-High-School-Students-Thoughts-on-Education-and-Career-Paths-and-Goals-2025-06.pdf" target="_blank" rel="noreferrer">ACT brief</a>
+              <a href="https://www.jff.org/newsroom/press-releases/new-survey-reveals-gen-z-youth-pursuing-nondegree-paths-after-high-school-feel-confident-and-workforce-ready/" target="_blank" rel="noreferrer">JFF nondegree survey</a>
+              <a href="https://pw.hks.harvard.edu/post/navigating-opportunity-career-information-and-mobility-in-low-wage-employment" target="_blank" rel="noreferrer">Harvard workforce note</a>
+            </article>
+          </div>
+        </section>
+
+        <section id="step-1" class="card assignment-card section-warm reveal">
           <div class="section-heading">
             <div>
               <p class="eyebrow">Step 1</p>
               <h2>Translate an activity</h2>
             </div>
             <p class="section-copy">
-              Paste an assignment title, activity, or interest to trigger the Hōʻike
-              translation flow, or use a preset example for a faster walkthrough.
+              Start with something you already did, made, liked, or cared about.
+              Hōʻike uses that starting point to reveal strengths, stories, and
+              local directions you could explore next.
             </p>
           </div>
           <div class="generator-shell">
@@ -119,22 +212,32 @@
                 Run AI Translation
               </button>
               <span id="translation-status" class="status-text">
-                Paste any assignment title, activity, or interest to show a live translation moment in the pitch demo.
+                Paste any assignment title, activity, or interest to show an OpenAI Codex-guided translation moment.
               </span>
             </div>
           </div>
           <p class="mini-label">Preset examples</p>
           <div class="assignment-list" id="assignment-list"></div>
+          <div class="activity-bridge">
+            <div class="activity-bridge-copy">
+              <span class="panel-label">Or build from your starter profile</span>
+              <p class="section-copy">Your handle comes with a lightweight interest profile. Keep it, remix it, or add more signals here.</p>
+            </div>
+            <div id="interest-list" class="interest-list"></div>
+          </div>
         </section>
 
         <section class="grid-two">
-          <article class="card reveal">
+          <article id="step-2" class="card section-petal reveal">
             <div class="section-heading compact">
               <div>
                 <p class="eyebrow">Step 2</p>
-                <h2>Professional Why</h2>
+                <h2>🌺 Professional Why</h2>
               </div>
             </div>
+            <p class="section-copy compact-copy">
+              Hōʻike looks for the strengths, patterns, and community value inside what you already do.
+            </p>
             <div class="student-surface" data-view-surface="student">
               <div id="professional-why" class="rich-panel"></div>
             </div>
@@ -143,50 +246,39 @@
             </div>
           </article>
 
-          <article class="card reveal">
+          <article id="step-3" class="card section-sun reveal">
             <div class="section-heading compact">
               <div>
                 <p class="eyebrow">Step 3</p>
-                <h2>Hawaiʻi Pathway Exploration</h2>
+                <h2>🧭 Hawaiʻi Pathway Exploration</h2>
               </div>
             </div>
+            <p class="section-copy compact-copy">
+              Pick one pathway at a time to see what it could look like, why it matters locally, and how you could explore it.
+            </p>
             <div id="pathway-list" class="pathway-list"></div>
+            <div class="integrated-pathway-shell">
+              <div class="integrated-pathway-heading">
+                <span class="panel-label">Different Ways In</span>
+                <p class="section-copy">
+                  Hōʻike keeps the pathway open: certificates, community college, university, volunteering, apprenticeships, service, portfolio-building, and community-rooted exploration all count.
+                </p>
+              </div>
+              <div class="interest-shell single-column-shell">
+                <div class="interest-card">
+                  <span class="panel-label">Multiple ways in</span>
+                  <div id="pathway-routes" class="pathway-routes"></div>
+                </div>
+              </div>
+            </div>
           </article>
         </section>
 
-        <section class="card reveal">
-          <div class="section-heading">
-            <div>
-              <p class="eyebrow">Step 3B</p>
-              <h2>Interests and Different Ways In</h2>
-            </div>
-            <p class="section-copy">
-              Hobbies, community interests, and non-college routes count too.
-              Hōʻike should show multiple valid ways into a field, not just a
-              university pipeline.
-            </p>
-          </div>
-          <div class="interest-shell">
-            <div class="interest-card">
-              <span class="panel-label">What you already like</span>
-              <p class="section-copy">
-                Pick a few interests or hobbies. Hōʻike treats these as real clues
-                about possible pathways.
-              </p>
-              <div id="interest-list" class="interest-list"></div>
-            </div>
-            <div class="interest-card">
-              <span class="panel-label">Multiple ways in</span>
-              <div id="pathway-routes" class="pathway-routes"></div>
-            </div>
-          </div>
-        </section>
-
-        <section class="card reveal">
+        <section id="step-4" class="card section-mint reveal">
           <div class="section-heading">
             <div>
               <p class="eyebrow">Step 4</p>
-              <h2>Local Voices</h2>
+              <h2>🎥 Local Voices</h2>
             </div>
             <p class="section-copy">
               A protected, school-safe LinkedIn vibe: local professionals share short
@@ -198,47 +290,65 @@
           <div id="voices-list" class="voices-list"></div>
         </section>
 
-        <section class="card reveal">
+        <section class="card section-sky reveal" data-view-surface="instructor">
           <div class="section-heading">
             <div>
               <p class="eyebrow">Step 4B</p>
-              <h2>Teacher View: Classroom Invite Signals</h2>
+              <h2>🏫 Instructor View: Classroom Signals</h2>
             </div>
             <p class="section-copy">
               A teacher-managed classroom view can turn student curiosity into a
               safer shared event, like a class visit or career-day-style talk story.
             </p>
           </div>
-          <div class="teacher-shell">
-            <div class="teacher-summary-card">
+          <div class="teacher-scoreboard">
+            <div class="teacher-summary-card teacher-stat-card">
               <span class="panel-label">Class alias</span>
               <strong id="teacher-class-alias">PueoPod</strong>
-              <small>Demo cohorts use pseudonymous class spaces like `PueoPod` and `MangoGrove` for shared exploration.</small>
+              <small>Teacher-managed cohorts like `PueoPod` and `MangoGrove` let a class explore together without exposing school identity to professionals.</small>
             </div>
-            <div class="teacher-summary-card">
-              <span class="panel-label">Most requested professional</span>
+            <div class="teacher-summary-card teacher-stat-card">
+              <span class="panel-label">Saved pathways</span>
+              <strong id="teacher-save-total">0</strong>
+              <small id="teacher-save-total-detail">Bookmarks across the class show which possibilities students want to keep coming back to.</small>
+            </div>
+            <div class="teacher-summary-card teacher-stat-card">
+              <span class="panel-label">Pending questions</span>
+              <strong id="teacher-pending-count">0</strong>
+              <small id="teacher-pending-detail">Guided questions stay in review until a teacher or program staff member clears them.</small>
+            </div>
+            <div class="teacher-summary-card teacher-stat-card">
+              <span class="panel-label">Top talk story signal</span>
               <strong id="teacher-top-voice">No votes yet</strong>
-              <small id="teacher-top-voice-detail">When students vote on Local Voices, teachers can see who the class wants to hear from most.</small>
+              <small id="teacher-top-voice-detail">When students vote on Local Voices, teachers can see who the class most wants to hear from.</small>
             </div>
+          </div>
+          <div class="teacher-invite-shell">
+            <div class="section-heading compact">
+              <div>
+                <span class="panel-label">Invite Signals + Talk Story</span>
+                <h3>Who this class wants to hear from</h3>
+              </div>
+            </div>
+            <div id="teacher-vote-list" class="teacher-vote-list"></div>
           </div>
           <div class="teacher-queue-card">
             <div class="section-heading compact">
               <div>
                 <span class="panel-label">Moderation Queue</span>
-                <h3>Questions waiting for review</h3>
+                <h3>Review, revise, or route questions</h3>
               </div>
             </div>
             <div id="teacher-question-queue" class="teacher-question-queue"></div>
           </div>
-          <div id="teacher-vote-list" class="teacher-vote-list"></div>
         </section>
 
         <section class="grid-two">
-          <article class="card reveal">
+          <article id="step-5" class="card section-berry reveal" data-view-surface="student-only">
             <div class="section-heading compact">
               <div>
                 <p class="eyebrow">Step 5</p>
-                <h2>Ask a Question</h2>
+                <h2>💬 Ask a Question</h2>
               </div>
             </div>
             <p class="section-copy">
@@ -265,11 +375,11 @@
             <div id="prompt-list" class="prompt-list"></div>
           </article>
 
-          <article class="card reveal">
+          <article id="step-6" class="card section-forest reveal">
             <div class="section-heading compact">
               <div>
                 <p class="eyebrow">Step 6</p>
-                <h2>Small Steps</h2>
+                <h2>✅ Small Steps</h2>
               </div>
             </div>
             <div class="steps-summary">
@@ -285,8 +395,22 @@
               </div>
               <small id="steps-progress-detail">Choose a few small steps to show how momentum builds over time.</small>
             </div>
+            <div id="steps-context" class="steps-context"></div>
             <div id="steps-panel" class="steps-panel"></div>
           </article>
+        </section>
+
+        <section class="card extension-preview-card section-sky reveal">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Extension Mockup</p>
+              <h2>What this could look like inside Canvas</h2>
+            </div>
+            <p class="section-copy">
+              This mockup shows Hōʻike as a Chrome extension overlay with a school assignment on the left and the Hōʻike panel on the right.
+            </p>
+          </div>
+          <a class="mockup-link" href="./extension-mockup.html">Open Chrome extension mockup</a>
         </section>
       </main>
     </div>

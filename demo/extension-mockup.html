@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hōʻike Extension Mockup</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body class="mockup-page">
+    <main class="mockup-shell">
+      <header class="mockup-header">
+        <p class="eyebrow">Chrome Extension Mockup</p>
+        <h1>Hōʻike as a live Canvas overlay</h1>
+        <p class="lede">
+          This mockup shows how Hōʻike could appear as a Chrome extension: the
+          course page stays visible, while the Hōʻike panel translates the current
+          activity into strengths, local pathways, and safer next steps.
+        </p>
+        <div class="mockup-header-actions">
+          <span class="browser-extension-chip mockup-chip">Built with OpenAI Codex</span>
+          <a class="mockup-link" href="./index.html">Back to main demo</a>
+        </div>
+      </header>
+
+      <section class="browser-mockup">
+        <div class="browser-bar">
+          <div class="browser-dots">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <div class="browser-address">canvas.hidoe.example/course/biology/unit-4</div>
+          <div class="browser-extension-chip">Hōʻike</div>
+        </div>
+
+        <div class="browser-body">
+          <article class="canvas-mock">
+            <div class="canvas-shell">
+              <aside class="canvas-global-rail">
+                <div class="canvas-crest">HI</div>
+                <div class="canvas-global-icons">
+                  <span>🏠</span>
+                  <span>📚</span>
+                  <span>📅</span>
+                  <span>📝</span>
+                  <span>💬</span>
+                </div>
+              </aside>
+
+              <aside class="canvas-sidebar">
+                <p class="canvas-term">Spring 2026</p>
+                <div class="canvas-course-link">Biology 10</div>
+                <nav class="canvas-nav">
+                  <a href="#">Home</a>
+                  <a href="#">Announcements</a>
+                  <a href="#">Modules</a>
+                  <a class="is-active" href="#">Assignments</a>
+                  <a href="#">Discussions</a>
+                  <a href="#">Grades</a>
+                  <a href="#">People</a>
+                </nav>
+              </aside>
+
+              <div class="canvas-course-view">
+                <div class="canvas-page-toolbar">
+                  <div class="canvas-breadcrumb">Biology 10 &nbsp;&gt;&nbsp; Assignments &nbsp;&gt;&nbsp; Marine biology lab</div>
+                  <button class="canvas-start-button" type="button">Start Assignment</button>
+                </div>
+
+                <div class="canvas-course-bar">
+                  <div>
+                    <h2>Marine biology lab: reef health indicators</h2>
+                  </div>
+                </div>
+
+                <div class="canvas-meta-row canvas-meta-grid">
+                  <span><strong>Due</strong> Tomorrow by 2:15pm</span>
+                  <span><strong>Points</strong> 20</span>
+                  <span><strong>Submitting</strong> Text entry</span>
+                  <span><strong>File Types</strong> pdf, docx</span>
+                </div>
+
+                <div class="canvas-card-grid">
+                  <div class="canvas-block canvas-block-main">
+                    <p>
+                      Collect sample observations, compare reef health markers,
+                      and write a short interpretation of what the data suggests.
+                    </p>
+                    <p>
+                      Your response should explain what patterns you notice,
+                      what the data may mean for reef health, and what further
+                      monitoring could help a local team learn next.
+                    </p>
+                    <h3>What to include</h3>
+                    <ul>
+                      <li>Review the field notes and lab sheet</li>
+                      <li>Compare indicators across sample sites</li>
+                      <li>Draft a short evidence-based explanation</li>
+                    </ul>
+                  </div>
+
+                  <div class="canvas-block">
+                    <h3>Teacher note</h3>
+                    <p>
+                      Practice observation, data interpretation, and communicating
+                      what the data means for real places and communities.
+                    </p>
+                  </div>
+
+                  <div class="canvas-block">
+                    <h3>Attached materials</h3>
+                    <ul>
+                      <li>Lab sheet: reef health markers</li>
+                      <li>Field notes sample set</li>
+                      <li>Quick guide: interpreting environmental indicators</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <aside class="extension-panel">
+            <div class="extension-brand">
+              <span class="extension-pill">OpenAI Codex-guided scan</span>
+              <strong>Hōʻike Explorer</strong>
+              <div class="extension-brand-art" aria-hidden="true">
+                <div class="extension-art-card art-card-coral">📝</div>
+                <div class="extension-art-card art-card-mint">🧭</div>
+                <div class="extension-art-card art-card-sky">🎥</div>
+              </div>
+              <p class="extension-brand-copy">
+                A school-safe layer that helps students connect what they do in class to local futures, community value, and next steps.
+              </p>
+              <div class="extension-brand-tags">
+                <span class="extension-brand-tag">🎒 Student-safe</span>
+                <span class="extension-brand-tag">🌺 Signals first</span>
+                <span class="extension-brand-tag">✅ Small steps</span>
+              </div>
+            </div>
+            <div class="extension-mode">
+              <input class="extension-mode-input" type="radio" name="extension-mode" id="extension-student" checked />
+              <input class="extension-mode-input" type="radio" name="extension-mode" id="extension-instructor" />
+              <div class="extension-mode-tabs">
+                <label class="extension-mode-tab" for="extension-student">Student view</label>
+                <label class="extension-mode-tab" for="extension-instructor">Instructor view</label>
+              </div>
+
+              <div class="extension-mode-panel extension-mode-panel-student">
+                <details class="extension-panel-card extension-collapsible card-petal" name="extension-student-stack" open>
+                  <summary class="extension-card-summary">
+                    <h3>🌺 Professional Why</h3>
+                    <span class="extension-summary-icon">⌄</span>
+                  </summary>
+                  <p class="extension-keyline">Science becomes place-based stewardship.</p>
+                  <p class="extension-highlight">
+                    Big idea: you are practicing noticing patterns, explaining evidence, and caring for real places.
+                  </p>
+                  <div class="extension-stat-row">
+                    <div class="extension-stat-bubble">
+                      <strong>3</strong>
+                      <span>strength signals</span>
+                    </div>
+                    <div class="extension-stat-bubble">
+                      <strong>2</strong>
+                      <span>local sectors</span>
+                    </div>
+                  </div>
+                  <div class="signal-list">
+                    <span class="signal-chip">reef monitoring</span>
+                    <span class="signal-chip">field data</span>
+                    <span class="signal-chip">care for place</span>
+                  </div>
+                </details>
+
+                <details class="extension-panel-card extension-collapsible card-sun" name="extension-student-stack">
+                  <summary class="extension-card-summary">
+                    <h3>🧭 Pathway Exploration</h3>
+                    <span class="extension-summary-icon">⌄</span>
+                  </summary>
+                  <div class="extension-carousel">
+                    <input class="extension-carousel-input" type="radio" name="student-pathway" id="pathway-env" checked />
+                    <input class="extension-carousel-input" type="radio" name="student-pathway" id="pathway-health" />
+                    <input class="extension-carousel-input" type="radio" name="student-pathway" id="pathway-agri" />
+                    <div class="extension-carousel-panel panel-pathway-env">
+                      <div class="extension-subcard extension-subcard-pathway">
+                        <div class="extension-subcard-nav">
+                          <label class="extension-arrow-button" for="pathway-agri">←</label>
+                          <div class="extension-title-bubble">🌊 Environmental Monitoring</div>
+                          <label class="extension-arrow-button" for="pathway-health">→</label>
+                        </div>
+                        <p class="extension-copy">Great if you like data, fieldwork, and community care for place.</p>
+                        <div class="extension-interest-cluster">
+                          <span class="panel-label">Similar Interests</span>
+                          <div class="extension-interest-chips">
+                            <span class="extension-interest-chip is-active">🌿 being outdoors</span>
+                            <span class="extension-interest-chip is-active">🏝️ community service</span>
+                            <span class="extension-interest-chip">🐢 working with animals</span>
+                          </div>
+                        </div>
+                        <div class="extension-route-stack">
+                          <span class="panel-label">Different ways in</span>
+                          <p class="extension-route-line">Fishpond programs • science clubs • community college • certificates • university • stewardship projects</p>
+                        </div>
+                        <div class="token-group">
+                          <span class="token-chip">place-based stewardship</span>
+                          <span class="token-chip">field, lab, and community science</span>
+                        </div>
+                        <div class="extension-actions">
+                          <button class="extension-chip-button" type="button">Save pathway</button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="extension-carousel-panel panel-pathway-health">
+                      <div class="extension-subcard extension-subcard-pathway">
+                        <div class="extension-subcard-nav">
+                          <label class="extension-arrow-button" for="pathway-env">←</label>
+                          <div class="extension-title-bubble">🩺 Healthcare Diagnostics</div>
+                          <label class="extension-arrow-button" for="pathway-agri">→</label>
+                        </div>
+                        <p class="extension-copy">Great if you like careful observations, health, and helping people through science.</p>
+                        <div class="extension-interest-cluster">
+                          <span class="panel-label">Similar Interests</span>
+                          <div class="extension-interest-chips">
+                            <span class="extension-interest-chip is-active">🤝 helping people</span>
+                            <span class="extension-interest-chip is-active">🧪 science</span>
+                            <span class="extension-interest-chip">📝 storytelling</span>
+                          </div>
+                        </div>
+                        <div class="extension-route-stack">
+                          <span class="panel-label">Different ways in</span>
+                          <p class="extension-route-line">health academies • CNA or lab pathways • community college • certificates • university • hospital exposure</p>
+                        </div>
+                        <div class="token-group">
+                          <span class="token-chip">careful science</span>
+                          <span class="token-chip">precision and interpretation</span>
+                        </div>
+                        <div class="extension-actions">
+                          <button class="extension-chip-button" type="button">Save pathway</button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="extension-carousel-panel panel-pathway-agri">
+                      <div class="extension-subcard extension-subcard-pathway">
+                        <div class="extension-subcard-nav">
+                          <label class="extension-arrow-button" for="pathway-health">←</label>
+                          <div class="extension-title-bubble">🚜 Agri-Tech and Sensors</div>
+                          <label class="extension-arrow-button" for="pathway-env">→</label>
+                        </div>
+                        <p class="extension-copy">Great if you like being outdoors, tools, growing things, or practical science.</p>
+                        <div class="extension-interest-cluster">
+                          <span class="panel-label">Similar Interests</span>
+                          <div class="extension-interest-chips">
+                            <span class="extension-interest-chip is-active">🚜 farming</span>
+                            <span class="extension-interest-chip is-active">🌿 being outdoors</span>
+                            <span class="extension-interest-chip">🛠️ fixing things</span>
+                          </div>
+                        </div>
+                        <div class="extension-route-stack">
+                          <span class="panel-label">Different ways in</span>
+                          <p class="extension-route-line">school gardens • volunteer farm work • sensors and drones • certificates • community college • entrepreneurship</p>
+                        </div>
+                        <div class="token-group">
+                          <span class="token-chip">field systems</span>
+                          <span class="token-chip">local food futures</span>
+                        </div>
+                        <div class="extension-actions">
+                          <button class="extension-chip-button" type="button">Save pathway</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </details>
+
+                <details class="extension-panel-card extension-collapsible card-coral" name="extension-student-stack">
+                  <summary class="extension-card-summary">
+                    <h3>🎥 Local Voices</h3>
+                    <span class="extension-summary-icon">⌄</span>
+                  </summary>
+                  <div class="extension-carousel">
+                    <input class="extension-carousel-input" type="radio" name="student-voice" id="voice-chris" checked />
+                    <input class="extension-carousel-input" type="radio" name="student-voice" id="voice-maya" />
+                    <input class="extension-carousel-input" type="radio" name="student-voice" id="voice-kai" />
+                    <div class="extension-carousel-panel panel-voice-chris">
+                      <div class="extension-subcard extension-subcard-voice">
+                        <div class="extension-subcard-nav">
+                          <label class="extension-arrow-button" for="voice-kai">←</label>
+                          <div class="extension-title-bubble">Chris K. Aloha</div>
+                          <label class="extension-arrow-button" for="voice-maya">→</label>
+                        </div>
+                        <p class="voice-meta"><strong>Coastal Data Explorer</strong> • Oʻahu</p>
+                        <p class="extension-highlight">Favorite part: helping people make better decisions about places they actually know and care about.</p>
+                        <p class="extension-copy">Best for students curious about place-based science and community stewardship.</p>
+                        <div class="extension-actions">
+                          <button class="primary-action" type="button">Watch intro</button>
+                          <button class="extension-chip-button" type="button">Use question starter</button>
+                          <button class="extension-chip-button" type="button">Vote to invite</button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="extension-carousel-panel panel-voice-maya">
+                      <div class="extension-subcard extension-subcard-voice">
+                        <div class="extension-subcard-nav">
+                          <label class="extension-arrow-button" for="voice-chris">←</label>
+                          <div class="extension-title-bubble">Maya N. Lei</div>
+                          <label class="extension-arrow-button" for="voice-kai">→</label>
+                        </div>
+                        <p class="voice-meta"><strong>Community Resilience Guide</strong> • Maui</p>
+                        <p class="extension-highlight">Favorite part: combining technical thinking with long-term care for local communities and schools.</p>
+                        <p class="extension-copy">Best for students curious about resilience, planning, and systems that help people.</p>
+                        <div class="extension-actions">
+                          <button class="primary-action" type="button">Watch intro</button>
+                          <button class="extension-chip-button" type="button">Use question starter</button>
+                          <button class="extension-chip-button" type="button">Vote to invite</button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="extension-carousel-panel panel-voice-kai">
+                      <div class="extension-subcard extension-subcard-voice">
+                        <div class="extension-subcard-nav">
+                          <label class="extension-arrow-button" for="voice-maya">←</label>
+                          <div class="extension-title-bubble">Kai P. Blossom</div>
+                          <label class="extension-arrow-button" for="voice-chris">→</label>
+                        </div>
+                        <p class="voice-meta"><strong>Storytelling Studio Lead</strong> • Hilo</p>
+                        <p class="extension-highlight">Favorite part: making big public issues feel understandable and useful for real people.</p>
+                        <p class="extension-copy">Best for students curious about storytelling, design, and public education.</p>
+                        <div class="extension-actions">
+                          <button class="primary-action" type="button">Watch intro</button>
+                          <button class="extension-chip-button" type="button">Use question starter</button>
+                          <button class="extension-chip-button" type="button">Vote to invite</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </details>
+
+                <details class="extension-panel-card extension-collapsible card-mint" name="extension-student-stack">
+                  <summary class="extension-card-summary">
+                    <h3>✅ Small Steps</h3>
+                    <span class="extension-summary-icon">⌄</span>
+                  </summary>
+                  <p class="extension-keyline">Short, trackable moves keep the pathway connected to the original prompt.</p>
+                  <div class="small-steps-top">
+                    <div class="extension-progress-inline">
+                      <div class="progress-circle extension-progress-circle" aria-hidden="true">
+                        <svg class="progress-circle-svg" viewBox="0 0 44 44" role="presentation">
+                          <circle class="progress-circle-track" cx="22" cy="22" r="16"></circle>
+                          <circle class="progress-circle-fill extension-progress-fill" cx="22" cy="22" r="16"></circle>
+                        </svg>
+                      </div>
+                      <span class="steps-progress-pill">1 of 3 done</span>
+                    </div>
+                  </div>
+                  <ul class="extension-checklist">
+                    <li class="is-complete">
+                      <span class="extension-check"></span>
+                      <span>From this reef-health prompt, name one thing a local monitoring team would track over time.</span>
+                    </li>
+                    <li>
+                      <span class="extension-check"></span>
+                      <span>Save one pathway and one Local Voices profile that you want to come back to.</span>
+                    </li>
+                    <li>
+                      <span class="extension-check"></span>
+                      <span>Draft one moderated question about how this pathway could help Hawaiʻi.</span>
+                    </li>
+                  </ul>
+                </details>
+              </div>
+
+              <div class="extension-mode-panel extension-mode-panel-instructor">
+                <details class="extension-panel-card extension-collapsible card-mint" name="extension-instructor-stack" open>
+                  <summary class="extension-card-summary">
+                    <h3>🏫 Classroom Snapshot</h3>
+                    <span class="extension-summary-icon">⌄</span>
+                  </summary>
+                  <p class="extension-keyline">PueoPod is leaning toward environmental pathways.</p>
+                  <div class="snapshot-scoreboard">
+                    <div class="snapshot-jersey">
+                      <strong>12</strong>
+                      <span>Pathway saves</span>
+                      <small>Students are bookmarking ideas they want to return to.</small>
+                    </div>
+                    <div class="snapshot-jersey">
+                      <strong>7</strong>
+                      <span>Question drafts</span>
+                      <small>Students are turning curiosity into guided outreach.</small>
+                    </div>
+                    <div class="snapshot-jersey">
+                      <strong>4</strong>
+                      <span>Ready for follow-up</span>
+                      <small>Students are close to a teacher-approved next step.</small>
+                    </div>
+                  </div>
+                  <div class="snapshot-graphic">
+                    <div class="snapshot-bar">
+                      <span>🌊 Environmental Monitoring</span>
+                      <div class="snapshot-track"><div class="snapshot-fill fill-80"></div></div>
+                    </div>
+                    <div class="snapshot-bar">
+                      <span>🩺 Healthcare Diagnostics</span>
+                      <div class="snapshot-track"><div class="snapshot-fill fill-55"></div></div>
+                    </div>
+                    <div class="snapshot-bar">
+                      <span>🚜 Agri-Tech and Sensors</span>
+                      <div class="snapshot-track"><div class="snapshot-fill fill-38"></div></div>
+                    </div>
+                  </div>
+                </details>
+
+                <details class="extension-panel-card extension-collapsible card-sun" name="extension-instructor-stack">
+                  <summary class="extension-card-summary">
+                    <h3>💬 Invite Signals</h3>
+                    <span class="extension-summary-icon">⌄</span>
+                  </summary>
+                  <p class="extension-keyline">Who the class wants to hear from next.</p>
+                  <div class="invite-grid">
+                    <div class="invite-card is-featured">
+                      <div class="invite-copy">
+                        <strong>Chris K. Aloha</strong>
+                        <span>8 PueoPod votes</span>
+                      </div>
+                      <button class="primary-action" type="button">Invite</button>
+                    </div>
+                    <div class="invite-card">
+                      <div class="invite-copy">
+                        <strong>Maya N. Lei</strong>
+                        <span>6 PueoPod votes</span>
+                      </div>
+                      <button class="extension-chip-button" type="button">Invite</button>
+                    </div>
+                    <div class="invite-card">
+                      <div class="invite-copy">
+                        <strong>Kai P. Blossom</strong>
+                        <span>4 PueoPod votes</span>
+                      </div>
+                      <button class="extension-chip-button" type="button">Invite</button>
+                    </div>
+                  </div>
+                </details>
+
+                <details class="extension-panel-card extension-collapsible card-petal" name="extension-instructor-stack">
+                  <summary class="extension-card-summary">
+                    <h3>🛟 Moderation Queue</h3>
+                    <span class="extension-summary-icon">⌄</span>
+                  </summary>
+                  <p class="extension-keyline">Review, revise, or route student questions.</p>
+                  <div class="moderation-list">
+                    <div class="moderation-item">
+                      <div class="moderation-copy">
+                        <span class="voice-chip">CuriousPueo</span>
+                        <span class="moderation-tag">🌊 Environmental Monitoring</span>
+                        <p>“What should I try next if I care about reef health and community science?”</p>
+                      </div>
+                      <div class="moderation-actions">
+                        <button class="extension-chip-button" type="button">Revise</button>
+                        <button class="extension-chip-button" type="button">Route</button>
+                        <button class="primary-action" type="button">Approve</button>
+                      </div>
+                    </div>
+                    <div class="moderation-item">
+                      <div class="moderation-copy">
+                        <span class="voice-chip">BrightPueo</span>
+                        <span class="moderation-tag">🎥 Local Voices prompt</span>
+                        <p>“How did you first learn that this kind of job existed?”</p>
+                      </div>
+                      <div class="moderation-actions">
+                        <button class="extension-chip-button" type="button">Revise</button>
+                        <button class="extension-chip-button" type="button">Route</button>
+                        <button class="primary-action" type="button">Approve</button>
+                      </div>
+                    </div>
+                  </div>
+                </details>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
