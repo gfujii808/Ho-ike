@@ -197,6 +197,7 @@ li,
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 16px;
+  align-items: start;
 }
 
 .hero-notes-in-panel {
@@ -212,6 +213,7 @@ li,
   border-radius: var(--radius-md);
   background: #fff;
   border: 1px solid var(--line);
+  align-content: start;
 }
 
 .note-card span,
