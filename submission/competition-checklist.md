@@ -26,6 +26,7 @@
 - Make the repo easy to scan:
   - keep the README focused on problem, Codex mechanism, and Hawaiʻi relevance
   - include the visual proof strip in the repo
+  - include the HIDOE-facing pilot brief for post-competition credibility
   - make sure `Local Voices` is pluralized consistently across surfaces
 
 ## Demo Video
@@ -48,6 +49,7 @@
 - Frame `Small Steps` as moving students from abstraction to preparation.
 - Frame `Local Voices` as a protected, school-safe discovery layer rather than open networking.
 - Match sectors to Hawaiʻi needs, but do not cite labor-market counts unless you have verified them yourself.
+- If you mention life beyond the contest, keep it to pilot-readiness and research potential rather than a sprawling roadmap.
 
 ## Finalist Pitch
 

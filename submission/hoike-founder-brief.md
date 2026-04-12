@@ -25,6 +25,7 @@ Hōʻike fixes that by making the scripts visible earlier.
 - It turns “go network” into a protected, school-safe question flow.
 - It is pseudonymous by default, which lowers social risk for students and protects participating professionals.
 - It feels culturally specific to Hawaiʻi instead of imported from a mainland playbook.
+- It is credible beyond the competition as a school-safe pilot and research opportunity for HIDOE classrooms, advisories, or counselor-supported pathway exploration.
 
 ## Why Codex Matters
 

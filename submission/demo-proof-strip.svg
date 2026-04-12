@@ -1,64 +1,62 @@
 <svg width="1440" height="460" viewBox="0 0 1440 460" fill="none" xmlns="http://www.w3.org/2000/svg">
   <rect width="1440" height="460" rx="32" fill="#F6F1E8"/>
-  <rect x="32" y="32" width="1376" height="396" rx="28" fill="#FFFDF7"/>
-  <text x="72" y="90" fill="#194D3D" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700">Hōʻike Demo Proof Strip</text>
-  <text x="72" y="122" fill="#5A544B" font-family="Arial, Helvetica, sans-serif" font-size="18">Competition-ready browser prototype flow: activity input → Professional Why → pathway exploration → Local Voices → small steps.</text>
+  <rect x="24" y="24" width="1392" height="412" rx="30" fill="#F1E9DA"/>
+  <rect x="34" y="34" width="1372" height="392" rx="28" fill="#FFFDF8"/>
 
-  <g transform="translate(68 162)">
-    <rect width="246" height="218" rx="26" fill="#FFE4D6"/>
-    <rect x="18" y="18" width="82" height="30" rx="15" fill="#FFFFFF"/>
-    <text x="34" y="39" fill="#194D3D" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700">Step 1</text>
-    <text x="18" y="78" fill="#194D3D" font-family="Arial, Helvetica, sans-serif" font-size="28">📝</text>
-    <text x="18" y="114" fill="#1F2328" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700">Paste an activity</text>
-    <text x="18" y="150" fill="#5A544B" font-family="Arial, Helvetica, sans-serif" font-size="16">Assignment, hobby, community role,</text>
-    <text x="18" y="174" fill="#5A544B" font-family="Arial, Helvetica, sans-serif" font-size="16">or interest all count as a starting point.</text>
-    <rect x="18" y="188" width="164" height="18" rx="9" fill="#FFFFFF"/>
+  <text x="72" y="88" fill="#194D3D" font-family="'Red Hat Display', Arial, Helvetica, sans-serif" font-size="24" font-weight="700">Hōʻike Demo Proof Strip</text>
+  <text x="72" y="122" fill="#5A544B" font-family="'Lexend Deca', Arial, Helvetica, sans-serif" font-size="17">Dynamic Codex-guided flow for judges: paste an activity, translate it, explore local pathways, meet Local Voices, and take one next step.</text>
+
+  <g transform="translate(68 158)">
+    <rect width="244" height="212" rx="28" fill="#FFE5D7"/>
+    <rect x="18" y="18" width="86" height="28" rx="14" fill="#FDEDDD"/>
+    <rect x="18" y="166" width="146" height="10" rx="5" fill="#FCEFE5"/>
+    <rect x="18" y="184" width="112" height="10" rx="5" fill="#FCEFE5"/>
+    <text x="28" y="38" fill="#7E2A1F" font-family="'Lexend Deca', Arial, Helvetica, sans-serif" font-size="13" font-weight="700">📝 Step 1</text>
+    <text x="18" y="82" fill="#1F2328" font-family="'Red Hat Display', Arial, Helvetica, sans-serif" font-size="21" font-weight="700">Paste an activity</text>
+    <text x="18" y="116" fill="#5A544B" font-family="'Lexend Deca', Arial, Helvetica, sans-serif" font-size="13">Assignment, hobby, or interest</text>
+    <text x="18" y="134" fill="#5A544B" font-family="'Lexend Deca', Arial, Helvetica, sans-serif" font-size="13">becomes the starting signal.</text>
   </g>
 
-  <g transform="translate(336 162)">
-    <rect width="246" height="218" rx="26" fill="#FFDDE8"/>
-    <rect x="18" y="18" width="82" height="30" rx="15" fill="#FFFFFF"/>
-    <text x="34" y="39" fill="#194D3D" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700">Step 2</text>
-    <text x="18" y="78" fill="#194D3D" font-family="Arial, Helvetica, sans-serif" font-size="28">🌺</text>
-    <text x="18" y="114" fill="#1F2328" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700">Professional Why</text>
-    <text x="18" y="150" fill="#5A544B" font-family="Arial, Helvetica, sans-serif" font-size="16">Codex-style translation surfaces</text>
-    <text x="18" y="174" fill="#5A544B" font-family="Arial, Helvetica, sans-serif" font-size="16">strengths, signals, and local value.</text>
-    <rect x="18" y="188" width="86" height="18" rx="9" fill="#FFFFFF"/>
-    <rect x="112" y="188" width="90" height="18" rx="9" fill="#FFFFFF"/>
+  <g transform="translate(330 158)">
+    <rect width="244" height="212" rx="28" fill="#F8DDE8"/>
+    <rect x="18" y="18" width="86" height="28" rx="14" fill="#FCEAF0"/>
+    <rect x="18" y="166" width="88" height="10" rx="5" fill="#FCEFF4"/>
+    <rect x="114" y="166" width="94" height="10" rx="5" fill="#FCEFF4"/>
+    <text x="28" y="38" fill="#7E2A1F" font-family="'Lexend Deca', Arial, Helvetica, sans-serif" font-size="13" font-weight="700">🌺 Step 2</text>
+    <text x="18" y="82" fill="#1F2328" font-family="'Red Hat Display', Arial, Helvetica, sans-serif" font-size="21" font-weight="700">Professional Why</text>
+    <text x="18" y="116" fill="#5A544B" font-family="'Lexend Deca', Arial, Helvetica, sans-serif" font-size="13">Codex-guided translation surfaces</text>
+    <text x="18" y="134" fill="#5A544B" font-family="'Lexend Deca', Arial, Helvetica, sans-serif" font-size="13">strengths, signals, and local value.</text>
   </g>
 
-  <g transform="translate(604 162)">
-    <rect width="246" height="218" rx="26" fill="#FFF0B9"/>
-    <rect x="18" y="18" width="82" height="30" rx="15" fill="#FFFFFF"/>
-    <text x="34" y="39" fill="#194D3D" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700">Step 3</text>
-    <text x="18" y="78" fill="#194D3D" font-family="Arial, Helvetica, sans-serif" font-size="28">🧭</text>
-    <text x="18" y="114" fill="#1F2328" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700">Explore pathways</text>
-    <text x="18" y="150" fill="#5A544B" font-family="Arial, Helvetica, sans-serif" font-size="16">Compare multiple Hawaiʻi-rooted</text>
-    <text x="18" y="174" fill="#5A544B" font-family="Arial, Helvetica, sans-serif" font-size="16">options and different ways in.</text>
-    <rect x="18" y="188" width="96" height="18" rx="9" fill="#FFFFFF"/>
-    <rect x="122" y="188" width="76" height="18" rx="9" fill="#FFFFFF"/>
+  <g transform="translate(592 158)">
+    <rect width="244" height="212" rx="28" fill="#FFF0B8"/>
+    <rect x="18" y="18" width="86" height="28" rx="14" fill="#FFF6D9"/>
+    <rect x="18" y="166" width="100" height="10" rx="5" fill="#FFF7DD"/>
+    <rect x="126" y="166" width="68" height="10" rx="5" fill="#FFF7DD"/>
+    <text x="28" y="38" fill="#7E2A1F" font-family="'Lexend Deca', Arial, Helvetica, sans-serif" font-size="13" font-weight="700">🧭 Step 3</text>
+    <text x="18" y="82" fill="#1F2328" font-family="'Red Hat Display', Arial, Helvetica, sans-serif" font-size="21" font-weight="700">Explore pathways</text>
+    <text x="18" y="116" fill="#5A544B" font-family="'Lexend Deca', Arial, Helvetica, sans-serif" font-size="13">Compare culturally grounded options</text>
+    <text x="18" y="134" fill="#5A544B" font-family="'Lexend Deca', Arial, Helvetica, sans-serif" font-size="13">and different ways in.</text>
   </g>
 
-  <g transform="translate(872 162)">
-    <rect width="246" height="218" rx="26" fill="#DDF5EC"/>
-    <rect x="18" y="18" width="82" height="30" rx="15" fill="#FFFFFF"/>
-    <text x="34" y="39" fill="#194D3D" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700">Step 4</text>
-    <text x="18" y="78" fill="#194D3D" font-family="Arial, Helvetica, sans-serif" font-size="28">🎥</text>
-    <text x="18" y="114" fill="#1F2328" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700">Meet Local Voices</text>
-    <text x="18" y="150" fill="#5A544B" font-family="Arial, Helvetica, sans-serif" font-size="16">School-safe local profiles make</text>
-    <text x="18" y="174" fill="#5A544B" font-family="Arial, Helvetica, sans-serif" font-size="16">future possibilities feel reachable.</text>
-    <circle cx="197" cy="192" r="22" fill="#FFFFFF"/>
-    <text x="186" y="199" fill="#194D3D" font-family="Arial, Helvetica, sans-serif" font-size="20">→</text>
+  <g transform="translate(854 158)">
+    <rect width="244" height="212" rx="28" fill="#DDF4EC"/>
+    <rect x="18" y="18" width="86" height="28" rx="14" fill="#EAF8F2"/>
+    <circle cx="202" cy="184" r="20" fill="#EEF9F5"/>
+    <text x="28" y="38" fill="#7E2A1F" font-family="'Lexend Deca', Arial, Helvetica, sans-serif" font-size="13" font-weight="700">🎥 Step 4</text>
+    <text x="18" y="82" fill="#1F2328" font-family="'Red Hat Display', Arial, Helvetica, sans-serif" font-size="20" font-weight="700">Meet Local Voices</text>
+    <text x="18" y="116" fill="#5A544B" font-family="'Lexend Deca', Arial, Helvetica, sans-serif" font-size="13">School-safe profiles make local</text>
+    <text x="18" y="134" fill="#5A544B" font-family="'Lexend Deca', Arial, Helvetica, sans-serif" font-size="13">futures feel more reachable.</text>
+    <text x="194" y="191" fill="#194D3D" font-family="'Red Hat Display', Arial, Helvetica, sans-serif" font-size="20" font-weight="700">→</text>
   </g>
 
-  <g transform="translate(1140 162)">
-    <rect width="228" height="218" rx="26" fill="#E7EEF8"/>
-    <rect x="18" y="18" width="82" height="30" rx="15" fill="#FFFFFF"/>
-    <text x="34" y="39" fill="#194D3D" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700">Step 5</text>
-    <text x="18" y="78" fill="#194D3D" font-family="Arial, Helvetica, sans-serif" font-size="28">✅</text>
-    <text x="18" y="114" fill="#1F2328" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700">Take small steps</text>
-    <text x="18" y="150" fill="#5A544B" font-family="Arial, Helvetica, sans-serif" font-size="16">Track progress, save ideas, and</text>
-    <text x="18" y="174" fill="#5A544B" font-family="Arial, Helvetica, sans-serif" font-size="16">send guided questions to review.</text>
-    <circle cx="187" cy="194" r="18" stroke="#194D3D" stroke-width="8"/>
+  <g transform="translate(1116 158)">
+    <rect width="244" height="212" rx="28" fill="#E5ECF8"/>
+    <rect x="18" y="18" width="86" height="28" rx="14" fill="#EFF4FB"/>
+    <circle cx="198" cy="184" r="18" stroke="#194D3D" stroke-width="8"/>
+    <text x="28" y="38" fill="#7E2A1F" font-family="'Lexend Deca', Arial, Helvetica, sans-serif" font-size="13" font-weight="700">✅ Step 5</text>
+    <text x="18" y="82" fill="#1F2328" font-family="'Red Hat Display', Arial, Helvetica, sans-serif" font-size="20" font-weight="700">Take small steps</text>
+    <text x="18" y="116" fill="#5A544B" font-family="'Lexend Deca', Arial, Helvetica, sans-serif" font-size="13">Track progress, save ideas, and</text>
+    <text x="18" y="134" fill="#5A544B" font-family="'Lexend Deca', Arial, Helvetica, sans-serif" font-size="13">send guided questions to review.</text>
   </g>
 </svg>

@@ -34,6 +34,7 @@ Character count: `477`
 - Keep the live URL public and demo-ready before the April 30, 2026 deadline.
 - In the description, explicitly say what you built yourself: the demo flow, the translation logic, the Local Voices concept, the guided prompt experience, and the privacy model.
 - Keep the tone product-focused: problem, who it helps, how it works, and why it matters.
+- If you mention what happens after the contest, keep it to one sentence about pilot-readiness or research potential rather than a long future roadmap.
 - If you mention Hawaiʻi labor-market counts, use only figures you have personally verified and can defend.
 
 ## Resume / Profile Bullet
