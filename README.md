@@ -35,6 +35,10 @@ In the demo, Codex is represented as the reasoning layer that:
 
 The repo and UI are intentionally built to make that execution visible, not hidden behind static copy.
 
+## Extension Direction
+
+The main hosted demo is the primary judged artifact, but the extension mockup shows the near-term implementation direction. In a real Chrome extension build, Hōʻike should mount its sidebar inside a dedicated root using `Shadow DOM` so Canvas styles cannot break the overlay and the overlay cannot interfere with LMS rendering.
+
 ## Why Hawaiʻi
 
 Hōʻike is explicitly Hawaiʻi-centered. The product frames local futures as contribution to home, community, and local resilience, not just as a pipeline to employment or a reason to leave. The explainer mode and submission package connect the prototype to Hawaiʻi-specific brain drain, hidden curriculum, and pathway-decision research.
@@ -62,4 +66,8 @@ This project was developed using a vibe-coding workflow: natural-language prompt
 - `Local Voices` profiles are simulated for presentation purposes.
 - The public ship target should open directly to `demo/index.html`, with `demo/extension-mockup.html` as the secondary artifact.
 
-Open `demo/index.html` in a browser to review the MVP flow.
+Live demo: [https://gfujii808.github.io/Ho-ike/](https://gfujii808.github.io/Ho-ike/)
+
+Direct main demo: [https://gfujii808.github.io/Ho-ike/demo/index.html](https://gfujii808.github.io/Ho-ike/demo/index.html)
+
+Extension mockup: [https://gfujii808.github.io/Ho-ike/demo/extension-mockup.html](https://gfujii808.github.io/Ho-ike/demo/extension-mockup.html)

@@ -4,6 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hōʻike Explorer Demo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@400;500;600;700;800&family=Red+Hat+Display:wght@500;700;800;900&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
@@ -12,10 +18,10 @@
         <div class="hero-copy reveal">
           <p class="eyebrow">Hōʻike Explorer</p>
           <div class="flora-row" aria-hidden="true">
-            <span class="flora-glyph">✨</span>
             <span class="flora-glyph">🌺</span>
+            <span class="flora-glyph">🌿</span>
+            <span class="flora-glyph">🐢</span>
             <span class="flora-glyph">🌊</span>
-            <span class="flora-glyph">🌱</span>
           </div>
           <h1>Revealing the hidden curriculum for attainable local futures in Hawai'i.</h1>
           <p class="lede">
@@ -26,25 +32,6 @@
             <span class="hero-sticker">📝 Start with you</span>
             <span class="hero-sticker">🌺 Find your signals</span>
             <span class="hero-sticker">🎥 Meet Local Voices</span>
-          </div>
-          <div class="hero-notes">
-            <div class="note-card">
-              <span>Student identity</span>
-              <strong id="student-handle">CuriousPueo</strong>
-              <label class="mini-control" for="cohort-select">Class space</label>
-              <select id="cohort-select" class="select-input compact-select">
-                <option value="PueoPod">PueoPod</option>
-                <option value="MangoGrove">MangoGrove</option>
-              </select>
-              <div id="starter-interest-profile" class="starter-interest-profile"></div>
-              <button id="generate-handle" type="button">Generate new handle</button>
-              <small id="student-cohort">Class cohort: PueoPod</small>
-            </div>
-            <div class="note-card">
-              <span>Saved ideas</span>
-              <strong id="saved-pathways-count">0 saved</strong>
-              <small id="saved-pathways-detail">Saved pathways from across activities appear here so your dashboard keeps your running interests visible.</small>
-            </div>
           </div>
         </div>
         <div class="hero-panel reveal">
@@ -123,6 +110,41 @@
             <p id="view-mode-description">
               Student View shows activity translation, pathway exploration, Local Voices, guided questions, and trackable small steps.
             </p>
+          </div>
+        </section>
+
+        <section class="card section-warm reveal" data-view-surface="student-only">
+          <div class="section-heading compact">
+            <div>
+              <p class="eyebrow">Student Dashboard</p>
+              <h2>🎒 Your profile and saved ideas</h2>
+            </div>
+            <p class="section-copy compact-copy">
+              Keep your pseudonymous profile, starter signals, and saved pathways in one place.
+            </p>
+          </div>
+          <div class="student-scoreboard">
+            <div class="student-profile-card">
+              <span class="panel-label">Student identity</span>
+              <div id="student-class-badge" class="cohort-badge-card"></div>
+              <strong id="student-handle">CuriousPueo</strong>
+              <label class="mini-control" for="cohort-select">Class space</label>
+              <select id="cohort-select" class="select-input compact-select">
+                <option value="PueoPod">PueoPod</option>
+                <option value="HonuHui">HonuHui</option>
+                <option value="PopokiPod">PopokiPod</option>
+                <option value="MangoGrove">MangoGrove</option>
+              </select>
+              <div id="starter-interest-profile" class="starter-interest-profile"></div>
+              <button id="generate-handle" type="button">Generate new handle</button>
+              <small id="student-cohort">Class cohort: PueoPod</small>
+            </div>
+            <div class="student-summary-card student-jersey-card">
+              <span class="panel-label">Saved ideas</span>
+              <strong id="saved-pathways-count">0</strong>
+              <span class="student-jersey-label">Pathway saves</span>
+              <small id="saved-pathways-detail">Your saved pathways stay visible across activities so your dashboard keeps a running map of what keeps pulling you back.</small>
+            </div>
           </div>
         </section>
 
@@ -221,7 +243,7 @@
           <div class="activity-bridge">
             <div class="activity-bridge-copy">
               <span class="panel-label">Or build from your starter profile</span>
-              <p class="section-copy">Your handle comes with a lightweight interest profile. Keep it, remix it, or add more signals here.</p>
+              <p class="section-copy">Start from hobbies, causes, and strengths that already feel like you.</p>
             </div>
             <div id="interest-list" class="interest-list"></div>
           </div>
@@ -238,12 +260,8 @@
             <p class="section-copy compact-copy">
               Hōʻike looks for the strengths, patterns, and community value inside what you already do.
             </p>
-            <div class="student-surface" data-view-surface="student">
-              <div id="professional-why" class="rich-panel"></div>
-            </div>
-            <div class="demo-surface" data-view-surface="explainer">
-              <div id="translation-log" class="translation-log"></div>
-            </div>
+            <div id="professional-why" class="student-surface professional-why-panel" data-view-surface="student"></div>
+            <div id="translation-log" class="demo-surface translation-log" data-view-surface="explainer"></div>
           </article>
 
           <article id="step-3" class="card section-sun reveal">
@@ -254,14 +272,14 @@
               </div>
             </div>
             <p class="section-copy compact-copy">
-              Pick one pathway at a time to see what it could look like, why it matters locally, and how you could explore it.
+              Compare a few local possibilities, then open one to see where it could lead.
             </p>
             <div id="pathway-list" class="pathway-list"></div>
             <div class="integrated-pathway-shell">
               <div class="integrated-pathway-heading">
                 <span class="panel-label">Different Ways In</span>
                 <p class="section-copy">
-                  Hōʻike keeps the pathway open: certificates, community college, university, volunteering, apprenticeships, service, portfolio-building, and community-rooted exploration all count.
+                  College is one path, not the only path.
                 </p>
               </div>
               <div class="interest-shell single-column-shell">
@@ -304,8 +322,9 @@
           <div class="teacher-scoreboard">
             <div class="teacher-summary-card teacher-stat-card">
               <span class="panel-label">Class alias</span>
+              <div id="teacher-class-badge" class="cohort-badge-card teacher-cohort-badge"></div>
               <strong id="teacher-class-alias">PueoPod</strong>
-              <small>Teacher-managed cohorts like `PueoPod` and `MangoGrove` let a class explore together without exposing school identity to professionals.</small>
+              <small>Teacher-managed cohorts like `PueoPod`, `HonuHui`, `PopokiPod`, and `MangoGrove` let a class explore together without exposing school identity to professionals.</small>
             </div>
             <div class="teacher-summary-card teacher-stat-card">
               <span class="panel-label">Saved pathways</span>
@@ -407,7 +426,7 @@
               <h2>What this could look like inside Canvas</h2>
             </div>
             <p class="section-copy">
-              This mockup shows Hōʻike as a Chrome extension overlay with a school assignment on the left and the Hōʻike panel on the right.
+              This mockup shows Hōʻike as a Chrome extension overlay with a school assignment on the left and the Hōʻike panel on the right. The real extension direction is a Shadow DOM-mounted sidebar so Canvas styles cannot break Hōʻike or interfere with LMS behavior.
             </p>
           </div>
           <a class="mockup-link" href="./extension-mockup.html">Open Chrome extension mockup</a>

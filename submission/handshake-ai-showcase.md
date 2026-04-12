@@ -8,7 +8,7 @@
 
 AI Showcase requires a URL. Recommended option: host the demo as a static page and use that link here.
 
-- `https://YOUR-URL/demo/`
+- `https://gfujii808.github.io/Ho-ike/demo/index.html`
 
 ## Recommended Description
 

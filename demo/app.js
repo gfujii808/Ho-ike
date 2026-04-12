@@ -459,10 +459,30 @@ const routeCatalog = {
 const cohorts = [
   {
     name: "PueoPod",
+    icon: "🦉",
+    iconLabel: "Pueo owl class icon",
+    accent: "night-study, pattern spotting, and calm leadership",
     handles: ["CuriousPueo", "BoldPueo", "CalmPueo", "BrightPueo", "SteadyPueo", "SwiftPueo"]
   },
   {
+    name: "HonuHui",
+    icon: "🐢",
+    iconLabel: "Honu turtle class icon",
+    accent: "steady care, place-based learning, and long-view thinking",
+    handles: ["SteadyHonu", "CuriousHonu", "BraveHonu", "KindHonu", "SunnyHonu", "OceanHonu"]
+  },
+  {
+    name: "PopokiPod",
+    icon: "🐱",
+    iconLabel: "Popoki cat class icon",
+    accent: "creative problem-solving, curiosity, and playful confidence",
+    handles: ["CleverPopoki", "CalmPopoki", "BrightPopoki", "SwiftPopoki", "KindPopoki", "BoldPopoki"]
+  },
+  {
     name: "MangoGrove",
+    icon: "🌺",
+    iconLabel: "MangoGrove blossom icon",
+    accent: "creative energy, expression, and community color",
     handles: ["SunnyMango", "KindMango", "BraveMango", "FreshMango", "GoldenMango", "LivelyMango"]
   }
 ];
@@ -475,6 +495,18 @@ const handleProfiles = {
   BrightPueo: ["coding", "gaming", "fixing things"],
   SteadyPueo: ["helping people", "community service", "leadership"],
   SwiftPueo: ["sports", "coding", "being outdoors"],
+  SteadyHonu: ["being outdoors", "community service", "working with animals"],
+  CuriousHonu: ["science", "being outdoors", "storytelling"],
+  BraveHonu: ["leadership", "helping people", "community service"],
+  KindHonu: ["working with animals", "helping people", "music"],
+  SunnyHonu: ["farming", "being outdoors", "community service"],
+  OceanHonu: ["science", "being outdoors", "animals"],
+  CleverPopoki: ["drawing and design", "storytelling", "coding"],
+  CalmPopoki: ["music", "storytelling", "helping people"],
+  BrightPopoki: ["coding", "gaming", "fixing things"],
+  SwiftPopoki: ["sports", "leadership", "gaming"],
+  KindPopoki: ["working with animals", "helping people", "community service"],
+  BoldPopoki: ["drawing and design", "leadership", "storytelling"],
   SunnyMango: ["drawing and design", "music", "community service"],
   KindMango: ["helping people", "storytelling", "working with animals"],
   BraveMango: ["sports", "leadership", "community service"],
@@ -498,6 +530,8 @@ const studentHandle = document.getElementById("student-handle");
 const studentCohort = document.getElementById("student-cohort");
 const cohortSelect = document.getElementById("cohort-select");
 const starterInterestProfile = document.getElementById("starter-interest-profile");
+const studentClassBadge = document.getElementById("student-class-badge");
+const teacherClassBadge = document.getElementById("teacher-class-badge");
 const dialog = document.getElementById("voice-dialog");
 const dialogContent = document.getElementById("dialog-content");
 const titleInput = document.getElementById("assignment-title-input");
@@ -558,6 +592,8 @@ const classroomVotes = new Map(persistedState.classroomVotes || []);
 const selectedPathways = new Map(persistedState.selectedPathways || []);
 const submittedQuestions = persistedState.submittedQuestions || [];
 const selectedInterests = new Set(persistedState.selectedInterests || []);
+let pathwayFeedbackMode = "";
+let pathwayFeedbackTimer;
 const currentCohort = cohorts.find((cohort) => cohort.name === selectedCohortName) || cohorts[0];
 let currentHandle =
   persistedState.studentHandle && currentCohort.handles.includes(persistedState.studentHandle)
@@ -579,6 +615,26 @@ const cohortBaseline = {
       noa: 2
     }
   },
+  HonuHui: {
+    saved: 6,
+    pending: 0,
+    votes: {
+      leilani: 4,
+      keoni: 7,
+      malia: 2,
+      noa: 2
+    }
+  },
+  PopokiPod: {
+    saved: 7,
+    pending: 0,
+    votes: {
+      leilani: 2,
+      keoni: 2,
+      malia: 6,
+      noa: 5
+    }
+  },
   MangoGrove: {
     saved: 5,
     pending: 0,
@@ -597,6 +653,16 @@ function getCohortForHandle(handle) {
 
 function getCurrentCohort() {
   return cohorts.find((cohort) => cohort.name === selectedCohortName) || cohorts[0];
+}
+
+function getCohortBadgeMarkup(cohort = getCurrentCohort()) {
+  return `
+    <span class="cohort-badge-icon" aria-hidden="true">${cohort.icon}</span>
+    <div class="cohort-badge-copy">
+      <span class="cohort-badge-name">${cohort.name}</span>
+      <small>${cohort.accent}</small>
+    </div>
+  `;
 }
 
 function getSavedPathwaysForCurrentCohort() {
@@ -667,10 +733,13 @@ function getInterestEmoji(interest) {
     "community service": "🏝️",
     science: "🧪",
     design: "🎨",
+    "drawing and design": "🎨",
     coding: "💻",
     sports: "🏄",
     farming: "🚜",
-    animals: "🐢"
+    animals: "🐢",
+    "working with animals": "🐢",
+    leadership: "🤙"
   };
 
   return emojiMap[interest] || "✨";
@@ -779,6 +848,12 @@ function syncIdentitySurfaces() {
   studentCohort.textContent = `Class cohort: ${cohort.name}`;
   teacherClassAlias.textContent = cohort.name;
   cohortSelect.value = cohort.name;
+  if (studentClassBadge) {
+    studentClassBadge.innerHTML = getCohortBadgeMarkup(cohort);
+  }
+  if (teacherClassBadge) {
+    teacherClassBadge.innerHTML = getCohortBadgeMarkup(cohort);
+  }
   renderStarterInterestProfile();
 }
 
@@ -1001,21 +1076,36 @@ function renderProfessionalWhy() {
     : "";
 
   professionalWhy.innerHTML = `
-    <div class="rich-panel-header">
+    <div class="professional-why-topbar">
       <span class="translation-pill">✨ ${selectedAssignment.translationSource}</span>
       <span class="translation-pill translation-pill-secondary">OpenAI Codex-guided scan</span>
     </div>
-    <h3>${selectedAssignment.whyTitle}</h3>
-    <p class="rich-panel-highlight">Big idea: this activity can become a clue about what feels energizing, what strengths are emerging, and how those strengths could matter in Hawaiʻi.</p>
-    <p>${selectedAssignment.whyBody}</p>
-    <p>${selectedAssignment.whyImpact}</p>
-    <div class="signal-cluster">
-      <span class="signal-label">✨ What Hōʻike spotted</span>
-      <div class="signal-list">
-        ${signalChips.map((signal) => `<span class="signal-chip">${signal}</span>`).join("")}
+    <div class="professional-why-grid">
+      <div class="professional-why-main">
+        <h3>${selectedAssignment.whyTitle}</h3>
+        <p class="rich-panel-highlight">Big idea: what you already do can point toward strengths, contribution, and local futures here at home.</p>
+        <div class="professional-why-stats">
+          <div class="professional-why-stat">
+            <strong>${signalChips.length}</strong>
+            <span>signals spotted</span>
+          </div>
+          <div class="professional-why-stat">
+            <strong>${selectedAssignment.pathways.length}</strong>
+            <span>pathways opened</span>
+          </div>
+        </div>
+        <p class="professional-why-keyline">${selectedAssignment.whyImpact}</p>
+      </div>
+      <div class="professional-why-side">
+        <div class="signal-cluster">
+          <span class="signal-label">✨ What Hōʻike spotted</span>
+          <div class="signal-list">
+            ${signalChips.map((signal) => `<span class="signal-chip">${signal}</span>`).join("")}
+          </div>
+        </div>
+        ${interestMarkup}
       </div>
     </div>
-    ${interestMarkup}
   `;
 }
 
@@ -1048,57 +1138,31 @@ function renderTranslationLog() {
 function renderPathways() {
   pathwayList.innerHTML = "";
 
+  const pathways = selectedAssignment.pathways;
   const selectedPathway = getSelectedPathway();
-
-  const picker = document.createElement("div");
-  picker.className = "pathway-picker";
-
-  selectedAssignment.pathways.forEach((pathway) => {
-    const pathwayKey = getPathwayKey(pathway.name);
-    const isSaved = hasSavedPathway(pathwayKey);
-    const pathwayLabel = `${getPathwayEmoji(pathway.name)} ${pathway.name}`;
-    const card = document.createElement("article");
-    card.className = `pathway-option${pathway.name === selectedPathway.name ? " is-active" : ""}`;
-    card.innerHTML = `
-      <div class="pathway-option-top">
-        <span class="pathway-meta">Pathway option</span>
-        <button class="mini-save-button${isSaved ? " is-saved" : ""}" type="button">
-          ${isSaved ? "Saved" : "Save"}
-        </button>
-      </div>
-      <strong>${pathwayLabel}</strong>
-      <span class="pathway-option-hint">${pathway.name === selectedPathway.name ? "Open below" : "Tap to open details"}</span>
-      <button class="pathway-select-button" type="button">
-        ${pathway.name === selectedPathway.name ? "Selected now" : "See details"}
-      </button>
-    `;
-    card.querySelector(".pathway-select-button").addEventListener("click", () => {
-      selectedPathways.set(getAssignmentKey(), pathway.name);
-      renderPathways();
-      renderInterestsAndRoutes();
-      renderSteps();
-      persistState();
-    });
-    card.querySelector(".mini-save-button").addEventListener("click", (event) => {
-      event.stopPropagation();
-      toggleSavedPathway(pathwayKey);
-      renderPathways();
-      updateSavedPathwaysSummary();
-      persistState();
-    });
-    picker.appendChild(card);
-  });
-
-  const detail = document.createElement("article");
-  detail.className = "pathway-card pathway-detail-card";
   const pathwayKey = getPathwayKey(selectedPathway.name);
   const isSaved = hasSavedPathway(pathwayKey);
   const localValueTokens = (sectorCatalog[selectedAssignment.sectorId] || sectorCatalog.general).localValueTokens;
-  detail.innerHTML = `
-    <span class="pathway-meta">🪄 Selected pathway</span>
-    <h3>${getPathwayEmoji(selectedPathway.name)} ${selectedPathway.name}</h3>
-    <p><strong>Explore if:</strong> ${selectedPathway.fit}</p>
-    <p><strong>Local value:</strong> ${selectedPathway.community}</p>
+  const selectedIndex = Math.max(
+    0,
+    pathways.findIndex((pathway) => pathway.name === selectedPathway.name)
+  );
+  const previousPathway = pathways[(selectedIndex - 1 + pathways.length) % pathways.length];
+  const nextPathway = pathways[(selectedIndex + 1) % pathways.length];
+
+  const card = document.createElement("article");
+  card.className = `pathway-card pathway-carousel-card${pathwayFeedbackMode ? " is-confirmed" : ""}`;
+  card.innerHTML = `
+    <div class="pathway-carousel-nav">
+      <button class="pathway-arrow-button" type="button" aria-label="Previous pathway">←</button>
+      <div class="pathway-carousel-title">
+        <span class="pathway-meta">Pathway option</span>
+        <h3>${getPathwayEmoji(selectedPathway.name)} ${selectedPathway.name}</h3>
+      </div>
+      <button class="pathway-arrow-button" type="button" aria-label="Next pathway">→</button>
+    </div>
+    <p class="pathway-carousel-preview"><strong>Good if:</strong> ${selectedPathway.fit}</p>
+    <p class="pathway-carousel-preview"><strong>Helps here by:</strong> ${selectedPathway.community}</p>
     <div class="token-group">
       ${localValueTokens.map((token) => `<span class="token-chip">${token}</span>`).join("")}
     </div>
@@ -1109,17 +1173,34 @@ function renderPathways() {
       <button class="save-pathway-button${isSaved ? " is-saved" : ""}" type="button">
         ${isSaved ? "Saved" : "Save pathway"}
       </button>
+      <span class="pathway-switch-pill">Browse with arrows: ${getPathwayEmoji(previousPathway.name)} ${previousPathway.name} • ${getPathwayEmoji(nextPathway.name)} ${nextPathway.name}</span>
     </div>
   `;
-  detail.querySelector(".save-pathway-button").addEventListener("click", () => {
+
+  const [previousButton, nextButton] = card.querySelectorAll(".pathway-arrow-button");
+  previousButton.addEventListener("click", () => {
+    selectedPathways.set(getAssignmentKey(), previousPathway.name);
+    renderPathways();
+    renderInterestsAndRoutes();
+    renderSteps();
+    persistState();
+  });
+  nextButton.addEventListener("click", () => {
+    selectedPathways.set(getAssignmentKey(), nextPathway.name);
+    renderPathways();
+    renderInterestsAndRoutes();
+    renderSteps();
+    persistState();
+  });
+
+  card.querySelector(".save-pathway-button").addEventListener("click", () => {
     toggleSavedPathway(pathwayKey);
     renderPathways();
     updateSavedPathwaysSummary();
     persistState();
   });
 
-  pathwayList.appendChild(picker);
-  pathwayList.appendChild(detail);
+  pathwayList.appendChild(card);
 }
 
 function renderInterestsAndRoutes() {
@@ -1150,8 +1231,8 @@ function renderInterestsAndRoutes() {
   const sectorRoutes = routeCatalog[selectedAssignment.sectorId] || routeCatalog.general;
 
   const interestLine = [...selectedInterests].length
-    ? `Based on your interests in ${[...selectedInterests].join(", ")}, here are valid ways into ${selectedPathway.name}.`
-    : `Here are multiple valid ways into ${selectedPathway.name}. Add hobbies or interests above to personalize this more.`;
+    ? `Because you care about ${[...selectedInterests].join(", ")}, these are valid ways into ${selectedPathway.name}.`
+    : `These are valid ways into ${selectedPathway.name}. Add interests above to personalize this more.`;
 
   const summary = document.createElement("div");
   summary.className = "route-summary";
@@ -1493,9 +1574,15 @@ async function runTranslation() {
   translationStatus.textContent = "Running translation service...";
   runTranslationButton.disabled = true;
   selectedAssignment = await requestTranslation(rawTitle, subject);
+  pathwayFeedbackMode = "matched";
+  clearTimeout(pathwayFeedbackTimer);
   renderAll();
   translationStatus.textContent = `OpenAI Codex-guided scan complete: "${rawTitle}" now maps to ${selectedAssignment.translationLog.sectorLabel}.`;
   runTranslationButton.disabled = false;
+  pathwayFeedbackTimer = setTimeout(() => {
+    pathwayFeedbackMode = "";
+    renderPathways();
+  }, 360);
   persistState();
 }
 

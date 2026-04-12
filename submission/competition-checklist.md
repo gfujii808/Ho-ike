@@ -3,6 +3,9 @@
 ## AI Showcase
 
 - Publish or host the demo and replace the placeholder URL in [handshake-ai-showcase.md](/Users/gracefujii/Documents/Codex/submission/handshake-ai-showcase.md).
+- Current live URL: [https://gfujii808.github.io/Ho-ike/demo/index.html](https://gfujii808.github.io/Ho-ike/demo/index.html)
+- Root redirect URL: [https://gfujii808.github.io/Ho-ike/](https://gfujii808.github.io/Ho-ike/)
+- Extension mockup URL: [https://gfujii808.github.io/Ho-ike/demo/extension-mockup.html](https://gfujii808.github.io/Ho-ike/demo/extension-mockup.html)
 - Make sure the public root URL opens directly to the main demo, not a repo landing page or localhost.
 - Test the public URL in an incognito window before submitting.
 - Submit the recommended title and description.
@@ -19,6 +22,7 @@
   - keep the `AI Translation Log` visible in the hosted demo
   - mention the vibe-coding workflow in the repo and submission copy
   - keep the extension mockup link visible as the near-term product direction
+  - describe `Shadow DOM` as the real extension isolation strategy for Canvas
 - Make the repo easy to scan:
   - keep the README focused on problem, Codex mechanism, and Hawaiʻi relevance
   - include the visual proof strip in the repo

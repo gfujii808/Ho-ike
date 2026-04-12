@@ -26,8 +26,10 @@ Then Hōʻike offers guided `Talk Story` prompts like `What made you choose this
 
 This matters because students do not always need certainty. They need exposure, language, and a safer first step. Hōʻike makes local futures visible before leaving starts to feel like the only ambitious option.
 
-The student experience is also pseudonymous by default, with handles like `HappyCow01`, so exploration feels lower-stakes while schools can still preserve accountability. And the `Small Steps` section moves students from abstraction to preparation through reachable actions they can do now, this week, and next.
+The student experience is also pseudonymous by default, with classroom-safe handles like `CuriousPueo` or `SunnyMango`, so exploration feels lower-stakes while schools can still preserve accountability. And the `Small Steps` section moves students from abstraction to preparation through reachable actions they can do now, this week, and next.
 
 ## 2:45-3:00 | Close
 
 I built this prototype with Codex using a vibe-coding workflow so I could move quickly on the product logic and focus on the cultural specifics of Hawaiʻi. Hōʻike does not just unhide a curriculum. It unhides a future where local students can see how their skills, their stories, and their communities still belong together.
+
+The near-term product direction is a real browser overlay mounted in a Shadow DOM so the Hōʻike sidebar can live on top of Canvas without Canvas CSS breaking the experience.
