@@ -20,6 +20,10 @@ Extension mockup: [https://gfujii808.github.io/Ho-ike/demo/extension-mockup.html
 
 Pilot brief: [submission/hoike-hidoe-pilot-brief.md](/Users/gracefujii/Documents/Codex/submission/hoike-hidoe-pilot-brief.md)
 
+Figma ship plan: [submission/hoike-figma-ship-plan.md](/Users/gracefujii/Documents/Codex/submission/hoike-figma-ship-plan.md)
+
+Figma prompt pack: [submission/hoike-figma-prompts.md](/Users/gracefujii/Documents/Codex/submission/hoike-figma-prompts.md)
+
 This workspace contains the full submission package:
 
 - `submission/hoike-proposal.md` - the polished proposal
@@ -28,6 +32,8 @@ This workspace contains the full submission package:
 - `submission/handshake-ai-showcase.md` - submission-ready Handshake AI Showcase copy
 - `submission/hoike-founder-brief.md` - a founder-style launch memo for judges
 - `submission/hoike-hidoe-pilot-brief.md` - a pilot and research brief for HIDOE-facing conversations
+- `submission/hoike-figma-ship-plan.md` - the April 12-30 design and shipping timeline
+- `submission/hoike-figma-prompts.md` - focused Figma prompts for the highest-value screens
 - `submission/competition-checklist.md` - packaging checklist for the challenge
 - `demo/index.html` - a lightweight MVP walkthrough
 - `demo/extension-mockup.html` - a near-term Chrome extension direction on top of a Canvas-like page

@@ -559,6 +559,12 @@ const teacherTopVoice = document.getElementById("teacher-top-voice");
 const teacherTopVoiceDetail = document.getElementById("teacher-top-voice-detail");
 const teacherQuestionQueue = document.getElementById("teacher-question-queue");
 const toast = document.getElementById("toast");
+const explainerArchitectureTab = document.getElementById("explainer-architecture-tab");
+const explainerReasoningTab = document.getElementById("explainer-reasoning-tab");
+const explainerResearchTab = document.getElementById("explainer-research-tab");
+const explainerArchitecturePanel = document.getElementById("explainer-architecture-panel");
+const explainerReasoningPanel = document.getElementById("explainer-reasoning-panel");
+const explainerResearchPanel = document.getElementById("explainer-research-panel");
 
 const STORAGE_KEY = "hoike-demo-state-v1";
 const TRANSLATION_DELAY_MS = 700;
@@ -590,6 +596,7 @@ let selectedCohortName = initialCohortName;
 const cohortSavedPathways = persistedState.cohortSavedPathways || {};
 const classroomVotes = new Map(persistedState.classroomVotes || []);
 const selectedPathways = new Map(persistedState.selectedPathways || []);
+const selectedVoices = new Map(persistedState.selectedVoices || []);
 const submittedQuestions = persistedState.submittedQuestions || [];
 const selectedInterests = new Set(persistedState.selectedInterests || []);
 let pathwayFeedbackMode = "";
@@ -655,12 +662,13 @@ function getCurrentCohort() {
   return cohorts.find((cohort) => cohort.name === selectedCohortName) || cohorts[0];
 }
 
-function getCohortBadgeMarkup(cohort = getCurrentCohort()) {
+function getCohortBadgeMarkup(cohort = getCurrentCohort(), options = {}) {
+  const { showName = true, showAccent = true } = options;
   return `
     <span class="cohort-badge-icon" aria-hidden="true">${cohort.icon}</span>
     <div class="cohort-badge-copy">
-      <span class="cohort-badge-name">${cohort.name}</span>
-      <small>${cohort.accent}</small>
+      ${showName ? `<span class="cohort-badge-name">${cohort.name}</span>` : ""}
+      ${showAccent ? `<small>${cohort.accent}</small>` : ""}
     </div>
   `;
 }
@@ -794,6 +802,7 @@ function persistState() {
     cohortSavedPathways,
     classroomVotes: [...classroomVotes.entries()],
     selectedPathways: [...selectedPathways.entries()],
+    selectedVoices: [...selectedVoices.entries()],
     submittedQuestions,
     selectedInterests: [...selectedInterests],
     studentHandle: currentHandle,
@@ -834,25 +843,40 @@ function setViewMode(mode) {
   explainerViewButton.classList.toggle("is-active", isExplainer);
   explainerViewButton.setAttribute("aria-pressed", String(isExplainer));
 
-  viewModeDescription.textContent = isStudent
-    ? "Student View focuses on activity translation, pathway exploration, Local Voices, guided questions, and trackable small steps."
-    : isInstructor
-      ? "Instructor View highlights classroom snapshot signals, invite demand, moderation, and the same pathway context students see."
-      : "Explainer View is for reviewers. It keeps the student and instructor flow visible, while also revealing the Codex-style scan, local-value reasoning, and demo scaffolding.";
+  if (viewModeDescription) {
+    if (isStudent) {
+      viewModeDescription.innerHTML = `
+        <span>Translate what you are already doing into strengths, local pathways, and small next steps.</span>
+        <span>Use Local Voices and guided questions to explore safely.</span>
+      `;
+    } else if (isInstructor) {
+      viewModeDescription.innerHTML = `
+        <span>See classroom snapshots, invite signals, and moderated question flow in one teacher-managed view.</span>
+        <span>Track who students want to hear from and what pathways they keep returning to.</span>
+      `;
+    } else {
+      viewModeDescription.innerHTML = `
+        <span>See the classroom-facing product, the AI reasoning layer, and the local research logic behind the prototype.</span>
+        <span>Use reviewer mode to understand why Hōʻike is built this way and how it stays school-safe.</span>
+      `;
+    }
+  }
   persistState();
 }
 
 function syncIdentitySurfaces() {
   const cohort = getCurrentCohort();
   studentHandle.textContent = currentHandle;
-  studentCohort.textContent = `Class cohort: ${cohort.name}`;
+  if (studentCohort) {
+    studentCohort.textContent = `Class cohort: ${cohort.name}`;
+  }
   teacherClassAlias.textContent = cohort.name;
   cohortSelect.value = cohort.name;
   if (studentClassBadge) {
-    studentClassBadge.innerHTML = getCohortBadgeMarkup(cohort);
+    studentClassBadge.innerHTML = getCohortBadgeMarkup(cohort, { showName: true, showAccent: false });
   }
   if (teacherClassBadge) {
-    teacherClassBadge.innerHTML = getCohortBadgeMarkup(cohort);
+    teacherClassBadge.innerHTML = getCohortBadgeMarkup(cohort, { showName: false, showAccent: false });
   }
   renderStarterInterestProfile();
 }
@@ -878,6 +902,14 @@ function getSelectedPathway() {
     selectedAssignment.pathways.find((pathway) => pathway.name === getSelectedPathwayName()) ||
     selectedAssignment.pathways[0]
   );
+}
+
+function getSelectedVoiceId() {
+  return selectedVoices.get(getAssignmentKey()) || selectedAssignment.voices[0];
+}
+
+function getSelectedVoice() {
+  return voices[getSelectedVoiceId()] || voices[selectedAssignment.voices[0]];
 }
 
 function getVoiceVoteKey(voiceId, cohortName = selectedCohortName) {
@@ -1021,7 +1053,7 @@ function updateSavedPathwaysSummary() {
   savedPathwaysCount.textContent = `${allSavedNames.length} saved`;
   savedPathwaysDetail.textContent =
     allSavedNames.length === 0
-      ? "Saved pathways from across activities appear here so your dashboard keeps your running interests visible."
+      ? "Saved pathways stay visible across activities so you can keep track of what keeps pulling you back."
       : `Saved across the dashboard: ${allSavedNames.join(" • ")}`;
   renderTeacherView();
   persistState();
@@ -1065,7 +1097,7 @@ function renderProfessionalWhy() {
   const interestMarkup = selectedInterestList.length
     ? `
       <div class="signal-cluster interest-influence">
-        <span class="signal-label">💡 Also using your interests</span>
+        <span class="signal-label">Also using your interests</span>
         <div class="signal-list">
           ${selectedInterestList
             .map((interest) => `<span class="signal-chip signal-chip-interest">${getInterestEmoji(interest)} ${interest}</span>`)
@@ -1077,35 +1109,49 @@ function renderProfessionalWhy() {
 
   professionalWhy.innerHTML = `
     <div class="professional-why-topbar">
-      <span class="translation-pill">✨ ${selectedAssignment.translationSource}</span>
-      <span class="translation-pill translation-pill-secondary">OpenAI Codex-guided scan</span>
+      <span class="translation-pill">Live demo</span>
+      <span class="translation-pill translation-pill-secondary">Codex scan</span>
+    </div>
+    <p class="professional-why-process">How this works: Hōʻike scans the activity and surfaces strengths, pathways, and local connections.</p>
+    <div class="professional-why-hero-row">
+      <h3>${selectedAssignment.whyTitle}</h3>
+      <p class="rich-panel-highlight">Big idea: what you already do can point toward strengths, contribution, and local futures here at home.</p>
     </div>
     <div class="professional-why-grid">
-      <div class="professional-why-main">
-        <h3>${selectedAssignment.whyTitle}</h3>
-        <p class="rich-panel-highlight">Big idea: what you already do can point toward strengths, contribution, and local futures here at home.</p>
-        <div class="professional-why-stats">
-          <div class="professional-why-stat">
-            <strong>${signalChips.length}</strong>
-            <span>signals spotted</span>
-          </div>
-          <div class="professional-why-stat">
-            <strong>${selectedAssignment.pathways.length}</strong>
-            <span>pathways opened</span>
-          </div>
+      <div class="signal-cluster skills-card">
+        <span class="signal-label">Skills you're building</span>
+        <div class="signal-list">
+          ${signalChips.map((signal) => `<span class="signal-chip">${signal}</span>`).join("")}
         </div>
-        <p class="professional-why-keyline">${selectedAssignment.whyImpact}</p>
       </div>
-      <div class="professional-why-side">
-        <div class="signal-cluster">
-          <span class="signal-label">✨ What Hōʻike spotted</span>
+      ${selectedInterestList.length
+        ? `
+        <div class="signal-cluster interest-influence">
+          <span class="signal-label">Also using your interests</span>
           <div class="signal-list">
-            ${signalChips.map((signal) => `<span class="signal-chip">${signal}</span>`).join("")}
+            ${selectedInterestList
+              .map((interest) => `<span class="signal-chip signal-chip-interest">${getInterestEmoji(interest)} ${interest}</span>`)
+              .join("")}
           </div>
         </div>
-        ${interestMarkup}
+      `
+        : `<div class="signal-cluster interest-influence interest-influence-empty"></div>`}
+    </div>
+    <div class="professional-why-stats professional-why-stats-wide">
+      <div class="professional-why-stat">
+        <strong>${signalChips.length}</strong>
+        <span>signals spotted</span>
+      </div>
+      <div class="professional-why-stat">
+        <strong>${selectedAssignment.pathways.length}</strong>
+        <span>pathways opened</span>
+      </div>
+      <div class="professional-why-stat">
+        <strong>${selectedAssignment.voices.length}</strong>
+        <span>local voices queued</span>
       </div>
     </div>
+    <p class="professional-why-keyline">${selectedAssignment.whyImpact}</p>
   `;
 }
 
@@ -1153,6 +1199,14 @@ function renderPathways() {
   const card = document.createElement("article");
   card.className = `pathway-card pathway-carousel-card${pathwayFeedbackMode ? " is-confirmed" : ""}`;
   card.innerHTML = `
+    <div class="pathway-progress-lines">
+      ${pathways
+        .map(
+          (_pathway, index) =>
+            `<span class="pathway-progress-line${index === selectedIndex ? " is-active" : ""}"></span>`
+        )
+        .join("")}
+    </div>
     <div class="pathway-carousel-nav">
       <button class="pathway-arrow-button" type="button" aria-label="Previous pathway">←</button>
       <div class="pathway-carousel-title">
@@ -1161,19 +1215,23 @@ function renderPathways() {
       </div>
       <button class="pathway-arrow-button" type="button" aria-label="Next pathway">→</button>
     </div>
-    <p class="pathway-carousel-preview"><strong>Good if:</strong> ${selectedPathway.fit}</p>
-    <p class="pathway-carousel-preview"><strong>Helps here by:</strong> ${selectedPathway.community}</p>
+    <div class="pathway-preview-grid">
+      <div class="pathway-preview-card">
+        <span class="panel-label">Good if</span>
+        <p class="pathway-carousel-preview">${selectedPathway.fit}</p>
+      </div>
+      <div class="pathway-preview-card">
+        <span class="panel-label">Helps here by</span>
+        <p class="pathway-carousel-preview">${selectedPathway.community}</p>
+      </div>
+    </div>
     <div class="token-group">
       ${localValueTokens.map((token) => `<span class="token-chip">${token}</span>`).join("")}
     </div>
-    <p class="pathway-note">
-      Pathway-specific actions move into Small Steps, where Hōʻike ties them back to your original activity and keeps them trackable.
-    </p>
     <div class="pathway-actions">
       <button class="save-pathway-button${isSaved ? " is-saved" : ""}" type="button">
         ${isSaved ? "Saved" : "Save pathway"}
       </button>
-      <span class="pathway-switch-pill">Browse with arrows: ${getPathwayEmoji(previousPathway.name)} ${previousPathway.name} • ${getPathwayEmoji(nextPathway.name)} ${nextPathway.name}</span>
     </div>
   `;
 
@@ -1275,56 +1333,86 @@ function useVoicePrompt(voice) {
 
 function renderVoices() {
   voicesList.innerHTML = "";
+  const availableVoiceIds = selectedAssignment.voices;
+  const selectedVoice = getSelectedVoice();
+  const selectedIndex = Math.max(0, availableVoiceIds.indexOf(selectedVoice.id));
+  const previousVoiceId = availableVoiceIds[(selectedIndex - 1 + availableVoiceIds.length) % availableVoiceIds.length];
+  const nextVoiceId = availableVoiceIds[(selectedIndex + 1) % availableVoiceIds.length];
+  const cohortBaselineVotes = cohortBaseline[selectedCohortName]?.votes?.[selectedVoice.id] || 0;
+  const voteCount =
+    cohortBaselineVotes + (classroomVotes.get(getVoiceVoteKey(selectedVoice.id, selectedCohortName)) || 0);
 
-  selectedAssignment.voices.forEach((voiceId) => {
-    const voice = voices[voiceId];
-    const cohortBaselineVotes = cohortBaseline[selectedCohortName]?.votes?.[voice.id] || 0;
-    const voteCount = cohortBaselineVotes + (classroomVotes.get(getVoiceVoteKey(voice.id, selectedCohortName)) || 0);
-    const card = document.createElement("article");
-    card.className = "voice-card";
-    card.innerHTML = `
-      <div class="voice-header">
-        <div class="voice-header-main">
-          <span class="voice-avatar">${getVoiceAvatar(voice.id)}</span>
-          <div>
-            <span class="voice-chip">📍 ${voice.location}</span>
-            <h3>${voice.name}</h3>
-            <p class="voice-meta">${voice.role}</p>
-          </div>
+  const card = document.createElement("article");
+  card.className = "voice-card voice-carousel-card";
+  card.innerHTML = `
+    <div class="pathway-progress-lines">
+      ${availableVoiceIds
+        .map(
+          (_voiceId, index) =>
+            `<span class="pathway-progress-line${index === selectedIndex ? " is-active" : ""}"></span>`
+        )
+        .join("")}
+    </div>
+    <div class="voice-carousel-nav">
+      <button class="pathway-arrow-button" type="button" aria-label="Previous local voice">←</button>
+      <div class="voice-header-main">
+        <span class="voice-avatar">${getVoiceAvatar(selectedVoice.id)}</span>
+        <div>
+          <span class="voice-chip">${selectedVoice.location} • ${selectedVoice.runtime}</span>
+          <h3>${selectedVoice.name}</h3>
+          <p class="voice-meta">${selectedVoice.role}</p>
         </div>
-        <div class="voice-header-side">
-          <span class="voice-chip">${voice.runtime}</span>
-          <span class="voice-role-chip">${voice.tags[0]}</span>
+      </div>
+      <button class="pathway-arrow-button" type="button" aria-label="Next local voice">→</button>
+    </div>
+    <p class="voice-summary">${selectedVoice.summary}</p>
+    <div class="voice-highlight-grid">
+      <div class="voice-highlight-card">
+        <span class="panel-label">Favorite part</span>
+        <p>${selectedVoice.favoriteThing}</p>
+      </div>
+      <div class="voice-highlight-card">
+        <span class="panel-label">Good for students curious about</span>
+        <div class="signal-list">
+          ${selectedVoice.tags.map((tag) => `<span class="signal-chip">${tag}</span>`).join("")}
         </div>
       </div>
-      <p>${voice.summary}</p>
-      <div class="voice-highlight">
-        <strong>What they love:</strong> ${voice.favoriteThing}
-      </div>
-      <p class="voice-try-now"><strong>Try now:</strong> ${voice.tryNow}</p>
-      <div class="voice-vote-row">
-        <span class="voice-chip">🗳️ ${voteCount} ${selectedCohortName} vote${voteCount === 1 ? "" : "s"}</span>
-      </div>
+    </div>
+    <p class="voice-try-now"><strong>Try now:</strong> ${selectedVoice.tryNow}</p>
+    <div class="voice-footer">
+      <span class="voice-chip">${voteCount} ${selectedCohortName} vote${voteCount === 1 ? "" : "s"}</span>
       <div class="voice-actions">
         <button class="voice-action" type="button" data-action="watch">Watch intro</button>
-        <button class="voice-action" type="button" data-action="ask">Use as question starter</button>
+        <button class="voice-action" type="button" data-action="ask">Use question starter</button>
         <button class="voice-action" type="button" data-action="vote">Vote to invite</button>
       </div>
-    `;
+    </div>
+  `;
 
-    card.querySelector('[data-action="watch"]').addEventListener("click", () => openVoiceDialog(voice));
-    card.querySelector('[data-action="ask"]').addEventListener("click", () => useVoicePrompt(voice));
-    card.querySelector('[data-action="vote"]').addEventListener("click", () => {
-      const voteKey = getVoiceVoteKey(voice.id, selectedCohortName);
-      classroomVotes.set(voteKey, (classroomVotes.get(voteKey) || 0) + 1);
-      renderVoices();
-      renderTeacherView();
-      questionStatus.textContent =
-        `Added a ${selectedCohortName} invite vote for ${voice.name}. A teacher can now see that classroom signal.`;
-      persistState();
-    });
-    voicesList.appendChild(card);
+  const [previousButton, nextButton] = card.querySelectorAll(".pathway-arrow-button");
+  previousButton.addEventListener("click", () => {
+    selectedVoices.set(getAssignmentKey(), previousVoiceId);
+    renderVoices();
+    persistState();
   });
+  nextButton.addEventListener("click", () => {
+    selectedVoices.set(getAssignmentKey(), nextVoiceId);
+    renderVoices();
+    persistState();
+  });
+
+  card.querySelector('[data-action="watch"]').addEventListener("click", () => openVoiceDialog(selectedVoice));
+  card.querySelector('[data-action="ask"]').addEventListener("click", () => useVoicePrompt(selectedVoice));
+  card.querySelector('[data-action="vote"]').addEventListener("click", () => {
+    const voteKey = getVoiceVoteKey(selectedVoice.id, selectedCohortName);
+    classroomVotes.set(voteKey, (classroomVotes.get(voteKey) || 0) + 1);
+    renderVoices();
+    renderTeacherView();
+    questionStatus.textContent =
+      `Added a ${selectedCohortName} invite vote for ${selectedVoice.name}. A teacher can now see that classroom signal.`;
+    persistState();
+  });
+  voicesList.appendChild(card);
 }
 
 function renderTeacherView() {
@@ -1347,23 +1435,23 @@ function renderTeacherView() {
   teacherSaveTotal.textContent = String(totalSaved);
   teacherSaveTotalDetail.textContent =
     totalSaved === 0
-      ? "Bookmarks across the class show which possibilities students want to keep coming back to."
-      : `${totalSaved} pathway save${totalSaved === 1 ? "" : "s"} are helping this class build a running map of interests.`;
+      ? "What this class keeps returning to."
+      : `${totalSaved} saves are mapping class interest.`;
   teacherPendingCount.textContent = String((cohortBaseline[currentCohortName]?.pending || 0) + queueItems.length);
   teacherPendingDetail.textContent =
     queueItems.length === 0
-      ? "Guided questions stay in review until a teacher or program staff member clears them."
-      : `${queueItems.length} question draft${queueItems.length === 1 ? "" : "s"} are ready for teacher review or revision.`;
+      ? "Guided drafts waiting for review."
+      : `${queueItems.length} draft${queueItems.length === 1 ? "" : "s"} ready for review.`;
 
   const topVote = rankedVoices[0];
   if (!topVote || topVote.votes === 0) {
     teacherTopVoice.textContent = "No votes yet";
     teacherTopVoiceDetail.textContent =
-      "When students vote on Local Voices, teachers can see who the class wants to hear from most.";
+      "Who this class most wants to hear from next.";
   } else {
-    teacherTopVoice.textContent = `${topVote.voice.name} (${topVote.votes} votes)`;
-    teacherTopVoiceDetail.textContent =
-      `${currentCohortName} is showing the strongest interest in ${topVote.voice.role.toLowerCase()} pathways right now.`;
+    teacherTopVoice.textContent = topVote.voice.name;
+    teacherTopVoiceDetail.innerHTML =
+      `<span class="teacher-top-votes">${topVote.votes} ${topVote.votes === 1 ? "vote" : "votes"}</span>${topVote.voice.role} • ${topVote.voice.location}`;
   }
 
   rankedVoices.forEach(({ voice, votes }) => {
@@ -1374,17 +1462,21 @@ function renderTeacherView() {
     card.className = "teacher-vote-card";
     card.innerHTML = `
       <div class="teacher-vote-copy">
-        <span class="voice-chip">🎤 ${voice.location}</span>
-        <h3>${voice.name}</h3>
-        <p class="voice-meta">${voice.role}</p>
-        <p class="teacher-vote-description">Students are signaling interest in this pathway for a possible classroom talk story, career-day visit, or moderated Q&A.</p>
-      </div>
-      <div class="teacher-vote-side">
-        <div class="teacher-vote-meta">
-          <strong>${votes}</strong>
-          <span>${currentCohortName} votes</span>
-          <small>Talk story signal</small>
+        <div class="teacher-vote-head">
+          <div class="teacher-vote-identity">
+            <span class="teacher-vote-avatar">${getVoiceAvatar(voice.id)}</span>
+            <div>
+              <h3>${voice.name}</h3>
+              <p class="voice-meta">${voice.role}</p>
+              <p class="teacher-vote-location">${voice.location}</p>
+            </div>
+          </div>
+          <div class="teacher-vote-meta teacher-vote-meta-inline">
+            <strong>${votes}</strong>
+            <span>${currentCohortName} votes</span>
+          </div>
         </div>
+        <p class="teacher-vote-line">${voice.summary}</p>
         <div class="teacher-vote-actions">
           <button class="voice-action" type="button">Invite to talk story</button>
           <button class="voice-action teacher-secondary-action" type="button">Preview prompts</button>
@@ -1561,6 +1653,21 @@ function renderAll() {
   renderSteps();
 }
 
+function setExplainerTab(tab) {
+  const config = {
+    architecture: [explainerArchitectureTab, explainerArchitecturePanel],
+    reasoning: [explainerReasoningTab, explainerReasoningPanel],
+    research: [explainerResearchTab, explainerResearchPanel]
+  };
+
+  Object.entries(config).forEach(([key, [button, panel]]) => {
+    const isActive = key === tab;
+    button?.classList.toggle("is-active", isActive);
+    button?.setAttribute("aria-selected", String(isActive));
+    panel?.classList.toggle("is-active", isActive);
+  });
+}
+
 async function runTranslation() {
   const rawTitle = titleInput.value.trim();
   const subject = subjectInput.value;
@@ -1639,6 +1746,9 @@ document.getElementById("submit-question").addEventListener("click", () => {
 studentViewButton.addEventListener("click", () => setViewMode("student"));
 instructorViewButton.addEventListener("click", () => setViewMode("instructor"));
 explainerViewButton.addEventListener("click", () => setViewMode("explainer"));
+explainerArchitectureTab?.addEventListener("click", () => setExplainerTab("architecture"));
+explainerReasoningTab?.addEventListener("click", () => setExplainerTab("reasoning"));
+explainerResearchTab?.addEventListener("click", () => setExplainerTab("research"));
 
 runTranslationButton.addEventListener("click", runTranslation);
 
@@ -1671,4 +1781,5 @@ titleInput.value = persistedState.assignmentTitleInput || selectedAssignment.tit
 subjectInput.value = persistedState.assignmentSubjectInput || subjectInput.value;
 questionBox.value = persistedState.questionDraft || "";
 setViewMode(currentViewMode);
+setExplainerTab("architecture");
 renderAll();

@@ -27,6 +27,7 @@
   - keep the README focused on problem, Codex mechanism, and Hawaiʻi relevance
   - include the visual proof strip in the repo
   - include the HIDOE-facing pilot brief for post-competition credibility
+  - include the Figma ship plan and prompt pack if design polish is part of the final push
   - make sure `Local Voices` is pluralized consistently across surfaces
 
 ## Demo Video
@@ -38,6 +39,17 @@
 - Trigger `Use as question starter`.
 - End on `Small Steps`.
 - If time allows, briefly show the teacher-managed classroom invite signals and the extension mockup.
+
+## Design Workflow
+
+- Use Figma as a reference and art-direction tool, not as a replacement for the live product.
+- Prioritize only 4 high-value surfaces before April 30:
+  - hero + student dashboard + `Professional Why`
+  - `Pathway Exploration` + `Local Voices`
+  - instructor dashboard
+  - extension overlay
+- Port only the top 2–3 visual improvements from Figma into the live demo before submission.
+- Keep the live demo as the primary judged artifact even if the Figma mockups become polished enough to show alongside it.
 
 ## What to Emphasize
 

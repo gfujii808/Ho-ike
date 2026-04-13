@@ -59,3 +59,7 @@ Hōʻike is strongest when framed as support for local belonging, contribution, 
 ## Near-Term Next Step
 
 The most credible next step after the competition is a small, counselor- or teacher-supported pilot conversation with HIDOE-aligned educators, pathway leaders, or community partners to test whether the current workflow feels useful, safe, and culturally grounded in practice.
+
+## Longer-Timeline Use
+
+If the competition phase succeeds, the current demo and mockup system can become the basis for a late Fall or Winter 2026 research or pilot package. At that stage, the strongest next layer would likely be a cleaner educator-facing deck, a refined pilot protocol, and a tighter evaluation model rather than a broad new feature push.
