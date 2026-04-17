@@ -1,8 +1,13 @@
 # Competition Checklist
 
+- Follow the weekly stop plan in [week-plan-through-monday.md](/Users/gracefujii/Documents/Codex/submission/week-plan-through-monday.md).
+- Treat `Monday, April 20, 2026` as the `submission-ready demo` stopping point.
+- After `Sunday, April 19, 2026 at 7:00 PM PT`, only fix true blockers and then switch to midterms.
+- Keep the final-submission reminder for `Tuesday, April 28, 2026 at 10:00 AM PT`.
+
 ## AI Showcase
 
-- Publish or host the demo and replace the placeholder URL in [handshake-ai-showcase.md](/Users/gracefujii/Documents/Codex/submission/handshake-ai-showcase.md).
+- Verify the final public URL in [handshake-ai-showcase.md](/Users/gracefujii/Documents/Codex/submission/handshake-ai-showcase.md).
 - Current live URL: [https://gfujii808.github.io/Ho-ike/demo/index.html](https://gfujii808.github.io/Ho-ike/demo/index.html)
 - Root redirect URL: [https://gfujii808.github.io/Ho-ike/](https://gfujii808.github.io/Ho-ike/)
 - Extension mockup URL: [https://gfujii808.github.io/Ho-ike/demo/extension-mockup.html](https://gfujii808.github.io/Ho-ike/demo/extension-mockup.html)
@@ -19,8 +24,8 @@
   - which AI tool was used
 - Make the Codex execution legible:
   - keep the paste-any-activity flow
-  - keep the `AI Translation Log` visible in the hosted demo
-  - mention the vibe-coding workflow in the repo and submission copy
+  - keep the `Hōʻike scan log` visible in the hosted demo
+  - mention the build workflow briefly, but keep the product value proposition primary
   - keep the extension mockup link visible as the near-term product direction
   - describe `Shadow DOM` as the real extension isolation strategy for Canvas
 - Make the repo easy to scan:
@@ -34,9 +39,9 @@
 
 - Use the paste-any-activity flow first.
 - Show the `Professional Why`.
-- Pause briefly on the `AI Translation Log`.
+- Pause briefly on the `Hōʻike scan log`.
 - Open one `Local Voices` card.
-- Trigger `Use as question starter`.
+- Trigger `Use question starter`.
 - End on `Small Steps`.
 - If time allows, briefly show the teacher-managed classroom invite signals and the extension mockup.
 

@@ -9,10 +9,12 @@ Hōʻike addresses that gap by unhiding the hidden curriculum of career navigati
 The product concept combines three layers into one school-safe system:
 
 - `Curriculum Translation`: school tasks are translated into a `Professional Why` and a `Skills to Stories` layer that explains why an assignment matters, what strengths it reveals, and how those strengths might serve Hawaiʻi.
-- `Local Voices`: students meet Hawaiʻi professionals through short, moderated introductions that feel closer to a protected LinkedIn than to open social media.
+- `Local Voices`: students meet Hawaiʻi professionals through short, moderated introductions inside a school-safe discovery layer designed for exploration, not open networking.
 - `Small Steps`: each pathway ends with realistic follow-up actions a student can take immediately, this week, and next.
 
-In phase 1, Hōʻike is a lightweight browser-based MVP or demo environment that can be shown quickly without requiring full institutional integration. In later phases, it becomes a school-sanctioned pilot and then a statewide bridge into dual-credit, postsecondary pathways, internships, and eventually Handshake-supported college-to-career visibility.
+Hawaiʻi is the first context, not the only one. The underlying product pattern can extend to other underserved communities where students face similar hidden-curriculum barriers and low-visibility local futures, but the current product is intentionally grounded in Hawaiʻi.
+
+In phase 1, Hōʻike is a lightweight browser-based MVP or demo environment that can be shown quickly without requiring full institutional integration. In later phases, it becomes a school-sanctioned pilot and then a broader bridge into dual-credit, postsecondary pathways, internships, and other early transitions.
 
 ## The Problem
 
@@ -93,7 +95,7 @@ Each profile includes:
 - a short answer to `What students can try now`
 - a short answer to `What I wish I knew in high school`
 
-This should feel like a protected, school-safe LinkedIn for exploration. Students can browse humans, not just occupations. They can see that local futures are populated by real people rather than distant abstractions.
+This should feel like a school-safe discovery layer for exploration. Students can browse humans, not just occupations. They can see that local futures are populated by real people rather than distant abstractions.
 
 ### 4. Ask a Question
 
@@ -173,13 +175,13 @@ The challenge context matters. Handshake is not the first runtime surface for H�
 
 In the near term, Handshake is the platform where the project can be showcased as a credible AI career-navigation concept. Handshake's AI Showcase is explicitly designed for students and alumni to share AI projects, explain the problem being addressed, and demonstrate how a tool works.[^7]
 
-In the longer term, Handshake becomes the postsecondary bridge. Once students move from HIDOE into dual-credit, community college, university, or internship pathways, the same exploration habits can continue in a more mature environment:
+In the longer term, Handshake can serve as a postsecondary bridge. Once students move from HIDOE into dual-credit, community college, university, or internship pathways, the same exploration habits can continue in a more mature environment:
 
 - local pathways become internships and early-career opportunities
 - guided questions become more independent outreach
 - school-safe exploration evolves into workforce-facing visibility
 
-That is why the title references the `Handshake Codex Ecosystem` rather than a single app integration. Hōʻike is designed to start earlier than Handshake and then connect forward into the networks Handshake already supports.
+That is why the title references the `Handshake Codex Ecosystem` rather than a single app integration. Hōʻike is designed to start earlier than Handshake and then connect forward into the networks Handshake already supports. The current browser prototype already proves the core student workflow, while the extension mockup shows a credible deployment surface for that same workflow rather than a different future product.
 
 ## Implementation Roadmap
 
@@ -219,7 +221,7 @@ Pilot additions:
 
 The student experience should remain pseudonymous and low-stakes even as school accountability improves.
 
-### Phase 3: Statewide and Postsecondary Bridge
+### Phase 3: Postsecondary and Ecosystem Bridge
 
 At scale, Hōʻike can connect school-based exploration to real pathway infrastructure across Hawaiʻi.
 
@@ -228,7 +230,7 @@ Expansion directions:
 - employer and alumni participation through local sector partnerships
 - stronger linkage to community college and university exploration
 - dual-credit and internship readiness pathways
-- eventual transition into Handshake-supported college-to-career visibility
+- expansion only after school-safe classroom and pilot workflows are proven
 
 The critical design principle is continuity. Students should not feel that they are moving from one disconnected system to another. They should feel that the same hidden curriculum is becoming gradually more legible as they advance.
 
@@ -259,7 +261,7 @@ Longer-term ambition:
 
 Hawaiʻi's brain drain cannot be solved by a single app. But it will also not be solved if local opportunity remains socially and professionally illegible to the students who most need it. Hōʻike offers a different kind of intervention: one that treats career navigation as a socio-technical problem, not only an economic one.
 
-By unhiding the hidden curriculum of opportunity, Hōʻike helps local futures in Hawaiʻi become visible, desirable, and attainable. With Codex providing constrained intelligence, professionals providing human context, and Handshake serving as a future bridge into broader professional networks, Hōʻike turns career exploration from a vague aspiration into a practiced pathway.
+By unhiding the hidden curriculum of opportunity, Hōʻike helps local futures in Hawaiʻi become visible, desirable, and attainable. With Codex providing constrained intelligence, professionals providing human context, and a credible pathway from school-safe exploration into later postsecondary ecosystems, Hōʻike turns career exploration from a vague aspiration into a practiced pathway.
 
 ## References
 

@@ -192,6 +192,6 @@ Position Hōʻike as:
 ## Success Checks
 
 - A judge can understand the product in under `30 seconds`.
-- The `Professional Why` moment clearly reads as Codex-guided.
+- The `Professional Why` moment clearly reads as the Hōʻike translation moment.
 - The live demo and extension mockup still feel like the same product.
 - The README, proof strip, AI Showcase copy, and pilot brief all tell one coherent story.

@@ -6,12 +6,14 @@ Hōʻike is a Hawaiʻi-centered AI pathway navigator designed for HIDOE middle a
 
 Hōʻike responds by unhiding the hidden curriculum of career navigation. When students can translate what they are already doing in school into stories about strengths, interests, and ways of giving back, and when those futures are introduced by real people from Hawaiʻi, local pathways become more visible, more desirable, and more attainable.
 
+Hawaiʻi is the first context, not the only one. The core product pattern can extend to other underserved communities where students face similar hidden-curriculum barriers and low-visibility local futures, but the current product is intentionally grounded in Hawaiʻi.
+
 ## What the Product Does
 
 Hōʻike combines three ideas in one protected system:
 
 - `Curriculum Translation`: a `Professional Why` and `Skills to Stories` layer explain why a school assignment matters, what it reveals about a student's strengths, and how those strengths might serve Hawaiʻi.
-- `Local Voices`: moderated profiles and short intro videos let students meet local professionals in a school-safe environment that feels like a protected LinkedIn for exploration.
+- `Local Voices`: moderated profiles and short intro videos let students meet local professionals in a school-safe discovery layer designed for exploration, not open networking.
 - `Small Steps`: every pathway ends with realistic actions such as saving a pathway, drafting a question, talking with a counselor, joining a club, or trying a mini project.
 
 Students are not pushed into adult-style networking. Instead, they use a guided `Ask a Question` flow with prompt starters that lower the barrier to outreach:
@@ -36,6 +38,8 @@ Handshake matters in two ways:
 - now, as the showcase layer for presenting the concept and demonstrating its relevance to career exploration
 - later, as a bridge into the college-to-career ecosystem once students age into internships, postsecondary pathways, and early-career visibility
 
+The current browser prototype already proves the core loop. The Canvas extension mockup shows a credible deployment surface for that same loop rather than a different future product.
+
 ## Safety by Design
 
 Hōʻike is pseudonymous by default. A student might appear as `HappyCow01` and provide only self-entered interests, goals, and constraints needed for guidance. Professionals do not see student legal names, and there are no open inboxes or unsupervised employer contacts in the MVP. At the same time, authorized school staff can resolve misuse if accountability is necessary.
@@ -59,10 +63,10 @@ This model lowers the social risk for students while also protecting participati
 - teacher-managed cohort spaces such as `PenguinPod`
 - student voting to invite selected professionals into classroom discussions
 
-`Phase 3: Statewide and Postsecondary Bridge`
+`Phase 3: Postsecondary and ecosystem bridge`
 
-- deeper links to local employers, alumni, and sector partnerships
-- bridges into dual-credit, UH pathways, internships, and eventual Handshake visibility
+- deeper links into dual-credit, UH pathways, internships, and other early postsecondary transitions
+- expansion only after school-safe classroom and pilot workflows are proven
 
 ## Why This Matters
 

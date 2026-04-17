@@ -12,19 +12,19 @@ AI Showcase requires a URL. Recommended option: host the demo as a static page a
 
 ## Recommended Description
 
-Hōʻike Explorer is a Codex-built browser prototype for HIDOE students. It translates class assignments into a Professional Why, Hawaiʻi pathway exploration, local professional discovery, and guided next steps. Instead of telling first-gen students to “just network,” it reduces informational frictions by giving them safer prompt starters and clearer local futures inside a familiar school workflow.
+Hōʻike Explorer is a Codex-built browser prototype for HIDOE students. It translates class assignments into a Professional Why, Hawaiʻi pathway exploration, local professional discovery, and guided next steps. Built for Hawaiʻi first, it reduces informational frictions by giving students safer prompt starters and clearer local futures inside a familiar school workflow.
 
 Character count: `446`
 
 ## Alternate Description
 
-I built Hōʻike Explorer with Codex using a vibe-coding workflow. Paste in a class assignment and Hōʻike translates it into a Professional Why, Hawaiʻi growth-sector pathway exploration, local professional discovery, and moderated `Talk Story` prompt starters. It unhides the hidden curriculum of career navigation and turns vague ambition into visible, actionable next steps for students.
+I built Hōʻike Explorer with Codex. Paste in a class assignment and Hōʻike translates it into a Professional Why, Hawaiʻi growth-sector pathway exploration, local professional discovery, and moderated `Talk Story` prompt starters. Hawaiʻi is the first context, but the underlying model can extend to other underserved communities facing the same hidden-curriculum barriers.
 
 Character count: `439`
 
 ## Stronger Round 1 Option
 
-Hawaiʻi students are often told to explore careers without being shown the script. Hōʻike Explorer is a Codex-built browser prototype that translates class assignments into a Professional Why, Hawaiʻi pathway exploration, local professionals to learn from, and guided `Talk Story` prompts. Built with a vibe-coding workflow, it reduces informational frictions for first-gen students and makes local futures more visible, desirable, and attainable.
+Hawaiʻi students are often told to explore careers without being shown the script. Hōʻike Explorer is a Codex-built browser prototype that translates class assignments into a Professional Why, Hawaiʻi pathway exploration, local professionals to learn from, and guided `Talk Story` prompts. It reduces informational frictions for first-gen students and shows how the same product pattern could support other underserved communities too.
 
 Character count: `477`
 

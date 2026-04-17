@@ -4,7 +4,7 @@
   <rect x="34" y="34" width="1372" height="392" rx="28" fill="#FFFDF8"/>
 
   <text x="72" y="88" fill="#194D3D" font-family="'Red Hat Display', Arial, Helvetica, sans-serif" font-size="24" font-weight="700">Hōʻike Demo Proof Strip</text>
-  <text x="72" y="122" fill="#5A544B" font-family="'Lexend Deca', Arial, Helvetica, sans-serif" font-size="17">Dynamic Codex-guided flow for judges: paste an activity, translate it, explore local pathways, meet Local Voices, and take one next step.</text>
+  <text x="72" y="122" fill="#5A544B" font-family="'Lexend Deca', Arial, Helvetica, sans-serif" font-size="17">Dynamic Hōʻike flow for judges: paste an activity, translate it, explore pathways, meet Local Voices, and take one next step.</text>
 
   <g transform="translate(68 158)">
     <rect width="244" height="212" rx="28" fill="#FFE5D7"/>
@@ -24,7 +24,7 @@
     <rect x="114" y="166" width="94" height="10" rx="5" fill="#FCEFF4"/>
     <text x="28" y="38" fill="#7E2A1F" font-family="'Lexend Deca', Arial, Helvetica, sans-serif" font-size="13" font-weight="700">🌺 Step 2</text>
     <text x="18" y="82" fill="#1F2328" font-family="'Red Hat Display', Arial, Helvetica, sans-serif" font-size="21" font-weight="700">Professional Why</text>
-    <text x="18" y="116" fill="#5A544B" font-family="'Lexend Deca', Arial, Helvetica, sans-serif" font-size="13">Codex-guided translation surfaces</text>
+    <text x="18" y="116" fill="#5A544B" font-family="'Lexend Deca', Arial, Helvetica, sans-serif" font-size="13">Hōʻike translation surfaces</text>
     <text x="18" y="134" fill="#5A544B" font-family="'Lexend Deca', Arial, Helvetica, sans-serif" font-size="13">strengths, signals, and local value.</text>
   </g>
 
@@ -54,8 +54,8 @@
     <rect width="244" height="212" rx="28" fill="#E5ECF8"/>
     <rect x="18" y="18" width="86" height="28" rx="14" fill="#EFF4FB"/>
     <circle cx="198" cy="184" r="18" stroke="#194D3D" stroke-width="8"/>
-    <text x="28" y="38" fill="#7E2A1F" font-family="'Lexend Deca', Arial, Helvetica, sans-serif" font-size="13" font-weight="700">✅ Step 5</text>
-    <text x="18" y="82" fill="#1F2328" font-family="'Red Hat Display', Arial, Helvetica, sans-serif" font-size="20" font-weight="700">Take small steps</text>
+    <text x="28" y="38" fill="#7E2A1F" font-family="'Lexend Deca', Arial, Helvetica, sans-serif" font-size="13" font-weight="700">💬✅ Steps 5–6</text>
+    <text x="18" y="82" fill="#1F2328" font-family="'Red Hat Display', Arial, Helvetica, sans-serif" font-size="20" font-weight="700">Ask + take next steps</text>
     <text x="18" y="116" fill="#5A544B" font-family="'Lexend Deca', Arial, Helvetica, sans-serif" font-size="13">Track progress, save ideas, and</text>
     <text x="18" y="134" fill="#5A544B" font-family="'Lexend Deca', Arial, Helvetica, sans-serif" font-size="13">send guided questions to review.</text>
   </g>

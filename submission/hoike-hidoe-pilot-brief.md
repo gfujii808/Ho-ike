@@ -35,7 +35,7 @@ One practical first pilot could involve:
 - 2 to 5 middle or high school classrooms, advisories, or pathway programs
 - a teacher-managed class alias such as `PueoPod` or `HonuHui`
 - student use during regular classroom or advisory time
-- a moderated pool of simulated or staff-reviewed `Local Voices`
+- a moderated pool of staff-reviewed `Local Voices`, with simulated examples where needed
 - a short feedback cycle with teachers, counselors, and students
 
 ## What To Measure

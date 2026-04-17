@@ -62,8 +62,8 @@ PROFESSIONAL WHY
 This should be the most visually important card on the screen.
 Include:
 - small labels:
-  - Live translation demo
-  - OpenAI Codex-guided scan
+  - Live demo
+  - Hōʻike scan
 - large headline like:
   “Science becomes place-based stewardship.”
 - one short highlight statement
@@ -192,3 +192,197 @@ Design goals:
 - Use Figma to improve hierarchy, rhythm, and visual finish, not to invent new product modules.
 - If a Figma result is beautiful but less clear than the live demo, do not port it into code.
 - Before April 30, only port the top `2–3` most valuable visual upgrades from Figma into the live demo.
+
+## Prompt 5: Lighter Student Flow Refinement
+
+Use this after reviewing the current live student view. This prompt is for making the existing Step 2–4 system feel lighter, airier, and more premium without changing the product logic.
+
+```text
+Refine the existing Hōʻike Explorer student workflow so it feels lighter, cleaner, and more premium while keeping the exact same product logic.
+
+Important:
+- do not redesign the product from scratch
+- do not add new modules
+- do not remove the core flow
+- keep the existing content model:
+  - Professional Why
+  - Pathway Exploration
+  - Local Voices
+  - Small Steps
+- keep the same school-safe, Hawaiʻi-centered product concept
+
+Goal:
+Make the student experience feel closer to a premium Figma dashboard and less like stacked cards. The key improvement should be visual lightness, spacing rhythm, and stronger composition.
+
+Priorities:
+1. Professional Why should feel like one elegant hero card, not several sub-panels.
+2. Pathway Exploration should feel like one large clickthrough card with minimal internal boxing.
+3. Local Voices should feel like a featured profile experience with a quote-centered layout.
+4. The overall student flow should use fewer borders, fewer nested boxes, and more breathing room.
+
+Keep:
+- asymmetry where it helps
+- top progress lines for Pathways and Local Voices
+- left/right arrows outside the main card when possible
+- chips for supporting metadata
+- one primary action per card
+- soft flat color blocks, not gradients
+
+Design direction:
+- lighter fills
+- softer subcards
+- fewer outlined regions
+- stronger whitespace
+- calmer card stacking
+- premium, rounded, student-friendly, culturally grounded
+
+Typography:
+- strong headline hierarchy
+- short support lines
+- no dense paragraphs
+
+Do not:
+- add a sidebar to the student screen
+- introduce enterprise SaaS visuals
+- turn Hōʻike into a generic jobs browser
+- over-explain the interface
+
+Return one student-facing screen that includes:
+- Professional Why
+- Pathway Exploration
+- Local Voices
+
+The result should feel:
+- lighter than the current implementation
+- cleaner than a hackathon prototype
+- still clearly Hōʻike
+- still believable as a browser product for HIDOE students
+```
+
+## Prompt 6: Post-Port Student Polish
+
+Use this after porting the current Figma-inspired improvements into code. This is not for a redesign. It is for a final composition polish pass on the existing live student flow.
+
+```text
+Refine the current Hōʻike Explorer student workflow after a Figma-inspired code port.
+
+Important:
+- do not redesign the product
+- do not add new modules
+- keep the same Hōʻike flow:
+  - Professional Why
+  - Pathway Exploration
+  - Local Voices
+  - Small Steps
+- keep the same school-safe, Hawaiʻi-centered concept
+
+Goal:
+Make the live student flow feel lighter, more premium, and more compositionally disciplined than the current coded version.
+
+Focus on:
+1. Professional Why as one elegant hero card with stronger headline hierarchy
+2. Pathway Exploration as one large clickthrough card with minimal internal boxing
+3. Local Voices as a featured profile experience with a quote-centered layout
+4. Better spacing rhythm between all three sections
+
+Keep:
+- soft flat fills
+- asymmetry where it helps
+- progress lines at the top of Pathways and Local Voices
+- arrows outside the card when possible
+- chips as light metadata
+- one primary action per card
+
+Improve:
+- visual lightness
+- whitespace
+- alignment
+- card hierarchy
+- calmness of the overall student flow
+
+Do not:
+- add sidebars
+- add enterprise UI
+- add extra helper text if the interface is already understandable
+- overstate labor-market data or generic jobs-browser language
+
+Return one student-facing screen with:
+- Professional Why
+- Pathway Exploration
+- Local Voices
+
+The result should feel:
+- lighter than the current live build
+- cleaner than a hackathon prototype
+- still clearly Hōʻike
+- still believable as a browser product for HIDOE students
+```
+
+## Prompt 7: Student Layout Balance Pass
+
+Use this after Prompt 6 if the live student view still feels uneven. This prompt is for layout balance and screen-space use, not for inventing new UI.
+
+```text
+Refine the current Hōʻike Explorer student screen so it feels more balanced, more intentional, and less patchy in how it uses horizontal space.
+
+Important:
+- do not redesign the product
+- do not add new modules
+- keep the same Hōʻike content model:
+  - Student dashboard
+  - Professional Why
+  - Pathway Exploration
+  - Local Voices
+  - Small Steps
+- keep the same school-safe, Hawaiʻi-centered product concept
+
+Goal:
+Improve layout balance, text distribution, and use of width across the student experience while keeping the interface light and premium.
+
+Focus areas:
+1. Student dashboard
+- make the 3 columns feel intentionally weighted
+- identity column = medium
+- starter signals = widest
+- saved ideas = narrowest
+- reduce awkward empty space
+
+2. Professional Why
+- make it feel like one elegant hero card
+- reduce redundancy
+- let the main headline/body lead
+- place “Big idea,” “Skills you’re building,” and “Also using your interests” in a cleaner shared supporting row
+- avoid stacked sub-panels
+
+3. Local Voices
+- use the full width of the card more consciously
+- let the quote and summary breathe across the card
+- keep the profile subcard compact and clear
+
+4. Small Steps
+- keep the asymmetry, but make the left progress block more compact
+- let the right-side linked-selection text use more width
+- rely on the visuals instead of extra descriptive text
+
+Keep:
+- borderless or near-borderless feel
+- soft flat fills
+- asymmetry where it helps
+- rounded cards
+- strong headline hierarchy
+- minimal helper text
+- progress lines and arrows for browseable sections
+
+Do not:
+- add sidebars
+- add more cards inside cards
+- add enterprise dashboard patterns
+- over-explain the interface
+
+The result should feel:
+- lighter
+- more balanced
+- more intentional in its use of width
+- still clearly Hōʻike
+- still believable as a browser product for HIDOE students
+```

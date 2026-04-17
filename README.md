@@ -54,7 +54,7 @@ In the demo, Codex is represented as the reasoning layer that:
 - infers strengths and signals from that starting point
 - maps those signals into Hawaiʻi-relevant pathway options
 - surfaces school-safe Local Voices and guided next steps
-- exposes that reasoning in the `AI Translation Log` for reviewers
+- exposes that reasoning in the `Hōʻike scan log` for reviewers
 
 The repo and UI are intentionally built to make that execution visible, not hidden behind static copy.
 
@@ -66,7 +66,7 @@ The main demo is not only a slideshow of preset screens. It supports a live `pas
 - runs in-browser matching against pathway and sector logic
 - generates a new `Professional Why`
 - generates pathway options, Local Voices matches, and Small Steps tied to that input
-- exposes the reasoning in the `AI Translation Log`
+- exposes the reasoning in the `Hōʻike scan log`
 
 Preset assignments and simulated `Local Voices` profiles are still included so judges can move quickly through the product, but the core translation path is functional and input-driven rather than a fixed storyboard.
 
@@ -86,13 +86,13 @@ Hōʻike is not framed as a throwaway contest artifact. The prototype is intenti
 
 ## What Judges Should Notice
 
-- `Execution`: the main demo includes a paste-any-activity flow and an `AI Translation Log` that make the Codex-guided reasoning legible instead of hiding it behind static marketing copy.
+- `Execution`: the main demo includes a paste-any-activity flow and a `Hōʻike scan log` that make the reasoning legible instead of hiding it behind static marketing copy.
 - `Usefulness / Value`: the product focuses on a real workflow problem for Hawaiʻi students by reducing informational frictions around pathway exploration, Local Voices discovery, and safer first questions.
 - `Polish / Thoughtfulness`: the prototype includes pseudonymous student handles, moderated question flows, cohort-aware classroom signals, concrete `Do Now / Try This Week / Explore Next` follow-up steps, and a documented `Shadow DOM` extension-isolation strategy for a real Canvas overlay.
 
 ## Built With Codex
 
-This project was developed using a vibe-coding workflow: natural-language prompting and iterative guidance with an AI coding assistant to generate, refine, and debug the prototype. That workflow was especially useful for:
+This project was developed through a prompt-driven build workflow: natural-language prompting and iterative guidance with an AI coding assistant to generate, refine, and debug the prototype. That workflow was especially useful for:
 
 - building the browser-based demo flow quickly
 - iterating on CSS and interaction details across both the main demo and extension mockup
@@ -103,6 +103,6 @@ This project was developed using a vibe-coding workflow: natural-language prompt
 
 - The main hosted demo is the primary judged artifact.
 - The extension mockup is a high-fidelity product-direction surface, not a production Canvas extension.
-- The `AI Translation Log` is intentionally visible in the main demo so reviewers can see how the assignment-to-pathway reasoning works.
+- The `Hōʻike scan log` is intentionally visible in the main demo so reviewers can see how the assignment-to-pathway reasoning works.
 - `Local Voices` profiles are simulated for presentation purposes.
 - The public ship target should open directly to `demo/index.html`, with `demo/extension-mockup.html` as the secondary artifact.

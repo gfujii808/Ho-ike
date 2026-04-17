@@ -17,7 +17,7 @@
       <header class="hero">
         <div class="hero-copy reveal">
           <p class="eyebrow">Hōʻike Explorer</p>
-          <h1>Revealing the hidden curriculum for attainable local futures in Hawai'i.</h1>
+          <h1>Revealing the hidden curriculum for attainable local futures in Hawaiʻi.</h1>
           <div class="hero-mode-switch">
             <div class="toggle-buttons hero-toggle-buttons" role="tablist" aria-label="View mode">
               <button id="student-view-button" class="toggle-button is-active" type="button" aria-pressed="true">
@@ -34,9 +34,11 @@
           </div>
         </div>
         <div class="hero-panel reveal">
-          <div class="panel-label">How Hōʻike works</div>
           <p class="hero-panel-lede">
-            Hōʻike turns assignments, hobbies, and community activities into attainable dreams that can grow into meaningful futures here in Hawai'i.
+            Start from schoolwork, hobbies, or causes you already care about.
+          </p>
+          <p class="hero-panel-support">
+            Hōʻike turns that starting point into local pathways, safer questions, and clearer next steps by making the hidden curriculum more legible here at home.
           </p>
           <div class="hero-visual-board" aria-hidden="true">
             <article class="hero-visual-card hero-visual-coral">
@@ -45,16 +47,12 @@
             </article>
             <article class="hero-visual-card hero-visual-mint">
               <span class="hero-visual-emoji">🧭</span>
-              <strong>Compare pathways without pressure</strong>
-            </article>
-            <article class="hero-visual-card hero-visual-sky">
-              <span class="hero-visual-emoji">💬</span>
-              <strong>Ask safer questions with support</strong>
+              <strong>Explore pathways without pressure</strong>
             </article>
           </div>
           <div class="hero-notes hero-notes-in-panel hero-notes-single">
             <div class="note-card">
-              <span>Privacy model</span>
+              <span>Privacy</span>
               <strong>Pseudonymous by default</strong>
               <small>Visible to professionals as a handle, resolvable by staff only if needed.</small>
             </div>
@@ -66,17 +64,12 @@
         <section class="card section-warm reveal" data-view-surface="student-only">
           <div class="section-heading compact">
             <div>
-              <p class="eyebrow">Student Dashboard</p>
               <h2>Your profile and saved ideas</h2>
             </div>
-            <p class="section-copy compact-copy">
-              Keep your pseudonymous profile, starter signals, and saved pathways in one place.
-            </p>
           </div>
           <div class="student-scoreboard">
             <div class="student-profile-card">
               <span class="panel-label">Student identity</span>
-              <div id="student-class-badge" class="cohort-badge-card"></div>
               <div class="student-handle-row">
                 <strong id="student-handle">CuriousPueo</strong>
                 <button id="generate-handle" type="button" class="handle-refresh-button" aria-label="Refresh pseudonymous handle">⟲</button>
@@ -90,14 +83,13 @@
               </select>
             </div>
             <div class="student-summary-card student-signal-card">
-              <span class="panel-label">Starter signals</span>
               <div id="starter-interest-profile" class="starter-interest-profile"></div>
             </div>
             <div class="student-summary-card student-jersey-card">
               <span class="panel-label">Saved ideas</span>
               <strong id="saved-pathways-count">0</strong>
               <span class="student-jersey-label">Pathway saves</span>
-              <small id="saved-pathways-detail">Saved pathways stay visible across activities so you can keep track of what keeps pulling you back.</small>
+              <small id="saved-pathways-detail">Save ideas you want to come back to.</small>
             </div>
           </div>
         </section>
@@ -176,7 +168,7 @@
                 </article>
                 <article class="explainer-summary-card">
                   <span class="panel-label">Extension direction</span>
-                  <strong>Canvas overlay later, with Shadow DOM isolation.</strong>
+                  <strong>A credible Canvas-side deployment surface, isolated so the LMS cannot break the workflow.</strong>
                 </article>
               </div>
             </div>
@@ -257,21 +249,19 @@
         </section>
 
         <section id="step-1" class="card assignment-card section-warm reveal" data-view-surface="student-only">
-          <div class="section-heading">
+          <div class="section-heading compact">
             <div>
               <p class="eyebrow">Step 1</p>
               <h2>Translate an activity</h2>
+              <p class="section-copy step-subcopy">
+                Start with one thing you already did or care about.
+              </p>
             </div>
-            <p class="section-copy">
-              Start with something you already did, made, liked, or cared about.
-              Hōʻike uses that starting point to reveal strengths, stories, and
-              local directions you could explore next.
-            </p>
           </div>
           <div class="generator-shell">
             <div class="generator-grid">
               <label class="generator-field" for="assignment-title-input">
-                <span class="input-label">Paste assignment title, activity, or interest</span>
+                <span class="input-label">Assignment, activity, or interest</span>
                 <input
                   id="assignment-title-input"
                   class="text-input"
@@ -297,21 +287,24 @@
             </div>
             <div class="generator-actions">
               <button id="run-translation" class="primary-action" type="button">
-                Run AI Translation
+                Translate
               </button>
               <span id="translation-status" class="status-text">
-                Paste any assignment title, activity, or interest to show an OpenAI Codex-guided translation moment.
+                Finds strengths and local directions.
               </span>
             </div>
           </div>
-          <p class="mini-label">Preset examples</p>
-          <div class="assignment-list" id="assignment-list"></div>
-          <div class="activity-bridge">
-            <div class="activity-bridge-copy">
-              <span class="panel-label">Or build from your starter profile</span>
-              <p class="section-copy">Start from hobbies, causes, and strengths that already feel like you.</p>
+          <div class="step1-secondary-grid">
+            <div class="step1-secondary-block">
+              <p class="mini-label">Or try</p>
+              <div class="assignment-list" id="assignment-list"></div>
             </div>
-            <div id="interest-list" class="interest-list"></div>
+            <div class="activity-bridge">
+              <div class="activity-bridge-copy">
+                <span class="panel-label">Or use your profile</span>
+              </div>
+              <div id="interest-list" class="interest-list"></div>
+            </div>
           </div>
         </section>
 
@@ -332,24 +325,25 @@
               <div>
                 <p class="eyebrow">Step 3</p>
                 <h2>Hawaiʻi Pathway Exploration</h2>
+                <p class="section-copy step-subcopy">Three ways from today to tomorrow.</p>
               </div>
             </div>
             <div id="pathway-list" class="pathway-list"></div>
             <div class="integrated-pathway-shell">
-              <span class="panel-label">Different Ways In</span>
+              <span class="panel-label">More paths</span>
               <div id="pathway-routes" class="pathway-routes pathway-routes-simple"></div>
             </div>
           </article>
         </section>
 
         <section id="step-4" class="card section-mint reveal" data-view-surface="student-only">
-          <div class="section-heading">
-            <div>
+            <div class="section-heading">
+              <div>
               <p class="eyebrow">Step 4</p>
                 <h2>Local Voices</h2>
             </div>
             <p class="section-copy">
-              School-safe local professionals share short intros, pathway context, and what you can try next.
+              School-safe local professionals share short intros and next steps.
             </p>
           </div>
           <p class="sim-note">All Local Voices profiles in this demo are simulated for presentation purposes.</p>
@@ -359,8 +353,8 @@
         <section class="card section-sky reveal" data-view-surface="instructor">
           <div class="section-heading">
             <div>
-              <p class="eyebrow">Step 4B</p>
-                <h2>Instructor View: Classroom Signals</h2>
+              <p class="eyebrow">Instructor view</p>
+                <h2>Classroom Signals</h2>
             </div>
             <p class="section-copy">
               A teacher-managed classroom view can turn student curiosity into a
@@ -369,7 +363,7 @@
           </div>
           <div class="teacher-scoreboard">
             <div class="teacher-summary-card teacher-stat-card teacher-stat-class">
-              <span class="panel-label">Class alias</span>
+              <span class="panel-label">Class alias 👥</span>
               <div class="teacher-class-inline">
                 <div id="teacher-class-badge" class="cohort-badge-card teacher-cohort-badge"></div>
                 <strong id="teacher-class-alias" class="teacher-class-alias-text">PueoPod</strong>
@@ -377,18 +371,18 @@
               <small>Teacher-managed cohorts let a class explore together without exposing school identity to professionals.</small>
             </div>
             <div class="teacher-summary-card teacher-stat-card teacher-stat-signal">
-              <span class="panel-label">Top talk story signal</span>
+              <span class="panel-label">Top talk story signal 📈</span>
               <strong id="teacher-top-voice">No votes yet</strong>
               <small id="teacher-top-voice-detail">Who this class most wants to hear from next.</small>
             </div>
             <div class="teacher-stat-stack">
               <div class="teacher-summary-card teacher-stat-card teacher-stat-saved">
-                <span class="panel-label">Saved pathways</span>
+                <span class="panel-label">Saved pathways ✅</span>
                 <strong id="teacher-save-total">0</strong>
                 <small id="teacher-save-total-detail">What this class keeps returning to.</small>
               </div>
               <div class="teacher-summary-card teacher-stat-card teacher-stat-pending">
-                <span class="panel-label">Pending questions</span>
+                <span class="panel-label">Pending questions 💬</span>
                 <strong id="teacher-pending-count">0</strong>
                 <small id="teacher-pending-detail">Guided drafts waiting for review.</small>
               </div>
@@ -409,11 +403,12 @@
                 <span class="panel-label">Moderation Queue</span>
               </div>
             </div>
+            <p class="queue-disclaimer">Messages stay pseudonymous and teacher-reviewed before reaching any professional.</p>
             <div id="teacher-question-queue" class="teacher-question-queue"></div>
           </div>
         </section>
 
-        <section class="grid-two">
+        <section class="grid-two grid-two-opposite">
           <article id="step-5" class="card section-berry reveal" data-view-surface="student-only">
             <div class="section-heading compact">
               <div>
@@ -422,24 +417,20 @@
               </div>
             </div>
             <p class="section-copy">
-              Prompt starters reduce intimidation and route questions into a moderated
-              workflow instead of open direct messages.
+              Use a starter, then make it yours.
             </p>
             <label class="input-label" for="question-box">Question draft</label>
-            <p class="question-helper">
-              Start from a prompt, edit it in your own words, and send it to teacher moderation when it feels ready.
-            </p>
             <textarea
               id="question-box"
               rows="6"
-              placeholder="Choose a prompt starter or write your own question."
+              placeholder="Write your question."
             ></textarea>
             <div class="question-actions">
               <button id="submit-question" class="primary-action" type="button">
-                Send to moderated review
+                Send question
               </button>
               <span id="question-status" class="status-text">
-                Questions are reviewed by school or program staff before a professional reply.
+                School staff review questions before replies.
               </span>
             </div>
             <div id="prompt-list" class="prompt-list"></div>
@@ -447,25 +438,23 @@
 
           <article id="step-6" class="card section-forest reveal" data-view-surface="student-only">
             <div class="section-heading compact">
-              <div>
+              <div class="steps-heading-inline">
                 <p class="eyebrow">Step 6</p>
-                <h2>Small Steps</h2>
-              </div>
-            </div>
-            <div class="steps-summary">
-              <span class="panel-label">Student Progress</span>
-              <div class="progress-inline">
-                <div class="progress-circle" id="progress-circle" aria-hidden="true">
-                  <svg class="progress-circle-svg" viewBox="0 0 44 44" role="presentation">
-                    <circle class="progress-circle-track" cx="22" cy="22" r="16"></circle>
-                    <circle class="progress-circle-fill" id="progress-circle-fill" cx="22" cy="22" r="16"></circle>
-                  </svg>
+                <div class="steps-title-inline">
+                  <h2>Small Steps</h2>
+                  <div class="steps-progress-bar-inline">
+                    <span id="steps-progress-count">0 of 0</span>
+                    <div class="steps-progress-track" aria-hidden="true">
+                      <div id="steps-progress-fill" class="steps-progress-fill"></div>
+                    </div>
+                    <small id="steps-progress-detail">0%</small>
+                  </div>
                 </div>
-                <strong id="steps-progress-count">0 completed</strong>
               </div>
-              <small id="steps-progress-detail">Choose a few small steps to show how momentum builds over time.</small>
             </div>
-            <div id="steps-context" class="steps-context"></div>
+            <div class="steps-top-shell">
+              <div id="steps-context" class="steps-context"></div>
+            </div>
             <div id="steps-panel" class="steps-panel"></div>
           </article>
         </section>
@@ -482,6 +471,11 @@
           </div>
           <a class="mockup-link" href="./extension-mockup.html">Open Chrome extension mockup</a>
         </section>
+        <div class="extension-entry-nudge" data-view-surface="student-only">
+          <a href="./extension-mockup.html" class="extension-entry-link">
+            🔌 See what this looks like inside Canvas →
+          </a>
+        </div>
       </main>
     </div>
 
