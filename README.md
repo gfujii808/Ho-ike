@@ -44,7 +44,7 @@ This workspace contains the full submission package:
 
 ## What Hōʻike Solves
 
-Hawaiʻi students do not only need lists of jobs. Many also need help with the hidden curriculum of career navigation: seeing how what they already do connects to local futures, understanding different ways into a field, and getting low-stakes support for first questions. Hōʻike is designed to reduce those informational frictions inside a workflow students already understand.
+Hawaiʻi students do not need lists of jobs. Many need help with the hidden curriculum of career navigation: seeing how what they already do connects to local futures, understanding different ways into a field, and getting low-stakes support for first questions. Hōʻike is designed to reduce those informational frictions inside a workflow students already understand.
 
 ## What OpenAI Codex Is Doing
 
