@@ -383,25 +383,6 @@ const assignments = [
     voices: ["malia", "keoni"],
     steps: sectorCatalog.environment.steps
   },
-  {
-    id: "media",
-    sectorId: "communications",
-    translationSource: "Preset example",
-    title: "Digital Storytelling for Public Information",
-    className: "English / Digital Media",
-    summary: "Create a short campaign explaining a community issue to a public audience.",
-    whyTitle: "Communication becomes civic and creative infrastructure.",
-    whyBody:
-      "A media assignment is not just about presentation. In Hawaiʻi, storytelling supports public information, nonprofit outreach, education, tourism ethics, and digital careers that help communities understand important issues.",
-    whyImpact:
-      "You can see creative work as useful, local, and community-serving instead of secondary to 'real' careers.",
-    pathways: sectorCatalog.communications.pathways.map((pathway) => ({
-      ...pathway,
-      nextStep: pathway.nextStep("Digital Storytelling for Public Information")
-    })),
-    voices: ["malia", "leilani"],
-    steps: sectorCatalog.communications.steps
-  }
 ];
 
 const interestCatalog = [
@@ -411,12 +392,9 @@ const interestCatalog = [
   "music",
   "coding",
   "helping people",
-  "fixing things",
-  "storytelling",
   "being outdoors",
-  "working with animals",
-  "leadership",
-  "community service"
+  "storytelling",
+  "fixing things",
 ];
 
 const routeCatalog = {
@@ -450,28 +428,28 @@ const routeCatalog = {
 const cohorts = [
   {
     name: "PueoPod",
-    icon: "🦉",
+    icon: "owl",
     iconLabel: "Pueo owl class icon",
-    accent: "night-study, pattern spotting, and calm leadership",
+    accent: "night-study, pattern spotting, and calm focus",
     handles: ["CuriousPueo", "BoldPueo", "CalmPueo", "BrightPueo", "SteadyPueo", "SwiftPueo"]
   },
   {
     name: "HonuHui",
-    icon: "🐢",
+    icon: "water",
     iconLabel: "Honu turtle class icon",
     accent: "steady care, place-based learning, and long-view thinking",
     handles: ["SteadyHonu", "CuriousHonu", "BraveHonu", "KindHonu", "SunnyHonu", "OceanHonu"]
   },
   {
     name: "PopokiPod",
-    icon: "🐱",
+    icon: "pets",
     iconLabel: "Popoki cat class icon",
     accent: "creative problem-solving, curiosity, and playful confidence",
     handles: ["CleverPopoki", "CalmPopoki", "BrightPopoki", "SwiftPopoki", "KindPopoki", "BoldPopoki"]
   },
   {
     name: "MangoGrove",
-    icon: "🌺",
+    icon: "local_florist",
     iconLabel: "MangoGrove blossom icon",
     accent: "creative energy, expression, and community color",
     handles: ["SunnyMango", "KindMango", "BraveMango", "FreshMango", "GoldenMango", "LivelyMango"]
@@ -480,31 +458,43 @@ const cohorts = [
 
 const allHandles = cohorts.flatMap((cohort) => cohort.handles);
 const handleProfiles = {
-  CuriousPueo: ["being outdoors", "community service", "storytelling"],
-  BoldPueo: ["sports", "leadership", "helping people"],
-  CalmPueo: ["music", "working with animals", "being outdoors"],
+  CuriousPueo: ["being outdoors", "helping people", "storytelling"],
+  BoldPueo: ["sports", "coding", "helping people"],
+  CalmPueo: ["music", "storytelling", "being outdoors"],
   BrightPueo: ["coding", "gaming", "fixing things"],
-  SteadyPueo: ["helping people", "community service", "leadership"],
+  SteadyPueo: ["helping people", "being outdoors", "storytelling"],
   SwiftPueo: ["sports", "coding", "being outdoors"],
-  SteadyHonu: ["being outdoors", "community service", "working with animals"],
+  SteadyHonu: ["being outdoors", "helping people", "storytelling"],
   CuriousHonu: ["science", "being outdoors", "storytelling"],
-  BraveHonu: ["leadership", "helping people", "community service"],
-  KindHonu: ["working with animals", "helping people", "music"],
-  SunnyHonu: ["farming", "being outdoors", "community service"],
+  BraveHonu: ["coding", "helping people", "storytelling"],
+  KindHonu: ["storytelling", "helping people", "music"],
+  SunnyHonu: ["farming", "being outdoors", "helping people"],
   OceanHonu: ["science", "being outdoors", "animals"],
   CleverPopoki: ["drawing and design", "storytelling", "coding"],
   CalmPopoki: ["music", "storytelling", "helping people"],
   BrightPopoki: ["coding", "gaming", "fixing things"],
-  SwiftPopoki: ["sports", "leadership", "gaming"],
-  KindPopoki: ["working with animals", "helping people", "community service"],
-  BoldPopoki: ["drawing and design", "leadership", "storytelling"],
-  SunnyMango: ["drawing and design", "music", "community service"],
-  KindMango: ["helping people", "storytelling", "working with animals"],
-  BraveMango: ["sports", "leadership", "community service"],
-  FreshMango: ["being outdoors", "working with animals", "helping people"],
+  SwiftPopoki: ["sports", "coding", "gaming"],
+  KindPopoki: ["storytelling", "helping people", "being outdoors"],
+  BoldPopoki: ["drawing and design", "coding", "storytelling"],
+  SunnyMango: ["drawing and design", "music", "helping people"],
+  KindMango: ["helping people", "storytelling", "being outdoors"],
+  BraveMango: ["sports", "coding", "helping people"],
+  FreshMango: ["being outdoors", "farming", "helping people"],
   GoldenMango: ["coding", "drawing and design", "storytelling"],
   LivelyMango: ["music", "gaming", "sports"]
 };
+
+const removedStepOneInterests = new Set([
+  "community service",
+  "working with animals",
+  "leadership"
+]);
+
+Object.keys(handleProfiles).forEach((handle) => {
+  handleProfiles[handle] = handleProfiles[handle].filter(
+    (interest) => !removedStepOneInterests.has(interest)
+  );
+});
 
 const assignmentList = document.getElementById("assignment-list");
 const pathwayList = document.getElementById("pathway-list");
@@ -525,7 +515,6 @@ const teacherClassBadge = document.getElementById("teacher-class-badge");
 const dialog = document.getElementById("voice-dialog");
 const dialogContent = document.getElementById("dialog-content");
 const titleInput = document.getElementById("assignment-title-input");
-const subjectInput = document.getElementById("assignment-subject-input");
 const runTranslationButton = document.getElementById("run-translation");
 const translationStatus = document.getElementById("translation-status");
 const stepsProgressCount = document.getElementById("steps-progress-count");
@@ -585,11 +574,17 @@ const completedSteps = new Set(persistedState.completedSteps || []);
 let selectedCohortName = initialCohortName;
 const cohortSavedPathways = persistedState.cohortSavedPathways || {};
 const classroomVotes = new Map(persistedState.classroomVotes || []);
-const handleVotes = new Set(persistedState.handleVotes || []);
+const handleVotes = new Set(
+  (persistedState.handleVotes || []).map((key) => key.split("::handle::")[0])
+);
 const selectedPathways = new Map(persistedState.selectedPathways || []);
 const selectedVoices = new Map(persistedState.selectedVoices || []);
 const submittedQuestions = persistedState.submittedQuestions || [];
-const selectedInterests = new Set(persistedState.selectedInterests || []);
+const selectedInterests = new Set(
+  (persistedState.selectedInterests || []).filter(
+    (interest) => !removedStepOneInterests.has(interest)
+  )
+);
 let pathwayFeedbackMode = "";
 let pathwayFeedbackTimer;
 const teacherInviteRequests = new Set(persistedState.teacherInviteRequests || []);
@@ -659,12 +654,17 @@ function getCurrentCohort() {
 function getCohortBadgeMarkup(cohort = getCurrentCohort(), options = {}) {
   const { showName = true, showAccent = true } = options;
   return `
-    <span class="cohort-badge-icon" aria-hidden="true">${cohort.icon}</span>
+    <span class="cohort-badge-icon" aria-hidden="true">${renderIcon(cohort.icon, "cohort-icon")}</span>
     <div class="cohort-badge-copy">
       ${showName ? `<span class="cohort-badge-name">${cohort.name}</span>` : ""}
       ${showAccent ? `<small>${cohort.accent}</small>` : ""}
     </div>
   `;
+}
+
+function renderIcon(iconName, className = "") {
+  const extraClass = className ? ` ${className}` : "";
+  return `<span class="material-symbols-outlined ui-icon${extraClass}" aria-hidden="true">${iconName}</span>`;
 }
 
 function getSavedPathwaysForCurrentCohort() {
@@ -691,76 +691,72 @@ function toggleSavedPathway(pathwayKey) {
   setSavedPathway(pathwayKey, shouldSave);
 }
 
-function getPathwayEmoji(pathwayName) {
-  const emojiMap = {
-    "Clean Energy Planner": "☀️",
-    "Construction Technology": "🏗️",
-    "Operations and Data Roles": "📊",
-    "Environmental Monitoring": "🌊",
-    "Healthcare Diagnostics": "🩺",
-    "Agri-Tech and Sensors": "🚜",
-    "Community Communications": "📣",
-    "Creative Technology": "🎨",
-    "Education and Outreach Design": "📚",
-    "Cyber Operations": "🛡️",
-    "Software and Automation": "🤖",
-    "Infrastructure and Mission Systems": "🛰️",
-    "Community Innovation": "🌱",
-    "Education and Outreach": "🤝",
-    "Project and Team Support": "🧩"
+function getPathwayIcon(pathwayName) {
+  const iconMap = {
+    "Clean Energy Planner": "wb_sunny",
+    "Construction Technology": "construction",
+    "Operations and Data Roles": "analytics",
+    "Environmental Monitoring": "waves",
+    "Healthcare Diagnostics": "medical_services",
+    "Agri-Tech and Sensors": "agriculture",
+    "Community Communications": "campaign",
+    "Creative Technology": "palette",
+    "Education and Outreach Design": "menu_book",
+    "Cyber Operations": "shield",
+    "Software and Automation": "smart_toy",
+    "Infrastructure and Mission Systems": "satellite_alt",
+    "Community Innovation": "eco",
+    "Education and Outreach": "diversity_3",
+    "Project and Team Support": "handyman"
   };
 
-  return emojiMap[pathwayName] || "✨";
+  return iconMap[pathwayName] || "auto_awesome";
 }
 
-function getVoiceAvatar(voiceId) {
-  const avatarMap = {
-    leilani: "☀️",
-    keoni: "🌊",
-    malia: "🎨",
-    noa: "🛡️"
+function getVoiceIcon(voiceId) {
+  const iconMap = {
+    leilani: "wb_sunny",
+    keoni: "waves",
+    malia: "palette",
+    noa: "shield"
   };
 
-  return avatarMap[voiceId] || "🌺";
+  return iconMap[voiceId] || "bolt";
 }
 
-function getInterestEmoji(interest) {
-  const emojiMap = {
-    "being outdoors": "🌿",
-    gaming: "🎮",
-    storytelling: "📝",
-    music: "🎵",
-    "fixing things": "🛠️",
-    "helping people": "🤝",
-    "community service": "🏝️",
-    science: "🧪",
-    design: "🎨",
-    "drawing and design": "🎨",
-    coding: "💻",
-    sports: "🏄",
-    farming: "🚜",
-    animals: "🐢",
-    "working with animals": "🐢",
-    leadership: "🤙"
+function getInterestIcon(interest) {
+  const iconMap = {
+    "being outdoors": "park",
+    gaming: "sports_esports",
+    storytelling: "edit_note",
+    music: "music_note",
+    "helping people": "diversity_3",
+    science: "science",
+    design: "draw",
+    "drawing and design": "draw",
+    coding: "code",
+    sports: "surfing",
+    farming: "agriculture",
+    animals: "pets"
   };
 
-  return emojiMap[interest] || "✨";
+  return iconMap[interest] || "auto_awesome";
 }
 
-function getSubjectEmoji(subject) {
+function getSubjectIcon(subject) {
   const normalized = normalize(subject);
-  if (normalized.includes("english")) return "📚";
-  if (normalized.includes("art")) return "🎨";
-  if (normalized.includes("media")) return "🎬";
-  if (normalized.includes("computer")) return "💻";
-  if (normalized.includes("technology")) return "🧠";
-  if (normalized.includes("math")) return "➗";
-  if (normalized.includes("science")) return "🧪";
-  if (normalized.includes("engineering")) return "🛠️";
-  if (normalized.includes("social")) return "🌍";
-  if (normalized.includes("history")) return "🏛️";
-  if (normalized.includes("community")) return "🤝";
-  return "✨";
+  if (normalized.includes("english")) return "menu_book";
+  if (normalized.includes("art")) return "palette";
+  if (normalized.includes("media")) return "videocam";
+  if (normalized.includes("computer")) return "code";
+  if (normalized.includes("technology")) return "memory";
+  if (normalized.includes("math")) return "calculate";
+  if (normalized.includes("science")) return "science";
+  if (normalized.includes("engineering")) return "precision_manufacturing";
+  if (normalized.includes("social")) return "public";
+  if (normalized.includes("history")) return "history_edu";
+  if (normalized.includes("community")) return "diversity_3";
+  return "auto_awesome";
 }
 
 function getHandleInterests(handle = currentHandle) {
@@ -778,7 +774,7 @@ function renderStarterInterestProfile() {
       ${starterInterests
         .map(
           (interest) =>
-            `<span class="starter-profile-chip">${getInterestEmoji(interest)} ${interest}</span>`
+            `<span class="starter-profile-chip">${renderIcon(getInterestIcon(interest), "inline-icon")} ${interest}</span>`
         )
         .join("")}
     </div>
@@ -808,8 +804,7 @@ function persistState() {
     studentHandle: currentHandle,
     selectedCohortName,
     questionDraft: questionBox.value,
-    assignmentTitleInput: titleInput.value,
-    assignmentSubjectInput: subjectInput.value
+    assignmentTitleInput: titleInput.value
   };
 
   window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
@@ -863,6 +858,12 @@ function setViewMode(mode) {
   explainerViewButton.classList.toggle("is-active", isExplainer);
   explainerViewButton.setAttribute("aria-pressed", String(isExplainer));
 
+  // Hero morph on view toggle (suggestion 3)
+  const hero = document.querySelector(".hero");
+  if (hero) {
+    hero.dataset.viewMode = mode;
+  }
+
   if (viewModeDescription) {
     if (isStudent) {
       viewModeDescription.innerHTML = `
@@ -896,7 +897,7 @@ function syncIdentitySurfaces() {
   teacherClassAlias.textContent = cohort.name;
   cohortSelect.value = cohort.name;
   if (teacherClassBadge) {
-    teacherClassBadge.textContent = cohort.icon;
+    teacherClassBadge.innerHTML = renderIcon(cohort.icon, "cohort-icon");
   }
   renderStarterInterestProfile();
 }
@@ -936,18 +937,6 @@ function getSelectedVoice() {
   return voices[getSelectedVoiceId()] || voices[selectedAssignment.voices[0]];
 }
 
-function classNameToSubject(className) {
-  const normalized = className.toLowerCase();
-  if (normalized.includes("biology") || normalized.includes("science")) return "Science";
-  if (normalized.includes("english") || normalized.includes("media")) return "Art and Media";
-  if (normalized.includes("computer") || normalized.includes("tech")) return "Computer Science and Technology";
-  if (normalized.includes("engineering")) return "Engineering";
-  if (normalized.includes("social") || normalized.includes("history")) return "Social Studies";
-  if (normalized.includes("community")) return "Community";
-  if (normalized.includes("math") || normalized.includes("algebra") || normalized.includes("geometry")) return "Math";
-  return "Other";
-}
-
 function getContextualPrompts() {
   const voice = getSelectedVoice();
   const sector = sectorCatalog[selectedAssignment.sectorId] || sectorCatalog.general;
@@ -961,14 +950,6 @@ function getContextualPrompts() {
 
 function getVoiceVoteKey(voiceId, cohortName = selectedCohortName) {
   return `${cohortName}::voice-vote::${voiceId}`;
-}
-
-function getHandleVoiceVoteKey(
-  voiceId,
-  cohortName = selectedCohortName,
-  handle = currentHandle
-) {
-  return `${getVoiceVoteKey(voiceId, cohortName)}::handle::${handle}`;
 }
 
 async function requestTranslation(title, subject) {
@@ -1225,7 +1206,7 @@ function renderAssignments() {
     button.className = `assignment-button${assignment.id === selectedAssignment.id ? " active" : ""}`;
     button.innerHTML = `
       <div class="assignment-button-top">
-        <span class="assignment-icon-badge">${getSubjectEmoji(assignment.className)}</span>
+        <span class="assignment-icon-badge">${renderIcon(getSubjectIcon(assignment.className), "chip-icon")}</span>
         <strong>${assignment.title}</strong>
       </div>
       <p>${assignment.summary}</p>
@@ -1239,8 +1220,6 @@ function renderAssignments() {
       }
       selectedAssignment = enrichAssignment(assignment);
       titleInput.value = assignment.title;
-      subjectInput.value = classNameToSubject(assignment.className);
-      subjectInput.dispatchEvent(new Event("change"));
       renderAll();
       translationStatus.textContent = `"${assignment.title}" ready — hit Translate to map it.`;
       persistState();
@@ -1257,7 +1236,7 @@ function renderProfessionalWhy() {
   const combinedChips = [
     ...signalChips.map((signal) => ({ label: signal, kind: "signal" })),
     ...selectedInterestList.slice(0, 1).map((interest) => ({
-      label: `${getInterestEmoji(interest)} ${interest}`,
+      label: `${renderIcon(getInterestIcon(interest), "inline-icon")} ${interest}`,
       kind: "interest"
     }))
   ];
@@ -1362,7 +1341,7 @@ function renderPathways() {
     <div class="pathway-carousel-nav">
       <button class="pathway-arrow-button" type="button" aria-label="Previous pathway">←</button>
       <div class="pathway-carousel-title">
-        <h3>${getPathwayEmoji(selectedPathway.name)} ${selectedPathway.name}</h3>
+        <h3>${renderIcon(getPathwayIcon(selectedPathway.name), "inline-icon")} ${selectedPathway.name}</h3>
       </div>
       <button class="pathway-arrow-button" type="button" aria-label="Next pathway">→</button>
     </div>
@@ -1422,7 +1401,7 @@ function renderInterestsAndRoutes() {
     button.type = "button";
     button.className = `interest-chip${selectedInterests.has(interest) ? " is-active" : ""}`;
     button.innerHTML = `
-      <span class="interest-chip-icon">${getInterestEmoji(interest)}</span>
+      <span class="interest-chip-icon">${renderIcon(getInterestIcon(interest), "chip-icon")}</span>
       <span class="interest-chip-copy">${interest}</span>
     `;
     button.addEventListener("click", () => {
@@ -1451,7 +1430,7 @@ function renderInterestsAndRoutes() {
 
   const summary = document.createElement("div");
   summary.className = "route-summary";
-  summary.innerHTML = `<p>💡 ${interestLine}</p>`;
+  summary.innerHTML = `<p>${renderIcon("lightbulb", "inline-icon")} ${interestLine}</p>`;
   pathwayRoutes.appendChild(summary);
 
   const list = document.createElement("div");
@@ -1467,7 +1446,7 @@ function renderInterestsAndRoutes() {
 
 function openVoiceDialog(voice) {
   dialogContent.innerHTML = `
-    <div class="dialog-avatar">${getVoiceAvatar(voice.id)}</div>
+    <div class="dialog-avatar">${renderIcon(getVoiceIcon(voice.id), "avatar-icon")}</div>
     <span class="voice-chip">${voice.location} • ${voice.runtime} intro</span>
     <h3>${voice.name}</h3>
     <p><strong>${voice.role}</strong></p>
@@ -1497,8 +1476,7 @@ function renderVoices() {
   const previousVoiceId = availableVoiceIds[(selectedIndex - 1 + availableVoiceIds.length) % availableVoiceIds.length];
   const nextVoiceId = availableVoiceIds[(selectedIndex + 1) % availableVoiceIds.length];
   const voteKey = getVoiceVoteKey(selectedVoice.id, selectedCohortName);
-  const handleVoteKey = getHandleVoiceVoteKey(selectedVoice.id, selectedCohortName);
-  const alreadyVoted = handleVotes.has(handleVoteKey);
+  const alreadyVoted = handleVotes.has(voteKey);
   const cohortBaselineVotes = cohortBaseline[selectedCohortName]?.votes?.[selectedVoice.id] || 0;
   const voteCount = cohortBaselineVotes + (classroomVotes.get(voteKey) || 0);
 
@@ -1522,7 +1500,7 @@ function renderVoices() {
     </div>
     <div class="voice-main-stack">
       <div class="voice-profile-card voice-profile-card-featured voice-profile-card-side">
-        <span class="voice-avatar">${getVoiceAvatar(selectedVoice.id)}</span>
+        <span class="voice-avatar">${renderIcon(getVoiceIcon(selectedVoice.id), "avatar-icon")}</span>
         <div class="voice-profile-copy">
           <h3>${selectedVoice.name}</h3>
           <p class="voice-role-line">${selectedVoice.role}</p>
@@ -1568,7 +1546,7 @@ function renderVoices() {
   card.querySelector('[data-action="watch"]').addEventListener("click", () => openVoiceDialog(selectedVoice));
   card.querySelector('[data-action="ask"]').addEventListener("click", () => useVoicePrompt(selectedVoice));
   card.querySelector('[data-action="vote"]').addEventListener("click", () => {
-    handleVotes.add(handleVoteKey);
+    handleVotes.add(voteKey);
     classroomVotes.set(voteKey, (classroomVotes.get(voteKey) || 0) + 1);
     renderVoices();
     renderTeacherView();
@@ -1630,7 +1608,7 @@ function renderTeacherView(force = false) {
       <div class="teacher-vote-copy">
         <div class="teacher-vote-head">
           <div class="teacher-vote-identity">
-            <span class="teacher-vote-avatar">${getVoiceAvatar(voice.id)}</span>
+            <span class="teacher-vote-avatar">${renderIcon(getVoiceIcon(voice.id), "avatar-icon")}</span>
             <div>
               <h3>${voice.name}</h3>
               <p class="voice-meta">${voice.role}</p>
@@ -1785,7 +1763,7 @@ function renderSteps() {
   stepsContext.innerHTML = `
     <div class="steps-context-card">
       <span class="panel-label">Linked to your selection</span>
-      <strong>${getPathwayEmoji(selectedPathway.name)} ${selectedPathway.name}</strong>
+      <strong>${renderIcon(getPathwayIcon(selectedPathway.name), "inline-icon")} ${selectedPathway.name}</strong>
       <p>From your activity and pathway.</p>
     </div>
   `;
@@ -1922,7 +1900,10 @@ function setExplainerTab(tab) {
 
 async function runTranslation() {
   const rawTitle = titleInput.value.trim();
-  const subject = subjectInput.value;
+  const subject =
+    selectedAssignment.id !== "generated" && rawTitle === selectedAssignment.title
+      ? selectedAssignment.className
+      : "Other";
   const originalButtonLabel = runTranslationButton.textContent;
 
   if (!rawTitle) {
@@ -2033,7 +2014,6 @@ questionBox.addEventListener("input", () => {
   }
   persistState();
 });
-subjectInput.addEventListener("change", persistState);
 titleInput.addEventListener("input", persistState);
 
 titleInput.addEventListener("keydown", (event) => {
@@ -2056,9 +2036,43 @@ dialog.addEventListener("click", (event) => {
   }
 });
 
+// Scroll-progress band reveal (suggestion 1)
+// Bands fade in as user scrolls — no interaction required for demo
+const revealObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.style.animationPlayState = 'running';
+        entry.target.classList.add('is-revealed');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  },
+  {
+    threshold: 0.06,
+    rootMargin: '0px 0px -40px 0px'
+  }
+);
+
+document.querySelectorAll('.reveal').forEach((el) => {
+  el.style.animationPlayState = 'paused';
+  revealObserver.observe(el);
+});
+
+// Scroll progress line — thin vertical bar on left edge tracks how far user has scrolled
+const progressLine = document.createElement('div');
+progressLine.className = 'scroll-progress-line';
+document.body.appendChild(progressLine);
+
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+  progressLine.style.height = `${progress}%`;
+}, { passive: true });
+
 syncIdentitySurfaces();
 titleInput.value = persistedState.assignmentTitleInput || selectedAssignment.title;
-subjectInput.value = persistedState.assignmentSubjectInput || subjectInput.value;
 questionBox.value = persistedState.questionDraft || "";
 setViewMode(currentViewMode);
 setExplainerTab("architecture");

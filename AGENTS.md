@@ -51,3 +51,9 @@ This repository contains materials for `Hōʻike`, a Hawaiʻi-centered AI career
 - Assume all student-to-professional questions in phase 1 are guided and reviewable.
 - Provide escalation paths for counselors, teachers, or program staff where a student needs human support.
 - Avoid advice that could pressure students into unsafe disclosure or unsupervised contact.
+
+## Contributors
+
+**Grace Fujii** — project author, product direction, UX, and content. Built with OpenAI Codex.
+
+**Claude (Anthropic, claude-sonnet-4-6)** — contributed UI/UX design direction, CSS architecture, and visual polish across multiple sessions including: retro color palette implementation and token system, full-bleed flow-band layout system with wavy SVG section dividers, blob accent decorator system, hero gradient design, scroll-triggered reveal animation pattern, interest chip catalog expansion, card gradient updates, wave transition geometry debugging, and iterative visual audit passes on `styles.css`, `index.html`, `app.js`, and `extension-mockup.html`.

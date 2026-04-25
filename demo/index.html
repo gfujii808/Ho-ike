@@ -7,7 +7,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@400;500;600;700;800&family=Red+Hat+Display:wght@500;700;800;900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Lexend+Deca:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./styles.css" />
@@ -19,15 +23,15 @@
           <p class="eyebrow">Hōʻike Explorer</p>
           <h1>Revealing the hidden curriculum for attainable local futures in Hawaiʻi.</h1>
           <div class="hero-mode-switch">
-            <div class="toggle-buttons hero-toggle-buttons" role="tablist" aria-label="View mode">
+            <div class="toggle-buttons hero-toggle-buttons" aria-label="View mode">
               <button id="student-view-button" class="toggle-button is-active" type="button" aria-pressed="true">
-                🎒 Student
+                <span class="material-symbols-outlined" aria-hidden="true">school</span> Student
               </button>
               <button id="instructor-view-button" class="toggle-button" type="button" aria-pressed="false">
-                🏫 Instructor
+                <span class="material-symbols-outlined" aria-hidden="true">supervised_user_circle</span> Instructor
               </button>
               <button id="explainer-view-button" class="toggle-button" type="button" aria-pressed="false">
-                🔎 Explainer
+                <span class="material-symbols-outlined" aria-hidden="true">search</span> Explainer
               </button>
             </div>
             <p id="view-mode-description" class="hero-view-description"></p>
@@ -42,11 +46,11 @@
           </p>
           <div class="hero-visual-board" aria-hidden="true">
             <article class="hero-visual-card hero-visual-coral">
-              <span class="hero-visual-emoji">🧠</span>
+              <span class="material-symbols-outlined hero-visual-emoji" aria-hidden="true">neurology</span>
               <strong>Translate what already feels like you</strong>
             </article>
             <article class="hero-visual-card hero-visual-mint">
-              <span class="hero-visual-emoji">🧭</span>
+              <span class="material-symbols-outlined hero-visual-emoji" aria-hidden="true">explore</span>
               <strong>Explore pathways without pressure</strong>
             </article>
           </div>
@@ -61,421 +65,431 @@
       </header>
 
       <main class="dashboard">
-        <section class="card section-warm reveal" data-view-surface="student-only">
-          <div class="section-heading compact">
+        <div class="flow-band flow-band-sky reveal" data-view-surface="student-only">
+          <div class="chapter-band-intro">
             <div>
-              <h2>Your profile and saved ideas</h2>
+              <p class="eyebrow">Start Here</p>
+              <h2>Begin with what already feels like you.</h2>
             </div>
+            <p class="section-copy">
+              Build a school-safe starting point, then translate one activity or interest into clearer local direction.
+            </p>
           </div>
-          <div class="student-scoreboard">
-            <div class="student-profile-card">
-              <span class="panel-label">Student identity</span>
-              <div class="student-handle-row">
-                <strong id="student-handle">CuriousPueo</strong>
-                <button id="generate-handle" type="button" class="handle-refresh-button" aria-label="Refresh pseudonymous handle">⟲</button>
-              </div>
-              <label class="mini-control" for="cohort-select">Class space</label>
-              <select id="cohort-select" class="select-input compact-select">
-                <option value="PueoPod">PueoPod</option>
-                <option value="HonuHui">HonuHui</option>
-                <option value="PopokiPod">PopokiPod</option>
-                <option value="MangoGrove">MangoGrove</option>
-              </select>
-            </div>
-            <div class="student-summary-card student-signal-card">
-              <div id="starter-interest-profile" class="starter-interest-profile"></div>
-            </div>
-            <div class="student-summary-card student-jersey-card">
-              <span class="panel-label">Saved ideas</span>
-              <strong id="saved-pathways-count">0</strong>
-              <span class="student-jersey-label">Pathway saves</span>
-              <small id="saved-pathways-detail">Save ideas you want to come back to.</small>
-            </div>
-          </div>
-        </section>
 
-        <section class="card section-sky reveal explainer-context" data-view-surface="explainer">
-          <div class="section-heading">
+          <div class="band-section-stack" data-view-surface="student-only">
+            <div class="student-scoreboard">
+              <div class="student-profile-card">
+                <span class="panel-label">Student identity</span>
+                <div class="student-handle-row">
+                  <strong id="student-handle">CuriousPueo</strong>
+                  <button id="generate-handle" type="button" class="handle-refresh-button" aria-label="Refresh pseudonymous handle"><span class="material-symbols-outlined" aria-hidden="true">refresh</span></button>
+                </div>
+                <label class="mini-control" for="cohort-select">Class space</label>
+                <select id="cohort-select" class="select-input compact-select">
+                  <option value="PueoPod">PueoPod</option>
+                  <option value="HonuHui">HonuHui</option>
+                  <option value="PopokiPod">PopokiPod</option>
+                  <option value="MangoGrove">MangoGrove</option>
+                </select>
+              </div>
+              <div class="student-summary-card student-signal-card">
+                <div id="starter-interest-profile" class="starter-interest-profile"></div>
+              </div>
+              <div class="student-summary-card student-jersey-card">
+                <span class="panel-label">Saved ideas</span>
+                <strong id="saved-pathways-count">0</strong>
+                <span class="student-jersey-label">Pathway saves</span>
+                <small id="saved-pathways-detail">Save ideas you want to come back to.</small>
+              </div>
+            </div>
+            <div class="band-divider" aria-hidden="true"></div>
+
+            <section id="step-1" class="assignment-card section-warm" data-view-surface="student-only">
+              <div class="section-heading compact">
+                <div>
+                  <h2>Translate an activity</h2>
+                  <p class="section-copy step-subcopy">
+                    Start with one thing you already did or care about.
+                  </p>
+                </div>
+              </div>
+              <div class="generator-shell">
+                <div class="generator-grid">
+                  <label class="generator-field" for="assignment-title-input">
+                    <span class="input-label">Assignment, activity, or interest</span>
+                    <input
+                      id="assignment-title-input"
+                      class="text-input"
+                      type="text"
+                      placeholder="Ex: Marine biology lab - reef health indicators"
+                    />
+                  </label>
+                </div>
+                <div class="generator-actions">
+                  <button id="run-translation" class="primary-action" type="button">
+                    Translate
+                  </button>
+                  <span id="translation-status" class="status-text">
+                    Finds strengths and local directions.
+                  </span>
+                </div>
+              </div>
+              <div class="step1-secondary-grid">
+                <div class="step1-secondary-block">
+                  <p class="mini-label">Or try</p>
+                  <div class="assignment-list" id="assignment-list"></div>
+                </div>
+                <div class="activity-bridge">
+                  <div class="activity-bridge-copy">
+                    <span class="panel-label">Or use your profile</span>
+                  </div>
+                  <div id="interest-list" class="interest-list"></div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+
+        <div class="flow-band flow-band-sky reveal" data-view-surface="explainer">
+          <div class="chapter-band-intro">
             <div>
-              <p class="eyebrow">Explainer Context</p>
+              <p class="eyebrow">Explainer</p>
               <h2>Why this matters in Hawaiʻi</h2>
             </div>
             <p class="section-copy">
               Reviewer mode keeps the product visible, but adds the local research logic behind the prototype.
             </p>
           </div>
-          <div class="explainer-tab-shell">
-            <div class="explainer-tab-row" role="tablist" aria-label="Explainer tabs">
-              <button id="explainer-architecture-tab" class="explainer-tab is-active" type="button" role="tab" aria-selected="true">
-                🎒 Built for the classroom
-              </button>
-              <button id="explainer-reasoning-tab" class="explainer-tab" type="button" role="tab" aria-selected="false">
-                🧠 Powered by AI
-              </button>
-              <button id="explainer-research-tab" class="explainer-tab" type="button" role="tab" aria-selected="false">
-                📚 Grounded in research
-              </button>
-            </div>
 
-            <div id="explainer-architecture-panel" class="explainer-panel is-active">
-              <div class="explainer-shot-grid">
-                <article class="explainer-shot-card">
-                  <span class="panel-label">Student surface</span>
-                  <div class="explainer-shot-window">
-                    <div class="explainer-shot-header"></div>
-                    <div class="explainer-shot-body">
-                      <span class="explainer-shot-pill"></span>
-                      <span class="explainer-shot-pill short"></span>
-                      <div class="explainer-shot-metric-row">
+          <section class="card section-sky explainer-context" data-view-surface="explainer">
+            <div class="explainer-tab-shell">
+              <div class="explainer-tab-row" role="tablist" aria-label="Explainer tabs">
+                <button id="explainer-architecture-tab" class="explainer-tab is-active" type="button" role="tab" aria-selected="true">
+                  <span class="material-symbols-outlined" aria-hidden="true">school</span> Built for the classroom
+                </button>
+                <button id="explainer-reasoning-tab" class="explainer-tab" type="button" role="tab" aria-selected="false">
+                  <span class="material-symbols-outlined" aria-hidden="true">neurology</span> Powered by AI
+                </button>
+                <button id="explainer-research-tab" class="explainer-tab" type="button" role="tab" aria-selected="false">
+                  <span class="material-symbols-outlined" aria-hidden="true">menu_book</span> Grounded in research
+                </button>
+              </div>
+
+              <div id="explainer-architecture-panel" class="explainer-panel is-active">
+                <div class="explainer-shot-grid">
+                  <article class="explainer-shot-card">
+                    <span class="panel-label">Student surface</span>
+                    <div class="explainer-shot-window">
+                      <div class="explainer-shot-header"></div>
+                      <div class="explainer-shot-body">
+                        <span class="explainer-shot-pill"></span>
+                        <span class="explainer-shot-pill short"></span>
+                        <div class="explainer-shot-metric-row">
+                          <span></span>
+                          <span></span>
+                          <span></span>
+                        </div>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="explainer-shot-card">
+                    <span class="panel-label">Instructor dashboard</span>
+                    <div class="explainer-shot-window">
+                      <div class="explainer-shot-header wide"></div>
+                      <div class="explainer-shot-number-row">
                         <span></span>
                         <span></span>
                         <span></span>
                       </div>
                     </div>
-                  </div>
-                </article>
-                <article class="explainer-shot-card">
-                  <span class="panel-label">Instructor dashboard</span>
-                  <div class="explainer-shot-window">
-                    <div class="explainer-shot-header wide"></div>
-                    <div class="explainer-shot-number-row">
-                      <span></span>
-                      <span></span>
-                      <span></span>
+                  </article>
+                  <article class="explainer-shot-card">
+                    <span class="panel-label">Extension overlay</span>
+                    <div class="explainer-shot-window">
+                      <div class="explainer-shot-sidebar"></div>
+                      <div class="explainer-shot-stack">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                      </div>
                     </div>
-                  </div>
-                </article>
-                <article class="explainer-shot-card">
-                  <span class="panel-label">Extension overlay</span>
-                  <div class="explainer-shot-window">
-                    <div class="explainer-shot-sidebar"></div>
-                    <div class="explainer-shot-stack">
-                      <span></span>
-                      <span></span>
-                      <span></span>
+                  </article>
+                </div>
+                <div class="explainer-summary-grid">
+                  <article class="explainer-summary-card">
+                    <span class="panel-label">Core idea</span>
+                    <strong>Activity in. Strengths, pathways, Local Voices, and Small Steps out.</strong>
+                  </article>
+                  <article class="explainer-summary-card">
+                    <span class="panel-label">Safety</span>
+                    <strong>Pseudonymous students, guided prompts, and moderated Local Voices.</strong>
+                  </article>
+                  <article class="explainer-summary-card">
+                    <span class="panel-label">Extension direction</span>
+                    <strong>A credible Canvas-side deployment surface, isolated so the LMS cannot break the workflow.</strong>
+                  </article>
+                </div>
+              </div>
+
+              <div id="explainer-reasoning-panel" class="explainer-panel">
+                <div class="explainer-shot-grid explainer-shot-grid-compact">
+                  <article class="explainer-shot-card">
+                    <span class="panel-label">Professional Why</span>
+                    <div class="explainer-shot-window">
+                      <div class="explainer-shot-header"></div>
+                      <div class="explainer-shot-two-column">
+                        <span></span>
+                        <span></span>
+                      </div>
                     </div>
-                  </div>
-                </article>
-              </div>
-              <div class="explainer-summary-grid">
-                <article class="explainer-summary-card">
-                  <span class="panel-label">Core idea</span>
-                  <strong>Activity in. Strengths, pathways, Local Voices, and Small Steps out.</strong>
-                </article>
-                <article class="explainer-summary-card">
-                  <span class="panel-label">Safety</span>
-                  <strong>Pseudonymous students, guided prompts, and moderated Local Voices.</strong>
-                </article>
-                <article class="explainer-summary-card">
-                  <span class="panel-label">Extension direction</span>
-                  <strong>A credible Canvas-side deployment surface, isolated so the LMS cannot break the workflow.</strong>
-                </article>
-              </div>
-            </div>
-
-            <div id="explainer-reasoning-panel" class="explainer-panel">
-              <div class="explainer-shot-grid explainer-shot-grid-compact">
-                <article class="explainer-shot-card">
-                  <span class="panel-label">Professional Why</span>
-                  <div class="explainer-shot-window">
-                    <div class="explainer-shot-header"></div>
-                    <div class="explainer-shot-two-column">
-                      <span></span>
-                      <span></span>
+                  </article>
+                  <article class="explainer-shot-card">
+                    <span class="panel-label">Pathway clickthrough</span>
+                    <div class="explainer-shot-window">
+                      <div class="explainer-shot-lines-top">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                      </div>
+                      <div class="explainer-shot-header short"></div>
+                      <div class="explainer-shot-stack">
+                        <span></span>
+                        <span></span>
+                      </div>
                     </div>
-                  </div>
-                </article>
-                <article class="explainer-shot-card">
-                  <span class="panel-label">Pathway clickthrough</span>
-                  <div class="explainer-shot-window">
-                    <div class="explainer-shot-lines-top">
-                      <span></span>
-                      <span></span>
-                      <span></span>
-                    </div>
-                    <div class="explainer-shot-header short"></div>
-                    <div class="explainer-shot-stack">
-                      <span></span>
-                      <span></span>
-                    </div>
-                  </div>
-                </article>
+                  </article>
+                </div>
+                <div class="explainer-summary-grid explainer-summary-grid-two">
+                  <article class="explainer-summary-card">
+                    <span class="panel-label">How the scan works</span>
+                    <strong>Hōʻike reads the activity, matches Hawaiʻi-specific pathway logic, and surfaces local career connections.</strong>
+                  </article>
+                  <article class="explainer-summary-card">
+                    <span class="panel-label">What becomes visible</span>
+                    <strong>The goal is not job-title matching. It is future legibility.</strong>
+                  </article>
+                </div>
+                <div id="translation-log" class="demo-surface translation-log" data-view-surface="explainer"></div>
               </div>
-              <div class="explainer-summary-grid explainer-summary-grid-two">
-                <article class="explainer-summary-card">
-                  <span class="panel-label">How the scan works</span>
-                  <strong>Hōʻike reads the activity, matches Hawaiʻi-specific pathway logic, and surfaces local career connections.</strong>
-                </article>
-                <article class="explainer-summary-card">
-                  <span class="panel-label">What becomes visible</span>
-                  <strong>The goal is not job-title matching. It is future legibility.</strong>
-                </article>
-              </div>
-            </div>
 
-            <div id="explainer-research-panel" class="explainer-panel">
-              <div class="explainer-card-grid">
-                <article class="explainer-mini-card">
-                  <span class="panel-label">Brain drain</span>
-                  <strong>Young, educated Hawaiʻi-born residents are disproportionately leaving.</strong>
-                  <p>DBEDT’s 2021 report describes recent population decline as driven in large part by net domestic outmigration and notes that outmigrants are more likely to be young and educated.</p>
-                  <a href="https://files.hawaii.gov/dbedt/economic/reports/Brain_Drain_Hawaii_Born_Population.pdf" target="_blank" rel="noreferrer">DBEDT report</a>
-                </article>
-                <article class="explainer-mini-card">
-                  <span class="panel-label">Hidden curriculum</span>
-                  <strong>Hōʻike targets informational frictions, not just job awareness.</strong>
-                  <p>Research frames the hidden curriculum as two frictions: knowing certain actions exist and believing those actions are worth taking. That is why Hōʻike gives scripts, prompts, and next steps instead of only listing careers.</p>
-                  <a href="https://mgcuna.github.io/website/JMP_latest.pdf" target="_blank" rel="noreferrer">Hidden curriculum paper</a>
-                </article>
-                <article class="explainer-mini-card">
-                  <span class="panel-label">Local futures</span>
-                  <strong>Construction, ag-tech, and emerging tech all matter for local retention.</strong>
-                  <p>Hawaiʻi Business highlights major 2026 construction activity and growing attention to technology, while the governor’s office points to increased use of drones, field sensors, GPS livestock tracking, and other farm technologies.</p>
-                  <a href="https://www.hawaiibusiness.com/hawaiis-economic-outlook-2026/" target="_blank" rel="noreferrer">Economic outlook</a>
-                  <a href="https://governor.hawaii.gov/newsroom/dab-news-release-farm-technology-increasing-according-to-national-statistical-report/" target="_blank" rel="noreferrer">Ag-tech update</a>
-                </article>
-                <article class="explainer-mini-card">
-                  <span class="panel-label">Decision support</span>
-                  <strong>Students need support before the moment of choice, not only after they pick a pathway.</strong>
-                  <p>JFF argues that career planning is not linear and that young people need information, experiences, and advice before high-stakes decisions. ACT finds students value multiple paths, flexibility, and stronger fit between interests, values, and future choices.</p>
-                  <a href="https://www.jff.org/idea/career-decision-making-support-for-youth-before-the-moment-of-choice/" target="_blank" rel="noreferrer">JFF guide</a>
-                  <a href="https://www.act.org/content/dam/act/unsecured/documents/R2509-High-School-Students-Thoughts-on-Education-and-Career-Paths-and-Goals-2025-06.pdf" target="_blank" rel="noreferrer">ACT brief</a>
-                  <a href="https://www.jff.org/newsroom/press-releases/new-survey-reveals-gen-z-youth-pursuing-nondegree-paths-after-high-school-feel-confident-and-workforce-ready/" target="_blank" rel="noreferrer">JFF nondegree survey</a>
-                  <a href="https://pw.hks.harvard.edu/post/navigating-opportunity-career-information-and-mobility-in-low-wage-employment" target="_blank" rel="noreferrer">Harvard workforce note</a>
-                </article>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section id="step-1" class="card assignment-card section-warm reveal" data-view-surface="student-only">
-          <div class="section-heading compact">
-            <div>
-              <p class="eyebrow">Step 1</p>
-              <h2>Translate an activity</h2>
-              <p class="section-copy step-subcopy">
-                Start with one thing you already did or care about.
-              </p>
-            </div>
-          </div>
-          <div class="generator-shell">
-            <div class="generator-grid">
-              <label class="generator-field" for="assignment-title-input">
-                <span class="input-label">Assignment, activity, or interest</span>
-                <input
-                  id="assignment-title-input"
-                  class="text-input"
-                  type="text"
-                  placeholder="Ex: Marine biology lab - reef health indicators"
-                />
-              </label>
-              <label class="generator-field" for="assignment-subject-input">
-                <span class="input-label">Course area</span>
-                <select id="assignment-subject-input" class="select-input">
-                  <option value="English">English</option>
-                  <option value="Art and Media">Art and Media</option>
-                  <option value="Computer Science and Technology">Computer Science and Technology</option>
-                  <option value="Math">Math</option>
-                  <option value="Science">Science</option>
-                  <option value="Engineering">Engineering</option>
-                  <option value="Social Studies">Social Studies</option>
-                  <option value="History">History</option>
-                  <option value="Community">Community</option>
-                  <option value="Other">Other</option>
-                </select>
-              </label>
-            </div>
-            <div class="generator-actions">
-              <button id="run-translation" class="primary-action" type="button">
-                Translate
-              </button>
-              <span id="translation-status" class="status-text">
-                Finds strengths and local directions.
-              </span>
-            </div>
-          </div>
-          <div class="step1-secondary-grid">
-            <div class="step1-secondary-block">
-              <p class="mini-label">Or try</p>
-              <div class="assignment-list" id="assignment-list"></div>
-            </div>
-            <div class="activity-bridge">
-              <div class="activity-bridge-copy">
-                <span class="panel-label">Or use your profile</span>
-              </div>
-              <div id="interest-list" class="interest-list"></div>
-            </div>
-          </div>
-        </section>
-
-        <section class="grid-two">
-          <article id="step-2" class="card section-petal reveal" data-view-surface="student-only">
-            <div class="section-heading compact">
-              <div>
-                <p class="eyebrow">Step 2</p>
-                <h2>Professional Why</h2>
-              </div>
-            </div>
-            <div id="professional-why" class="student-surface professional-why-panel" data-view-surface="student"></div>
-            <div id="translation-log" class="demo-surface translation-log" data-view-surface="explainer"></div>
-          </article>
-
-          <article id="step-3" class="card section-sun reveal" data-view-surface="student-only">
-            <div class="section-heading compact">
-              <div>
-                <p class="eyebrow">Step 3</p>
-                <h2>Hawaiʻi Pathway Exploration</h2>
-                <p class="section-copy step-subcopy">Three ways from today to tomorrow.</p>
-              </div>
-            </div>
-            <div id="pathway-list" class="pathway-list"></div>
-            <div class="integrated-pathway-shell">
-              <span class="panel-label">More paths</span>
-              <div id="pathway-routes" class="pathway-routes pathway-routes-simple"></div>
-            </div>
-          </article>
-        </section>
-
-        <section id="step-4" class="card section-mint reveal" data-view-surface="student-only">
-            <div class="section-heading">
-              <div>
-              <p class="eyebrow">Step 4</p>
-                <h2>Local Voices</h2>
-            </div>
-            <p class="section-copy">
-              School-safe local professionals share short intros and next steps.
-            </p>
-          </div>
-          <p class="sim-note">All Local Voices profiles in this demo are simulated for presentation purposes.</p>
-          <div id="voices-list" class="voices-list"></div>
-        </section>
-
-        <section class="card section-sky reveal" data-view-surface="instructor">
-          <div class="section-heading">
-            <div>
-              <p class="eyebrow">Instructor view</p>
-                <h2>Classroom Signals</h2>
-            </div>
-            <p class="section-copy">
-              A teacher-managed classroom view can turn student curiosity into a
-              safer shared event, like a class visit or career-day-style talk story.
-            </p>
-          </div>
-          <div class="teacher-scoreboard">
-            <div class="teacher-summary-card teacher-stat-card teacher-stat-class">
-              <span class="panel-label">Class alias 👥</span>
-              <div class="teacher-class-inline">
-                <div id="teacher-class-badge" class="cohort-badge-card teacher-cohort-badge"></div>
-                <strong id="teacher-class-alias" class="teacher-class-alias-text">PueoPod</strong>
-              </div>
-              <small>Teacher-managed cohorts let a class explore together without exposing school identity to professionals.</small>
-            </div>
-            <div class="teacher-summary-card teacher-stat-card teacher-stat-signal">
-              <span class="panel-label">Top talk story signal 📈</span>
-              <strong id="teacher-top-voice">No votes yet</strong>
-              <small id="teacher-top-voice-detail">Who this class most wants to hear from next.</small>
-            </div>
-            <div class="teacher-stat-stack">
-              <div class="teacher-summary-card teacher-stat-card teacher-stat-saved">
-                <span class="panel-label">Saved pathways ✅</span>
-                <strong id="teacher-save-total">0</strong>
-                <small id="teacher-save-total-detail">What this class keeps returning to.</small>
-              </div>
-              <div class="teacher-summary-card teacher-stat-card teacher-stat-pending">
-                <span class="panel-label">Pending questions 💬</span>
-                <strong id="teacher-pending-count">0</strong>
-                <small id="teacher-pending-detail">Guided drafts waiting for review.</small>
-              </div>
-            </div>
-          </div>
-          <div class="teacher-invite-shell">
-            <div class="section-heading compact">
-              <div>
-                <span class="panel-label">Invite Signals + Talk Story</span>
-                <h3>Who this class wants to hear from</h3>
-              </div>
-            </div>
-            <div id="teacher-vote-list" class="teacher-vote-list"></div>
-          </div>
-          <div class="teacher-queue-card">
-            <div class="section-heading compact">
-              <div>
-                <span class="panel-label">Moderation Queue</span>
-              </div>
-            </div>
-            <p class="queue-disclaimer">Messages stay pseudonymous and teacher-reviewed before reaching any professional.</p>
-            <div id="teacher-question-queue" class="teacher-question-queue"></div>
-          </div>
-        </section>
-
-        <section class="grid-two grid-two-opposite">
-          <article id="step-5" class="card section-berry reveal" data-view-surface="student-only">
-            <div class="section-heading compact">
-              <div>
-                <p class="eyebrow">Step 5</p>
-                <h2>Ask a Question</h2>
-              </div>
-            </div>
-            <p class="section-copy">
-              Use a starter, then make it yours.
-            </p>
-            <label class="input-label" for="question-box">Question draft</label>
-            <textarea
-              id="question-box"
-              rows="6"
-              placeholder="Write your question."
-            ></textarea>
-            <div class="question-actions">
-              <button id="submit-question" class="primary-action" type="button">
-                Send question
-              </button>
-              <span id="question-status" class="status-text">
-                School staff review questions before replies.
-              </span>
-            </div>
-            <div id="prompt-list" class="prompt-list"></div>
-          </article>
-
-          <article id="step-6" class="card section-forest reveal" data-view-surface="student-only">
-            <div class="section-heading compact">
-              <div class="steps-heading-inline">
-                <p class="eyebrow">Step 6</p>
-                <div class="steps-title-inline">
-                  <h2>Small Steps</h2>
-                  <div class="steps-progress-bar-inline">
-                    <span id="steps-progress-count">0 of 0</span>
-                    <div class="steps-progress-track" aria-hidden="true">
-                      <div id="steps-progress-fill" class="steps-progress-fill"></div>
-                    </div>
-                    <small id="steps-progress-detail">0%</small>
-                  </div>
+              <div id="explainer-research-panel" class="explainer-panel">
+                <div class="explainer-card-grid">
+                  <article class="explainer-mini-card">
+                    <span class="panel-label">Brain drain</span>
+                    <strong>Young, educated Hawaiʻi-born residents are disproportionately leaving.</strong>
+                    <p>DBEDT's 2021 report describes recent population decline as driven in large part by net domestic outmigration and notes that outmigrants are more likely to be young and educated.</p>
+                    <a href="https://files.hawaii.gov/dbedt/economic/reports/Brain_Drain_Hawaii_Born_Population.pdf" target="_blank" rel="noreferrer">DBEDT report</a>
+                  </article>
+                  <article class="explainer-mini-card">
+                    <span class="panel-label">Hidden curriculum</span>
+                    <strong>Hōʻike targets informational frictions, not just job awareness.</strong>
+                    <p>Research frames the hidden curriculum as two frictions: knowing certain actions exist and believing those actions are worth taking. That is why Hōʻike gives scripts, prompts, and next steps instead of only listing careers.</p>
+                    <a href="https://mgcuna.github.io/website/JMP_latest.pdf" target="_blank" rel="noreferrer">Hidden curriculum paper</a>
+                  </article>
+                  <article class="explainer-mini-card">
+                    <span class="panel-label">Local futures</span>
+                    <strong>Construction, ag-tech, and emerging tech all matter for local retention.</strong>
+                    <p>Hawaiʻi Business highlights major 2026 construction activity and growing attention to technology, while the governor's office points to increased use of drones, field sensors, GPS livestock tracking, and other farm technologies.</p>
+                    <a href="https://www.hawaiibusiness.com/hawaiis-economic-outlook-2026/" target="_blank" rel="noreferrer">Economic outlook</a>
+                    <a href="https://governor.hawaii.gov/newsroom/dab-news-release-farm-technology-increasing-according-to-national-statistical-report/" target="_blank" rel="noreferrer">Ag-tech update</a>
+                  </article>
+                  <article class="explainer-mini-card">
+                    <span class="panel-label">Decision support</span>
+                    <strong>Students need support before the moment of choice, not only after they pick a pathway.</strong>
+                    <p>JFF argues that career planning is not linear and that young people need information, experiences, and advice before high-stakes decisions. ACT finds students value multiple paths, flexibility, and stronger fit between interests, values, and future choices.</p>
+                    <a href="https://www.jff.org/idea/career-decision-making-support-for-youth-before-the-moment-of-choice/" target="_blank" rel="noreferrer">JFF guide</a>
+                    <a href="https://www.act.org/content/dam/act/unsecured/documents/R2509-High-School-Students-Thoughts-on-Education-and-Career-Paths-and-Goals-2025-06.pdf" target="_blank" rel="noreferrer">ACT brief</a>
+                    <a href="https://www.jff.org/newsroom/press-releases/new-survey-reveals-gen-z-youth-pursuing-nondegree-paths-after-high-school-feel-confident-and-workforce-ready/" target="_blank" rel="noreferrer">JFF nondegree survey</a>
+                    <a href="https://pw.hks.harvard.edu/post/navigating-opportunity-career-information-and-mobility-in-low-wage-employment" target="_blank" rel="noreferrer">Harvard workforce note</a>
+                  </article>
                 </div>
               </div>
             </div>
-            <div class="steps-top-shell">
-              <div id="steps-context" class="steps-context"></div>
-            </div>
-            <div id="steps-panel" class="steps-panel"></div>
-          </article>
-        </section>
+          </section>
+        </div>
 
-        <section class="card extension-preview-card section-sky reveal" data-view-surface="explainer">
-          <div class="section-heading">
+        <div class="flow-band flow-band-dawn reveal" data-view-surface="student-only">
+          <div class="chapter-band-intro">
             <div>
-              <p class="eyebrow">Extension Mockup</p>
-              <h2>What this could look like inside Canvas</h2>
+              <p class="eyebrow">Why It Matters</p>
+              <h2>See why this activity could grow into a future here at home.</h2>
+            </div>
+          </div>
+
+          <section class="grid-two">
+            <article id="step-2" class="card section-petal" data-view-surface="student-only">
+              <div id="professional-why" class="student-surface professional-why-panel" data-view-surface="student"></div>
+            </article>
+
+            <article id="step-3" class="card section-sun" data-view-surface="student-only">
+              <div id="pathway-list" class="pathway-list"></div>
+              <div class="integrated-pathway-shell">
+                <span class="panel-label">More paths</span>
+                <div id="pathway-routes" class="pathway-routes pathway-routes-simple"></div>
+              </div>
+            </article>
+          </section>
+        </div>
+
+        <div class="flow-band flow-band-mint reveal" data-view-surface="student-only">
+          <div class="chapter-band-intro">
+            <div>
+              <p class="eyebrow">Who Can Help</p>
+              <h2>Learn from local voices in a guided, school-safe way.</h2>
+            </div>
+            <p class="section-copy">
+              Short intros, question starters, and moderated talk-story signals make the next move feel lower-stakes.
+            </p>
+          </div>
+
+          <section id="step-4" class="card section-mint" data-view-surface="student-only">
+            <p class="sim-note">All Local Voices profiles in this demo are simulated for presentation purposes.</p>
+            <div id="voices-list" class="voices-list"></div>
+          </section>
+        </div>
+
+        <div class="flow-band flow-band-instructor reveal" data-view-surface="instructor">
+          <div class="chapter-band-intro">
+            <div>
+              <p class="eyebrow">Instructor Mode</p>
+              <h2>Classroom signals and moderated follow-through.</h2>
+            </div>
+          </div>
+
+          <section class="card section-sky" data-view-surface="instructor">
+            <div class="teacher-scoreboard">
+              <div class="teacher-summary-card teacher-stat-card teacher-stat-class">
+                <span class="panel-label panel-label-inline">Class alias <span class="material-symbols-outlined" aria-hidden="true">group</span></span>
+                <div class="teacher-class-inline">
+                  <div id="teacher-class-badge" class="cohort-badge-card teacher-cohort-badge"></div>
+                  <strong id="teacher-class-alias" class="teacher-class-alias-text">PueoPod</strong>
+                </div>
+                <small>Teacher-managed cohorts let a class explore together without exposing school identity to professionals.</small>
+              </div>
+              <div class="teacher-summary-card teacher-stat-card teacher-stat-signal">
+                <span class="panel-label panel-label-inline">Top talk story signal <span class="material-symbols-outlined" aria-hidden="true">trending_up</span></span>
+                <strong id="teacher-top-voice">No votes yet</strong>
+                <small id="teacher-top-voice-detail">Who this class most wants to hear from next.</small>
+              </div>
+              <div class="teacher-stat-stack">
+                <div class="teacher-summary-card teacher-stat-card teacher-stat-saved">
+                  <span class="panel-label panel-label-inline">Saved pathways <span class="material-symbols-outlined" aria-hidden="true">check_circle</span></span>
+                  <strong id="teacher-save-total">0</strong>
+                  <small id="teacher-save-total-detail">What this class keeps returning to.</small>
+                </div>
+                <div class="teacher-summary-card teacher-stat-card teacher-stat-pending">
+                  <span class="panel-label panel-label-inline">Pending questions <span class="material-symbols-outlined" aria-hidden="true">chat_bubble</span></span>
+                  <strong id="teacher-pending-count">0</strong>
+                  <small id="teacher-pending-detail">Guided drafts waiting for review.</small>
+                </div>
+              </div>
+            </div>
+
+            <div class="teacher-follow-through-shell">
+              <div class="teacher-invite-shell">
+                <div class="section-heading compact">
+                  <div>
+                    <span class="panel-label">Invite signals + talk story</span>
+                  </div>
+                </div>
+                <div id="teacher-vote-list" class="teacher-vote-list"></div>
+              </div>
+              <div class="teacher-queue-card">
+                <div class="section-heading compact">
+                  <div>
+                    <span class="panel-label">Moderation Queue</span>
+                  </div>
+                </div>
+                <p class="queue-disclaimer">Messages stay pseudonymous and teacher-reviewed before reaching any professional.</p>
+                <div id="teacher-question-queue" class="teacher-question-queue"></div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <div class="flow-band flow-band-grove reveal" data-view-surface="student-only">
+          <div class="chapter-band-intro">
+            <div>
+              <p class="eyebrow">What Comes Next</p>
+              <h2>Ask one question, then take one concrete next step.</h2>
+            </div>
+            <p class="section-copy">
+              Keep the momentum going with guided prompts, reviewed outreach, and a short-horizon action plan.
+            </p>
+          </div>
+
+          <section class="grid-two grid-two-opposite">
+            <article id="step-5" class="card section-berry" data-view-surface="student-only">
+              <div class="section-heading compact">
+                <div>
+                  <h3>Ask a Question</h3>
+                </div>
+              </div>
+              <p class="section-copy">
+                Use a starter, then make it yours.
+              </p>
+              <label class="input-label" for="question-box">Question draft</label>
+              <textarea
+                id="question-box"
+                rows="6"
+                placeholder="Write your question."
+              ></textarea>
+              <div class="question-actions">
+                <button id="submit-question" class="primary-action" type="button">
+                  Send question
+                </button>
+                <span id="question-status" class="status-text">
+                  School staff review questions before replies.
+                </span>
+              </div>
+              <div id="prompt-list" class="prompt-list"></div>
+            </article>
+
+            <article id="step-6" class="card section-forest" data-view-surface="student-only">
+              <div class="section-heading compact">
+                <div class="steps-heading-inline">
+                  <div class="steps-title-inline">
+                    <h3>Small Steps</h3>
+                    <div class="steps-progress-bar-inline">
+                      <span id="steps-progress-count">0 of 0</span>
+                      <div class="steps-progress-track" aria-hidden="true">
+                        <div id="steps-progress-fill" class="steps-progress-fill"></div>
+                      </div>
+                      <small id="steps-progress-detail">0%</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="steps-top-shell">
+                <div id="steps-context" class="steps-context"></div>
+              </div>
+              <div id="steps-panel" class="steps-panel"></div>
+            </article>
+          </section>
+
+          <div class="extension-entry-nudge">
+            <a href="./extension-mockup.html" class="extension-entry-link">
+              <span class="material-symbols-outlined" aria-hidden="true">cable</span> See what this looks like inside Canvas →
+            </a>
+          </div>
+        </div>
+
+        <div class="flow-band flow-band-dawn reveal" data-view-surface="explainer">
+          <div class="chapter-band-intro">
+            <div>
+              <p class="eyebrow">Extension Direction</p>
+              <h2>See where this workflow could live next.</h2>
             </div>
             <p class="section-copy">
               This mockup shows Hōʻike as a Chrome extension overlay with a school assignment on the left and the Hōʻike panel on the right. The real extension direction is a Shadow DOM-mounted sidebar so Canvas styles cannot break Hōʻike or interfere with LMS behavior.
             </p>
           </div>
-          <a class="mockup-link" href="./extension-mockup.html">Open Chrome extension mockup</a>
-        </section>
-        <div class="extension-entry-nudge" data-view-surface="student-only">
-          <a href="./extension-mockup.html" class="extension-entry-link">
-            🔌 See what this looks like inside Canvas →
-          </a>
+
+          <section class="card extension-preview-card section-sky" data-view-surface="explainer">
+            <a class="mockup-link" href="./extension-mockup.html">Open Chrome extension mockup</a>
+          </section>
         </div>
+
       </main>
     </div>
 
