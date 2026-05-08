@@ -3088,6 +3088,18 @@ textarea {
   color: var(--ink);
 }
 
+.generator-shell {
+  gap: var(--ui-gap-sm);
+}
+
+.text-input {
+  min-height: 42px;
+}
+
+.status-text {
+  font-size: 0.8rem;
+  opacity: 0.9;
+}
 .question-actions {
   display: flex;
   flex-direction: column;
@@ -3121,6 +3133,16 @@ textarea {
   cursor: not-allowed;
   transform: none;
   box-shadow: 0 10px 18px rgba(143, 184, 122, 0.12);
+}
+
+/* keep primary CTA as-is; tone down secondary actions */
+.ghost-action,
+.voice-action,
+.chip-button,
+.assignment-button {
+  font-weight: 600;
+  box-shadow: none;
+  opacity: 0.95;
 }
 
 .steps-panel {
@@ -5145,4 +5167,76 @@ dialog::backdrop {
   font-weight: 700;
   background: transparent;
   flex-shrink: 0;
+}
+
+#view-mode-description {
+  display: none !important;
+}
+
+/* top-nav ergonomics */
+.hero-toggle-buttons {
+  display: inline-flex;
+  gap: 6px;
+  padding: 4px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.toggle-button {
+  border-radius: 999px;
+  padding: 8px 12px;
+  min-height: 36px;
+  font-size: 0.86rem;
+}
+
+.toggle-button.is-active {
+  background: rgba(255, 255, 255, 0.22);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.16);
+}
+
+/* Keep outer layout; tighten card internals */
+.card,
+.assignment-card,
+.section-warm,
+.section-sky,
+.section-mint,
+.section-forest,
+.section-berry,
+.section-sun,
+.section-petal {
+  padding: 20px;
+}
+
+/* Optional for larger screens only */
+@media (min-width: 980px) {
+  .card,
+  .assignment-card {
+    padding: 22px;
+  }
+}
+
+/* reduce verbose paragraph dominance */
+.card p,
+.assignment-card p,
+.section-copy {
+  line-height: 1.4;
+}
+
+:root {
+  --ui-gap-xs: 6px;
+  --ui-gap-sm: 10px;
+  --ui-gap-md: 14px;
+  --ui-gap-lg: 18px;
+}
+
+.generator-actions {
+  gap: var(--ui-gap-sm) var(--ui-gap-md);
+}
+
+.research-controls {
+  gap: var(--ui-gap-sm);
+}
+
+.section-heading.compact {
+  margin-bottom: var(--ui-gap-sm);
 }
