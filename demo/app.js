@@ -1286,9 +1286,10 @@ function renderProfessionalWhy() {
 }
 
 function renderTranslationLog() {
-  if (currentViewMode !== "explainer") {
-    translationLog.innerHTML = "";
-    return;
+if (currentViewMode !== "explainer") {
+  translationLog.innerHTML = "";
+  return;
+}
   }
   const log = selectedAssignment.translationLog;
   const localValueTokens = log.localValueTokens || [];
