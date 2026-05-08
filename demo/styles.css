@@ -1056,6 +1056,13 @@ body[data-view-mode="explainer"] [data-view-surface="explainer"] {
   animation: rise 300ms ease both;
 }
 
+
+body[data-view-mode="student"] #translation-log,
+body[data-view-mode="instructor"] #translation-log {
+  display: none !important;
+}
+
+
 .toggle-buttons {
   display: inline-flex;
   gap: 8px;
@@ -5444,4 +5451,8 @@ dialog::backdrop {
 /* Keep chapter intro from collapsing perceived spacing */
 .flow-band .chapter-band-intro {
   margin-bottom: 14px !important;
+}
+.flow-band {
+  padding-top: 24px !important;
+  padding-bottom: 24px !important;
 }
