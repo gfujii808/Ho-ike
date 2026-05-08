@@ -995,6 +995,11 @@ body[data-view-mode="student"] .flow-band {
   top: 78px;
 }
 
+.flow-band {
+  padding-top: 24px !important;
+  padding-bottom: 24px !important;
+}
+
 .view-toggle-shell,
 .view-card,
 .steps-summary,
