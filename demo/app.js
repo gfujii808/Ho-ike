@@ -881,9 +881,13 @@ function setViewMode(mode) {
         <span>Track who students want to hear from and what pathways keep surfacing.</span>
       `;
     } else {
-      viewModeDescription.innerHTML = `
-        <span>See the classroom-facing product, the AI reasoning layer, and the local research behind the prototype.</span>
-        <span>Reviewer mode explains why Hōʻike is built this way and how it stays school-safe.</span>
+      viewModeDescription.innerHTML = isResearchMode ? `
+  <span>Research mode keeps the product surfaces visible for inquiry and discussion.</span>
+  <span>Use this view to walk through reasoning, safety choices, and participant reactions.</span>
+` : `
+  <span>See the classroom-facing product, the AI reasoning layer, and the local research behind the prototype.</span>
+  <span>Reviewer mode explains why Hōʻike is built this way and how it stays school-safe.</span>
+`;
       `;
     }
   }
@@ -905,6 +909,37 @@ function syncIdentitySurfaces() {
     teacherClassBadge.innerHTML = renderIcon(cohort.icon, "cohort-icon");
   }
   renderStarterInterestProfile();
+}
+
+function setResearchMode(enabled) {
+  isResearchMode = enabled;
+  document.body.classList.toggle("research-mode", enabled);
+  if (researchModeToggle) {
+    researchModeToggle.checked = enabled;
+  }
+  if (currentViewMode === "explainer") {
+    setViewMode("explainer");
+  }
+  persistState();
+}
+
+function resetSession() {
+  selectedAssignment = enrichAssignment(assignments[0]);
+  completedSteps.clear();
+  selectedPathways.clear();
+  selectedVoices.clear();
+  selectedInterests.clear();
+  teacherInviteRequests.clear();
+  teacherPromptPreviews.clear();
+  submittedQuestions.length = 0;
+  questionBox.value = "";
+  titleInput.value = "";
+  translationStatus.textContent = "Session reset. Start with a new activity.";
+  pathwayFeedbackMode = "";
+  clearTimeout(pathwayFeedbackTimer);
+  applyHandleInterestProfile();
+  renderAll();
+  persistState();
 }
 
 function getAssignmentKey() {
@@ -2013,6 +2048,15 @@ explainerResearchTab?.addEventListener("click", () => setExplainerTab("research"
 
 runTranslationButton.addEventListener("click", runTranslation);
 
+resetSessionButton?.addEventListener("click", resetSession);
+researchModeToggle?.addEventListener("change", () => setResearchMode(researchModeToggle.checked));
+scenarioSelect?.addEventListener("change", () => {
+  if (!scenarioSelect.value) return;
+  titleInput.value = scenarioSelect.value;
+  translationStatus.textContent = "Scenario loaded. Click Translate when ready.";
+  persistState();
+});
+
 questionBox.addEventListener("input", () => {
   if (questionStatus.textContent !== DEFAULT_QUESTION_STATUS) {
     setQuestionStatus();
@@ -2080,5 +2124,6 @@ syncIdentitySurfaces();
 titleInput.value = persistedState.assignmentTitleInput || selectedAssignment.title;
 questionBox.value = persistedState.questionDraft || "";
 setViewMode(currentViewMode);
+setResearchMode(isResearchMode);
 setExplainerTab("architecture");
 renderAll();
