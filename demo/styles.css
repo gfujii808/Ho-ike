@@ -5577,3 +5577,55 @@ body[data-view-mode="student"] .flow-band[data-view-surface="student-only"] .ban
     max-width: 100%;
   }
 }
+/* =========================
+   STABLE EDITION OVERRIDES
+   append-only safety block
+   ========================= */
+
+/* 1) Mode gating by top-level bands only */
+.flow-band[data-view-surface="explainer"],
+.flow-band[data-view-surface="instructor"],
+.flow-band[data-view-surface="student-only"] {
+  display: none !important;
+}
+
+body[data-view-mode="student"] .flow-band[data-view-surface="student-only"] {
+  display: block !important;
+}
+body[data-view-mode="instructor"] .flow-band[data-view-surface="instructor"] {
+  display: block !important;
+}
+body[data-view-mode="explainer"] .flow-band[data-view-surface="explainer"] {
+  display: block !important;
+}
+
+/* 2) Restore core internal layout where needed */
+body[data-view-mode="student"] .band-section-stack[data-view-surface="student-only"],
+body[data-view-mode="student"] .grid-two,
+body[data-view-mode="student"] .grid-two-opposite {
+  display: grid !important;
+}
+
+/* 3) Aggressive but controlled banner spacing */
+.flow-band {
+  padding-top: 64px !important;
+  padding-bottom: 64px !important;
+}
+.flow-band .chapter-band-intro > div,
+.flow-band .chapter-band-intro .section-copy {
+  width: 75% !important;
+  max-width: 75% !important;
+}
+@media (max-width: 900px) {
+  .flow-band .chapter-band-intro > div,
+  .flow-band .chapter-band-intro .section-copy {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+/* 4) Keep translation log hidden outside explainer */
+body[data-view-mode="student"] #translation-log,
+body[data-view-mode="instructor"] #translation-log {
+  display: none !important;
+}
