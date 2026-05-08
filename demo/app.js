@@ -1292,99 +1292,19 @@ function renderTranslationLog() {
   }
 
   const log = selectedAssignment.translationLog;
-  const localValueTokens = log.localValueTokens || [];
   const bestFitShort = (log.sectorLabel || "").replace(/^Local Growth Sector:\s*/i, "");
-  const alsoPlausible = (log.alternateSectors || []).map((label) =>
-    label.replace(/^Local Growth Sector:\s*/i, "")
-  );
+  const strengths = (log.skillSignals || []).slice(0, 3).join(" • ");
+  const signals = (log.matchedKeywords || []).slice(0, 3).join(" • ");
 
   translationLog.innerHTML = `
-    <div class="scan-flow-shell">
-      <div class="scan-flow-topbar">
-        <span class="scan-flow-label">Pathway scan</span>
-        <span class="scan-flow-source">${log.sourceLabel}</span>
-      </div>
-
-      <div class="scan-chevron-row" aria-label="Scan flow">
-        <div class="scan-chevron-card">
-          <span class="scan-step-num">01</span>
-          <strong>Activity</strong>
-          <small>Read assignment</small>
-        </div>
-        <div class="scan-chevron-card">
-          <span class="scan-step-num">02</span>
-          <strong>Signals</strong>
-          <small>Detect keywords</small>
-        </div>
-        <div class="scan-chevron-card">
-          <span class="scan-step-num">03</span>
-          <strong>Strengths</strong>
-          <small>Infer strengths</small>
-        </div>
-        <div class="scan-chevron-card">
-          <span class="scan-step-num">04</span>
-          <strong>Best fit</strong>
-          <small>Map local sector</small>
-        </div>
-      </div>
-
-      <div class="scan-chip-grid">
-        <div class="scan-chip-group">
-          <span class="scan-chip-label">Signals</span>
-          <div class="scan-chip-row">
-            ${(log.matchedKeywords || []).map((item) => `<span class="scan-chip">${item}</span>`).join("")}
-          </div>
-        </div>
-
-        <div class="scan-chip-group">
-          <span class="scan-chip-label">Strengths</span>
-          <div class="scan-chip-row">
-            ${(log.skillSignals || []).map((item) => `<span class="scan-chip">${item}</span>`).join("")}
-          </div>
-        </div>
-
-        <div class="scan-chip-group">
-          <span class="scan-chip-label">Best fit</span>
-          <div class="scan-chip-row">
-            <span class="scan-chip scan-chip-fit">${bestFitShort}</span>
-          </div>
-        </div>
-
-        ${
-          localValueTokens.length
-            ? `<div class="scan-chip-group">
-                <span class="scan-chip-label">Local value</span>
-                <div class="scan-chip-row">
-                  ${localValueTokens.map((item) => `<span class="scan-chip">${item}</span>`).join("")}
-                </div>
-              </div>`
-            : ""
-        }
-
-        ${
-          alsoPlausible.length
-            ? `<div class="scan-chip-group">
-                <span class="scan-chip-label">Also</span>
-                <div class="scan-chip-row">
-                  ${alsoPlausible.map((item) => `<span class="scan-chip">${item}</span>`).join("")}
-                </div>
-              </div>`
-            : ""
-        }
-
-        <div class="scan-chip-group">
-          <span class="scan-chip-label">Voices</span>
-          <div class="scan-chip-row">
-            ${(log.localVoices || []).map((item) => `<span class="scan-chip">${item}</span>`).join("")}
-          </div>
-        </div>
-      </div>
-
-      <p class="scan-flow-note">Hōʻike translates schoolwork into local contribution pathways.</p>
+    <div class="scan-minimal-card">
+      <div class="scan-minimal-row"><strong>Best fit:</strong> ${bestFitShort}</div>
+      <div class="scan-minimal-row"><strong>Signals:</strong> ${signals || "—"}</div>
+      <div class="scan-minimal-row"><strong>Strengths:</strong> ${strengths || "—"}</div>
+      <div class="scan-minimal-row"><strong>Voices:</strong> ${(log.localVoices || []).join(" • ")}</div>
     </div>
   `;
 }
-
 
 function renderPathways() {
   pathwayList.innerHTML = "";
