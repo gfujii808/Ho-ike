@@ -770,6 +770,11 @@ textarea:focus-visible {
   z-index: 1;
 }
 
+body[data-view-mode="student"] .flow-band {
+  padding-top: 24px;
+  padding-bottom: 24px;
+}
+
 .flow-band > * {
   position: relative;
   z-index: 1;
@@ -1587,7 +1592,100 @@ body[data-view-mode="student"] .flow-band {
   margin-top: 0;
   margin-bottom: 10px;
 }
+.scan-flow-shell {
+  display: grid;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid var(--line);
+}
 
+.scan-flow-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.scan-flow-label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mauve);
+}
+
+.scan-flow-source {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--ink-muted);
+}
+
+.scan-flow-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.scan-node {
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: rgba(74, 103, 65, 0.1);
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--forest-deep);
+}
+
+.scan-arrow {
+  font-size: 0.78rem;
+  opacity: 0.6;
+}
+
+.scan-chip-grid {
+  display: grid;
+  gap: 10px;
+}
+
+.scan-chip-group {
+  display: grid;
+  gap: 6px;
+}
+
+.scan-chip-label {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.scan-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.scan-chip {
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: rgba(122, 104, 120, 0.12);
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.scan-chip-fit {
+  background: rgba(143, 184, 122, 0.22);
+  color: var(--forest-deep);
+}
+
+.scan-flow-note {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--ink-muted);
+}
 .translation-log {
   margin-top: 16px;
   margin-bottom: 0;
