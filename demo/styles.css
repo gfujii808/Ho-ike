@@ -1198,6 +1198,12 @@ body[data-view-mode="explainer"] .hero-view-description {
   max-width: 34rem;
 }
 
+/* Research-lite: reduce presentation framing in student path */
+body[data-view-mode="student"] .chapter-band-intro .section-copy,
+body[data-view-mode="student"] .chapter-band-intro .eyebrow {
+  display: none;
+}
+
 .band-section-stack {
   display: grid;
   gap: 32px;
@@ -1522,15 +1528,6 @@ body[data-view-mode="explainer"] .hero-view-description {
   gap: 8px;
 }
 
-.research-toggle {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--ink);
-}
-
 .ghost-action {
   border: 1px solid var(--line);
   background: #fffdfa;
@@ -1547,10 +1544,6 @@ body[data-view-mode="explainer"] .hero-view-description {
   background: var(--sand-soft);
 }
 
-body.research-mode .hero .eyebrow::after {
-  content: " · Research Session Build";
-  font-weight: 600;
-}
 .status-text {
   display: block;
   flex-basis: 100%;
@@ -4837,6 +4830,7 @@ dialog::backdrop {
     justify-self: start;
     max-width: 34rem;
   }
+
 
   .chapter-banner {
     grid-template-columns: 1fr;
