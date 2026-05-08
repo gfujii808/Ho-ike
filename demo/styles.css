@@ -927,9 +927,13 @@ textarea:focus-visible {
   border-left: 3px solid rgba(44, 85, 69, 0.45);
 }
 
-body[data-view-mode="student"] [data-view-surface="explainer"],
-body[data-view-mode="student"] [data-view-surface="instructor"] {
-  display: none;
+body[data-view-mode="student"] .chapter-band-intro {
+  margin-bottom: 8px;
+}
+
+body[data-view-mode="student"] .flow-band {
+  padding-top: 18px;
+  padding-bottom: 18px;
 }
 
 body[data-view-mode="instructor"] [data-view-surface="explainer"],
