@@ -223,7 +223,6 @@ h3 {
 .hero .eyebrow,
 .hero .hero-panel-lede,
 .hero .hero-panel-support,
-.hero .hero-view-description,
 .hero .note-card span,
 .hero .note-card strong,
 .hero .note-card small,
@@ -1036,25 +1035,6 @@ body[data-view-mode="explainer"] .hero-toggle-buttons::before {
   border-radius: 50% 50% 42% 58% / 58% 48% 52% 42%;
 }
 
-.hero-view-description {
-  display: none;
-  margin: 14px 0 0;
-  color: rgba(47, 43, 42, 0.78);
-  line-height: 1.45;
-  font-weight: 600;
-}
-
-body[data-view-mode="student"] .hero-view-description {
-  display: grid;
-  gap: 8px;
-}
-
-body[data-view-mode="instructor"] .hero-view-description,
-body[data-view-mode="explainer"] .hero-view-description {
-  display: grid;
-  gap: 8px;
-}
-
 .card {
   padding: 28px;
   position: relative;
@@ -1198,10 +1178,30 @@ body[data-view-mode="explainer"] .hero-view-description {
   max-width: 34rem;
 }
 
-/* Research-lite: reduce presentation framing in student path */
-body[data-view-mode="student"] .chapter-band-intro .section-copy,
-body[data-view-mode="student"] .chapter-band-intro .eyebrow {
+/* Product mode: reduce explainer/chapter framing for student flow */
+body[data-view-mode="student"] .chapter-band-intro .eyebrow,
+body[data-view-mode="student"] .chapter-band-intro .section-copy {
   display: none;
+}
+
+/* tighten vertical rhythm for app-like density */
+body[data-view-mode="student"] .chapter-band-intro {
+  margin-bottom: 8px;
+}
+
+body[data-view-mode="student"] .hero {
+  min-height: auto;
+  padding-top: 18px;
+  padding-bottom: 24px;
+}
+
+body[data-view-mode="student"] .hero-panel .hero-panel-support {
+  display: none;
+}
+
+body[data-view-mode="student"] .flow-band {
+  padding-top: 18px;
+  padding-bottom: 18px;
 }
 
 .band-section-stack {
