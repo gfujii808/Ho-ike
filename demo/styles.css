@@ -1076,6 +1076,9 @@ body[data-view-mode="instructor"] #translation-log {
   display: none !important;
 }
 
+#translation-log:empty {
+  display: none !important;
+}
 
 .toggle-buttons {
   display: inline-flex;
