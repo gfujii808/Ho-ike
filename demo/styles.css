@@ -1516,7 +1516,41 @@ body[data-view-mode="explainer"] .hero-view-description {
   flex-wrap: wrap;
   margin-top: 12px;
 }
+.research-controls {
+  margin-top: 12px;
+  display: grid;
+  gap: 8px;
+}
 
+.research-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.ghost-action {
+  border: 1px solid var(--line);
+  background: #fffdfa;
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 8px 14px;
+  font: inherit;
+  font-weight: 700;
+  width: fit-content;
+  cursor: pointer;
+}
+
+.ghost-action:hover {
+  background: var(--sand-soft);
+}
+
+body.research-mode .hero .eyebrow::after {
+  content: " · Research Session Build";
+  font-weight: 600;
+}
 .status-text {
   display: block;
   flex-basis: 100%;
