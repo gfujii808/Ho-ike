@@ -1288,29 +1288,90 @@ function renderProfessionalWhy() {
 function renderTranslationLog() {
   const log = selectedAssignment.translationLog;
   const localValueTokens = log.localValueTokens || [];
-  const alternateSectorLine = log.alternateSectors.length
-    ? `<li><strong>Also plausible:</strong> ${log.alternateSectors.join(" • ")}</li>`
-    : "";
-  const localValueLine = localValueTokens.length
-    ? `<li><strong>Local value cues:</strong> ${localValueTokens.join(" • ")}</li>`
-    : "";
+  const bestFitShort = (log.sectorLabel || "").replace(/^Local Growth Sector:\s*/i, "");
+  const alsoPlausible = (log.alternateSectors || []).map((label) =>
+    label.replace(/^Local Growth Sector:\s*/i, "")
+  );
 
   translationLog.innerHTML = `
-    <span class="log-label">Demo / Judge View: ${log.sourceLabel} — Hōʻike scan log</span>
-    <ul class="log-list">
-      <li><strong>Scan source:</strong> ${log.sourceLabel}</li>
-      <li><strong>Workflow:</strong> read activity → infer strengths → map local sector → surface safer next steps</li>
-      <li><strong>Signals read:</strong> ${log.matchedKeywords.join(" • ")}</li>
-      <li><strong>Strengths inferred:</strong> ${log.skillSignals.join(" • ")}</li>
-      <li><strong>Best fit:</strong> ${log.sectorLabel}</li>
-      ${localValueLine}
-      ${alternateSectorLine}
-      <li><strong>Local voices queued:</strong> ${log.localVoices.join(" • ")}</li>
-      <li><strong>What Hōʻike is doing:</strong> ${log.identityLine}</li>
-    </ul>
+    <div class="scan-flow-shell">
+      <div class="scan-flow-topbar">
+        <span class="scan-flow-label">Hōʻike scan</span>
+        <span class="scan-flow-source">${log.sourceLabel}</span>
+      </div>
+
+      <div class="scan-flow-line" aria-label="Scan flow">
+        <span class="scan-node">Activity</span>
+        <span class="scan-arrow">→</span>
+        <span class="scan-node">Signals</span>
+        <span class="scan-arrow">→</span>
+        <span class="scan-node">Strengths</span>
+        <span class="scan-arrow">→</span>
+        <span class="scan-node">Sector</span>
+        <span class="scan-arrow">→</span>
+        <span class="scan-node">Next Steps</span>
+      </div>
+
+      <div class="scan-chip-grid">
+        <div class="scan-chip-group">
+          <span class="scan-chip-label">Signals</span>
+          <div class="scan-chip-row">
+            ${(log.matchedKeywords || []).map((item) => `<span class="scan-chip">${item}</span>`).join("")}
+          </div>
+        </div>
+
+        <div class="scan-chip-group">
+          <span class="scan-chip-label">Strengths</span>
+          <div class="scan-chip-row">
+            ${(log.skillSignals || []).map((item) => `<span class="scan-chip">${item}</span>`).join("")}
+          </div>
+        </div>
+
+        <div class="scan-chip-group">
+          <span class="scan-chip-label">Best fit</span>
+          <div class="scan-chip-row">
+            <span class="scan-chip scan-chip-fit">${bestFitShort}</span>
+          </div>
+        </div>
+
+        ${
+          localValueTokens.length
+            ? `
+          <div class="scan-chip-group">
+            <span class="scan-chip-label">Local value</span>
+            <div class="scan-chip-row">
+              ${localValueTokens.map((item) => `<span class="scan-chip">${item}</span>`).join("")}
+            </div>
+          </div>
+        `
+            : ""
+        }
+
+        ${
+          alsoPlausible.length
+            ? `
+          <div class="scan-chip-group">
+            <span class="scan-chip-label">Also</span>
+            <div class="scan-chip-row">
+              ${alsoPlausible.map((item) => `<span class="scan-chip">${item}</span>`).join("")}
+            </div>
+          </div>
+        `
+            : ""
+        }
+
+        <div class="scan-chip-group">
+          <span class="scan-chip-label">Voices</span>
+          <div class="scan-chip-row">
+            ${(log.localVoices || []).map((item) => `<span class="scan-chip">${item}</span>`).join("")}
+          </div>
+        </div>
+      </div>
+
+      <p class="scan-flow-note">Hōʻike translates schoolwork into local contribution pathways.</p>
+    </div>
   `;
 }
-
 function renderPathways() {
   pathwayList.innerHTML = "";
 
