@@ -803,8 +803,8 @@ function persistState() {
     teacherInviteRequests: [...teacherInviteRequests],
     teacherPromptPreviews: [...teacherPromptPreviews],
     studentHandle: currentHandle,
-    selectedCohortName,
-   questionDraft: questionBox.value,
+selectedCohortName,
+questionDraft: questionBox.value,
 assignmentTitleInput: titleInput.value
   };
 
@@ -1286,11 +1286,11 @@ function renderProfessionalWhy() {
 }
 
 function renderTranslationLog() {
-if (currentViewMode !== "explainer") {
-  translationLog.innerHTML = "";
-  return;
-}
+  if (currentViewMode !== "explainer") {
+    translationLog.innerHTML = "";
+    return;
   }
+
   const log = selectedAssignment.translationLog;
   const localValueTokens = log.localValueTokens || [];
   const bestFitShort = (log.sectorLabel || "").replace(/^Local Growth Sector:\s*/i, "");
@@ -1305,16 +1305,27 @@ if (currentViewMode !== "explainer") {
         <span class="scan-flow-source">${log.sourceLabel}</span>
       </div>
 
-      <div class="scan-flow-line" aria-label="Scan flow">
-        <span class="scan-node">Activity</span>
-        <span class="scan-arrow">→</span>
-        <span class="scan-node">Signals</span>
-        <span class="scan-arrow">→</span>
-        <span class="scan-node">Strengths</span>
-        <span class="scan-arrow">→</span>
-        <span class="scan-node">Sector</span>
-        <span class="scan-arrow">→</span>
-        <span class="scan-node">Next Steps</span>
+      <div class="scan-chevron-row" aria-label="Scan flow">
+        <div class="scan-chevron-card">
+          <span class="scan-step-num">01</span>
+          <strong>Activity</strong>
+          <small>Read assignment</small>
+        </div>
+        <div class="scan-chevron-card">
+          <span class="scan-step-num">02</span>
+          <strong>Signals</strong>
+          <small>Detect keywords</small>
+        </div>
+        <div class="scan-chevron-card">
+          <span class="scan-step-num">03</span>
+          <strong>Strengths</strong>
+          <small>Infer strengths</small>
+        </div>
+        <div class="scan-chevron-card">
+          <span class="scan-step-num">04</span>
+          <strong>Best fit</strong>
+          <small>Map local sector</small>
+        </div>
       </div>
 
       <div class="scan-chip-grid">
@@ -1341,27 +1352,23 @@ if (currentViewMode !== "explainer") {
 
         ${
           localValueTokens.length
-            ? `
-          <div class="scan-chip-group">
-            <span class="scan-chip-label">Local value</span>
-            <div class="scan-chip-row">
-              ${localValueTokens.map((item) => `<span class="scan-chip">${item}</span>`).join("")}
-            </div>
-          </div>
-        `
+            ? `<div class="scan-chip-group">
+                <span class="scan-chip-label">Local value</span>
+                <div class="scan-chip-row">
+                  ${localValueTokens.map((item) => `<span class="scan-chip">${item}</span>`).join("")}
+                </div>
+              </div>`
             : ""
         }
 
         ${
           alsoPlausible.length
-            ? `
-          <div class="scan-chip-group">
-            <span class="scan-chip-label">Also</span>
-            <div class="scan-chip-row">
-              ${alsoPlausible.map((item) => `<span class="scan-chip">${item}</span>`).join("")}
-            </div>
-          </div>
-        `
+            ? `<div class="scan-chip-group">
+                <span class="scan-chip-label">Also</span>
+                <div class="scan-chip-row">
+                  ${alsoPlausible.map((item) => `<span class="scan-chip">${item}</span>`).join("")}
+                </div>
+              </div>`
             : ""
         }
 
@@ -1377,6 +1384,8 @@ if (currentViewMode !== "explainer") {
     </div>
   `;
 }
+
+
 function renderPathways() {
   pathwayList.innerHTML = "";
 
@@ -2151,9 +2160,3 @@ questionBox.value = persistedState.questionDraft || "";
 setViewMode(currentViewMode);
 setExplainerTab("architecture");
 renderAll();
-
-
-body[data-view-mode="student"] #translation-log,
-body[data-view-mode="instructor"] #translation-log {
-  display: none !important;
-}
