@@ -5533,3 +5533,47 @@ body[data-view-mode="student"] .flow-band[data-view-surface="student-only"] .gri
 body[data-view-mode="student"] .flow-band[data-view-surface="student-only"] .band-section-stack {
   display: grid !important;
 }
+/* ===== Aggressive banner spacing / rhythm ===== */
+.flow-band {
+  padding-top: 64px !important;
+  padding-bottom: 64px !important;
+}
+
+/* Extra vertical breathing room between stacked sections inside each band */
+.flow-band .chapter-band-intro {
+  margin-bottom: 28px !important;
+}
+
+/* On larger screens, make it even roomier */
+@media (min-width: 980px) {
+  .flow-band {
+    padding-top: 80px !important;
+    padding-bottom: 80px !important;
+  }
+
+  .flow-band .chapter-band-intro {
+    margin-bottom: 36px !important;
+  }
+}
+
+/* ===== Banner title width control ===== */
+/* Make title blocks span ~75% of usable content width */
+.flow-band .chapter-band-intro > div {
+  width: 75%;
+  max-width: 75%;
+}
+
+/* Keep supporting copy below title from getting too wide */
+.flow-band .chapter-band-intro .section-copy {
+  width: 75%;
+  max-width: 75%;
+}
+
+/* Mobile fallback */
+@media (max-width: 900px) {
+  .flow-band .chapter-band-intro > div,
+  .flow-band .chapter-band-intro .section-copy {
+    width: 100%;
+    max-width: 100%;
+  }
+}
