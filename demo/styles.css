@@ -200,6 +200,20 @@ body {
   opacity: 0.9;
 }
 
+.scan-minimal-card {
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgba(255,255,255,0.75);
+  display: grid;
+  gap: 8px;
+}
+.scan-minimal-row {
+  font-size: 0.82rem;
+  color: var(--ink);
+  line-height: 1.3;
+}
+
 /* responsive fallback */
 @media (max-width: 980px) {
   .scan-chevron-row {
@@ -5455,4 +5469,41 @@ dialog::backdrop {
 .flow-band {
   padding-top: 24px !important;
   padding-bottom: 24px !important;
+}
+/* ---- HARD VIEW GATING (safe) ---- */
+[data-view-surface] { 
+  display: none !important; 
+}
+
+/* Student mode */
+body[data-view-mode="student"] [data-view-surface="student"],
+body[data-view-mode="student"] [data-view-surface="student-only"] {
+  display: revert !important;
+}
+
+/* Instructor mode */
+body[data-view-mode="instructor"] [data-view-surface="instructor"] {
+  display: revert !important;
+}
+
+/* Explainer mode */
+body[data-view-mode="explainer"] [data-view-surface="explainer"] {
+  display: revert !important;
+}
+
+/* Explicit layout restores for known containers */
+body[data-view-mode="student"] .band-section-stack[data-view-surface="student-only"],
+body[data-view-mode="student"] .grid-two[data-view-surface="student-only"],
+body[data-view-mode="student"] .grid-two-opposite[data-view-surface="student-only"] {
+  display: grid !important;
+}
+
+body[data-view-mode="student"] .generator-actions[data-view-surface="student"],
+body[data-view-mode="student"] .question-actions[data-view-surface="student"] {
+  display: flex !important;
+}
+
+body[data-view-mode="explainer"] .explainer-tab-shell,
+body[data-view-mode="explainer"] .explainer-panel.is-active {
+  display: block !important;
 }
