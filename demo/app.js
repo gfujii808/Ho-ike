@@ -517,6 +517,9 @@ const dialogContent = document.getElementById("dialog-content");
 const titleInput = document.getElementById("assignment-title-input");
 const runTranslationButton = document.getElementById("run-translation");
 const translationStatus = document.getElementById("translation-status");
+const resetSessionButton = document.getElementById("reset-session");
+const scenarioSelect = document.getElementById("scenario-select");
+const researchModeToggle = document.getElementById("research-mode-toggle");
 const stepsProgressCount = document.getElementById("steps-progress-count");
 const stepsProgressDetail = document.getElementById("steps-progress-detail");
 const stepsContext = document.getElementById("steps-context");
@@ -595,6 +598,7 @@ let currentHandle =
     ? persistedState.studentHandle
     : currentCohort.handles[0];
 let openStepsSection = "Do Now";
+let isResearchMode = Boolean(persistedState.isResearchMode);
 
 if (!persistedState.selectedInterests?.length) {
   (handleProfiles[currentHandle] || []).forEach((interest) => selectedInterests.add(interest));
@@ -805,6 +809,7 @@ function persistState() {
     selectedCohortName,
     questionDraft: questionBox.value,
     assignmentTitleInput: titleInput.value
+    isResearchMode
   };
 
   window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
