@@ -865,25 +865,6 @@ function setViewMode(mode) {
     hero.dataset.viewMode = mode;
   }
 
-  if (viewModeDescription) {
-    if (isStudent) {
-      viewModeDescription.innerHTML = `
-        <span>Translate what you are already doing into strengths, pathways, and small next steps.</span>
-        <span>Use Local Voices and guided questions to explore safely.</span>
-      `;
-    } else if (isInstructor) {
-      viewModeDescription.innerHTML = `
-        <span>See classroom snapshots, invite signals, and moderated questions in one teacher-managed view.</span>
-        <span>Track who students want to hear from and what pathways keep surfacing.</span>
-      `;
-   } else {
-  viewModeDescription.innerHTML = `
-    <span>See the classroom-facing product, the AI reasoning layer, and the local research behind the prototype.</span>
-    <span>Reviewer mode explains why Hōʻike is built this way and how it stays school-safe.</span>
-  `;
-}
-  }
-
   if (isInstructor) {
     renderTeacherView(true);
   }
