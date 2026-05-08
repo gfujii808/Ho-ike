@@ -525,7 +525,6 @@ const stepsContext = document.getElementById("steps-context");
 const studentViewButton = document.getElementById("student-view-button");
 const instructorViewButton = document.getElementById("instructor-view-button");
 const explainerViewButton = document.getElementById("explainer-view-button");
-const viewModeDescription = document.getElementById("view-mode-description");
 const stepsProgressFill = document.getElementById("steps-progress-fill");
 const savedPathwaysCount = document.getElementById("saved-pathways-count");
 const savedPathwaysDetail = document.getElementById("saved-pathways-detail");
