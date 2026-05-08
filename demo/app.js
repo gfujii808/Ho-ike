@@ -519,7 +519,6 @@ const runTranslationButton = document.getElementById("run-translation");
 const translationStatus = document.getElementById("translation-status");
 const resetSessionButton = document.getElementById("reset-session");
 const scenarioSelect = document.getElementById("scenario-select");
-const researchModeToggle = document.getElementById("research-mode-toggle");
 const stepsProgressCount = document.getElementById("steps-progress-count");
 const stepsProgressDetail = document.getElementById("steps-progress-detail");
 const stepsContext = document.getElementById("steps-context");
@@ -598,7 +597,6 @@ let currentHandle =
     ? persistedState.studentHandle
     : currentCohort.handles[0];
 let openStepsSection = "Do Now";
-let isResearchMode = Boolean(persistedState.isResearchMode);
 
 if (!persistedState.selectedInterests?.length) {
   (handleProfiles[currentHandle] || []).forEach((interest) => selectedInterests.add(interest));
@@ -808,8 +806,7 @@ function persistState() {
     studentHandle: currentHandle,
     selectedCohortName,
    questionDraft: questionBox.value,
-assignmentTitleInput: titleInput.value,
-isResearchMode
+assignmentTitleInput: titleInput.value
   };
 
   window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
@@ -879,17 +876,12 @@ function setViewMode(mode) {
         <span>See classroom snapshots, invite signals, and moderated questions in one teacher-managed view.</span>
         <span>Track who students want to hear from and what pathways keep surfacing.</span>
       `;
-    } else {
-      viewModeDescription.innerHTML = isResearchMode
-        ? `
-        <span>Research mode keeps the product surfaces visible for inquiry and discussion.</span>
-        <span>Use this view to walk through reasoning, safety choices, and participant reactions.</span>
-      `
-        : `
-        <span>See the classroom-facing product, the AI reasoning layer, and the local research behind the prototype.</span>
-        <span>Reviewer mode explains why Hōʻike is built this way and how it stays school-safe.</span>
-      `;
-    }
+   } else {
+  viewModeDescription.innerHTML = `
+    <span>See the classroom-facing product, the AI reasoning layer, and the local research behind the prototype.</span>
+    <span>Reviewer mode explains why Hōʻike is built this way and how it stays school-safe.</span>
+  `;
+}
   }
 
   if (isInstructor) {
@@ -909,18 +901,6 @@ function syncIdentitySurfaces() {
     teacherClassBadge.innerHTML = renderIcon(cohort.icon, "cohort-icon");
   }
   renderStarterInterestProfile();
-}
-
-function setResearchMode(enabled) {
-  isResearchMode = enabled;
-  document.body.classList.toggle("research-mode", enabled);
-  if (researchModeToggle) {
-    researchModeToggle.checked = enabled;
-  }
-  if (currentViewMode === "explainer") {
-    setViewMode("explainer");
-  }
-  persistState();
 }
 
 function resetSession() {
@@ -2049,7 +2029,6 @@ explainerResearchTab?.addEventListener("click", () => setExplainerTab("research"
 runTranslationButton.addEventListener("click", runTranslation);
 
 resetSessionButton?.addEventListener("click", resetSession);
-researchModeToggle?.addEventListener("change", () => setResearchMode(researchModeToggle.checked));
 scenarioSelect?.addEventListener("change", () => {
   if (!scenarioSelect.value) return;
   titleInput.value = scenarioSelect.value;
@@ -2124,6 +2103,5 @@ syncIdentitySurfaces();
 titleInput.value = persistedState.assignmentTitleInput || selectedAssignment.title;
 questionBox.value = persistedState.questionDraft || "";
 setViewMode(currentViewMode);
-setResearchMode(isResearchMode);
 setExplainerTab("architecture");
 renderAll();
