@@ -5471,9 +5471,6 @@ dialog::backdrop {
   padding-bottom: 24px !important;
 }
 /* ---- HARD VIEW GATING (safe) ---- */
-[data-view-surface] { 
-  display: none !important; 
-}
 
 /* Student mode */
 body[data-view-mode="student"] [data-view-surface="student"],
@@ -5506,4 +5503,33 @@ body[data-view-mode="student"] .question-actions[data-view-surface="student"] {
 body[data-view-mode="explainer"] .explainer-tab-shell,
 body[data-view-mode="explainer"] .explainer-panel.is-active {
   display: block !important;
+}
+/* ===== Mode gating by top-level bands (robust) ===== */
+
+/* Default: hide mode-specific bands */
+.flow-band[data-view-surface="explainer"],
+.flow-band[data-view-surface="instructor"],
+.flow-band[data-view-surface="student-only"] {
+  display: none !important;
+}
+
+/* Student view: only student bands */
+body[data-view-mode="student"] .flow-band[data-view-surface="student-only"] {
+  display: block !important;
+}
+
+/* Instructor view: only instructor band */
+body[data-view-mode="instructor"] .flow-band[data-view-surface="instructor"] {
+  display: block !important;
+}
+
+/* Explainer view: only explainer bands */
+body[data-view-mode="explainer"] .flow-band[data-view-surface="explainer"] {
+  display: block !important;
+}
+
+/* Keep required internal layout types */
+body[data-view-mode="student"] .flow-band[data-view-surface="student-only"] .grid-two,
+body[data-view-mode="student"] .flow-band[data-view-surface="student-only"] .band-section-stack {
+  display: grid !important;
 }
