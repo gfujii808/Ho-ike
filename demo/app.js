@@ -808,7 +808,7 @@ function persistState() {
     studentHandle: currentHandle,
     selectedCohortName,
     questionDraft: questionBox.value,
-    assignmentTitleInput: titleInput.value
+    assignmentTitleInput: titleInput.value,
     isResearchMode
   };
 
@@ -881,16 +881,14 @@ function setViewMode(mode) {
         <span>Track who students want to hear from and what pathways keep surfacing.</span>
       `;
     } else {
-      viewModeDescription.innerHTML = isResearchMode ? `
-  <span>Research mode keeps the product surfaces visible for inquiry and discussion.</span>
-  <span>Use this view to walk through reasoning, safety choices, and participant reactions.</span>
-` : `
-  <span>See the classroom-facing product, the AI reasoning layer, and the local research behind the prototype.</span>
-  <span>Reviewer mode explains why Hōʻike is built this way and how it stays school-safe.</span>
-`;
-      `;
-    }
-  }
+  viewModeDescription.innerHTML = isResearchMode ? `
+    <span>Research mode keeps the product surfaces visible for inquiry and discussion.</span>
+    <span>Use this view to walk through reasoning, safety choices, and participant reactions.</span>
+  ` : `
+    <span>See the classroom-facing product, the AI reasoning layer, and the local research behind the prototype.</span>
+    <span>Reviewer mode explains why Hōʻike is built this way and how it stays school-safe.</span>
+  `;
+}
   if (isInstructor) {
     renderTeacherView(true);
   }
