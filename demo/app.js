@@ -1286,6 +1286,10 @@ function renderProfessionalWhy() {
 }
 
 function renderTranslationLog() {
+  if (currentViewMode !== "explainer") {
+    translationLog.innerHTML = "";
+    return;
+  }
   const log = selectedAssignment.translationLog;
   const localValueTokens = log.localValueTokens || [];
   const bestFitShort = (log.sectorLabel || "").replace(/^Local Growth Sector:\s*/i, "");
@@ -1296,7 +1300,7 @@ function renderTranslationLog() {
   translationLog.innerHTML = `
     <div class="scan-flow-shell">
       <div class="scan-flow-topbar">
-        <span class="scan-flow-label">Hōʻike scan</span>
+        <span class="scan-flow-label">Pathway scan</span>
         <span class="scan-flow-source">${log.sourceLabel}</span>
       </div>
 
@@ -2146,3 +2150,9 @@ questionBox.value = persistedState.questionDraft || "";
 setViewMode(currentViewMode);
 setExplainerTab("architecture");
 renderAll();
+
+
+body[data-view-mode="student"] #translation-log,
+body[data-view-mode="instructor"] #translation-log {
+  display: none !important;
+}
