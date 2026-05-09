@@ -344,6 +344,9 @@ const sectorCatalog = {
   }
 };
 
+const resetSessionButton = document.getElementById("reset-session");
+const scenarioSelect = document.getElementById("scenario-select");
+
 const assignments = [
   {
     id: "solar",
@@ -555,6 +558,10 @@ function loadPersistedState() {
   } catch (_error) {
     return {};
   }
+  studentHandle: currentHandle,
+selectedCohortName,
+questionDraft: questionBox.value,
+assignmentTitleInput: titleInput.value
 }
 
 const persistedState = loadPersistedState();
