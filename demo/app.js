@@ -558,10 +558,6 @@ function loadPersistedState() {
   } catch (_error) {
     return {};
   }
-  studentHandle: currentHandle,
-selectedCohortName,
-questionDraft: questionBox.value,
-assignmentTitleInput: titleInput.value
 }
 
 const persistedState = loadPersistedState();
