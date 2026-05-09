@@ -1079,7 +1079,13 @@ body[data-view-mode="instructor"] #translation-log {
 #translation-log:empty {
   display: none !important;
 }
-
+#translation-log:empty {
+  display: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  min-height: 0 !important;
+}
 .toggle-buttons {
   display: inline-flex;
   gap: 8px;
