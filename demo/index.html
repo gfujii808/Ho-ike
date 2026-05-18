@@ -133,17 +133,16 @@
                   </span>
                 </div>
 <div class="research-controls">
-  <label class="mini-control" for="scenario-select">Session scenario</label>
-  <select id="scenario-select" class="select-input compact-select">
-    <option value="">Choose a starter scenario</option>
-    <option value="Marine biology lab - reef health indicators">Marine biology lab - reef health indicators</option>
-    <option value="Essay on affordable housing and local community futures">Essay on affordable housing and local community futures</option>
-    <option value="Coding project - wildfire alert dashboard">Coding project - wildfire alert dashboard</option>
-    <option value="Yearbook media piece on student mental health">Yearbook media piece on student mental health</option>
-  </select>
-  <button id="reset-session" class="ghost-action" type="button">Reset session</button>
-</div>
-              </div>
+                  <label class="mini-control" for="scenario-select">Session scenario</label>
+                  <select id="scenario-select" class="select-input compact-select">
+                    <option value="">Choose a starter scenario</option>
+                    <option value="Marine biology lab - reef health indicators">Marine biology lab - reef health indicators</option>
+                    <option value="Essay on affordable housing and local community futures">Essay on affordable housing and local community futures</option>
+                    <option value="Coding project - wildfire alert dashboard">Coding project - wildfire alert dashboard</option>
+                    <option value="Yearbook media piece on student mental health">Yearbook media piece on student mental health</option>
+                  </select>
+                  <button id="reset-session" class="ghost-action" type="button">Reset session</button>
+                </div>
               <div class="step1-secondary-grid">
                 <div class="step1-secondary-block">
                   <p class="mini-label">Or try</p>
@@ -184,6 +183,13 @@
                   <span class="material-symbols-outlined" aria-hidden="true">menu_book</span> Grounded in research
                 </button>
               </div>
+              <div class="explainer-logic-toggle-row">
+                <button id="explain-curtain-toggle" class="explainer-logic-toggle" type="button" aria-pressed="false">
+                  <span class="material-symbols-outlined" aria-hidden="true">theater_comedy</span>
+                  Explain layer
+                </button>
+              </div>
+
 
               <div id="explainer-architecture-panel" class="explainer-panel is-active">
                 <div class="explainer-shot-grid">
@@ -313,6 +319,18 @@
                     <a href="https://pw.hks.harvard.edu/post/navigating-opportunity-career-information-and-mobility-in-low-wage-employment" target="_blank" rel="noreferrer">Harvard workforce note</a>
                   </article>
                 </div>
+              </div>
+            </div>
+             <div id="explainer-logic-curtain" class="explainer-logic-curtain" aria-hidden="true">
+              <div class="explainer-logic-sheet">
+                <h3>Why this recommendation appears</h3>
+                <div class="explainer-logic-chip-row">
+                  <span class="explainer-logic-chip">JFF decision support</span>
+                  <span class="explainer-logic-chip">DBEDT local retention context</span>
+                  <span class="explainer-logic-chip">HIDOE 2025-2029 alignment</span>
+                </div>
+                <p>This layer translates assignment signals into local pathways, trusted voices, and short-horizon action prompts.</p>
+                <button id="explain-curtain-close" class="explainer-logic-close" type="button">Close</button>
               </div>
             </div>
           </section>
