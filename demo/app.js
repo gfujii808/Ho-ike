@@ -92,8 +92,7 @@ const sectorCatalog = {
     buildWhyBody: (title) =>
       `"${title}" is more than an academic exercise. In Hawaiʻi, the same habits show up in solar layout planning, energy auditing, battery sizing, and the cost models behind resilience projects.`,
     whyImpact:
-  "You can connect analysis, fieldwork, and care for place instead of seeing science as something only done somewhere else. Your local knowledge, relationships, and responsibilities are real strengths here.",
-    localValueTokens: [
+ "You can connect analysis, fieldwork, and care for place instead of seeing science as something only done somewhere else. Your local knowledge, relationships, and responsibilities are real strengths here.",    localValueTokens: [
       "Hawaiʻi growth area",
       "clean energy and resilience work",
       "community projects and sector partnerships"
@@ -178,12 +177,13 @@ const sectorCatalog = {
       ],
       week: [
         "Ask about clubs, internships, or projects related to science, health, or the environment.",
-        "Draft a question for a local professional about how they first explored this kind of work."
+ "Draft a question for a local professional about how they first explored this kind of work.",
+        "Name one future you hope to protect or improve in your community."
       ],
       next: [
         "Build a simple observation log for a local environmental question you care about.",
-        "Visit a campus lab, community event, or environmental organization if your school offers a connection."
-      ]
+"Visit a campus lab, community event, or environmental organization if your school offers a connection.",
+        "Write one step for getting support from a teacher, counselor, or mentor when systems feel hard to access."      ]
     }
   },
   communications: {
@@ -196,8 +196,7 @@ const sectorCatalog = {
     buildWhyBody: (title) =>
       `"${title}" is not just about presentation. In Hawaiʻi, storytelling supports public information, nonprofit outreach, education, cultural interpretation, and digital experiences that help communities understand important issues.`,
     whyImpact:
-      "You can see creative work as useful, local, and community-serving instead of secondary to so-called real careers.",
-    localValueTokens: [
+      "You can see technical problem-solving as a local public-interest pathway, not only as a ticket to leave. The persistence you build in complex systems is a strength, not a deficit.",    localValueTokens: [
       "communication as community infrastructure",
       "portfolio and project-based entry points",
       "school, nonprofit, and public storytelling work"
@@ -282,12 +281,13 @@ const sectorCatalog = {
       ],
       week: [
         "Ask about coding, robotics, or engineering clubs at school.",
-        "Draft one question about how a technical skill can serve Hawaiʻi directly."
+"Draft one question about how a technical skill can serve Hawaiʻi directly.",
+        "Name one future condition you want to improve for your school, ʻohana, or neighborhood."
       ],
       next: [
         "Build a tiny tool, automation, or debugging walkthrough that solves a real student problem.",
-        "Attend a workshop, club meeting, or campus event related to computing or engineering."
-      ]
+ "Attend a workshop, club meeting, or campus event related to computing or engineering.",
+        "Document one move you used to find help, tools, or access when resources were limited."      ]
     }
   },
   general: {
@@ -547,7 +547,9 @@ const explainerResearchTab = document.getElementById("explainer-research-tab");
 const explainerArchitecturePanel = document.getElementById("explainer-architecture-panel");
 const explainerReasoningPanel = document.getElementById("explainer-reasoning-panel");
 const explainerResearchPanel = document.getElementById("explainer-research-panel");
-
+const explainCurtainToggle = document.getElementById("explain-curtain-toggle");
+const explainCurtainClose = document.getElementById("explain-curtain-close");
+const explainerLogicCurtain = document.getElementById("explainer-logic-curtain");
 const STORAGE_KEY = "hoike-demo-state-v1";
 const TRANSLATION_DELAY_MS = 700;
 const DEFAULT_QUESTION_STATUS = "School staff review questions before replies.";
@@ -867,8 +869,28 @@ function setViewMode(mode) {
     hero.dataset.viewMode = mode;
   }
 
+  if (viewModeDescription) {
+    if (isStudent) {
+      viewModeDescription.innerHTML = `
+        <span>Translate what you are already doing into strengths, pathways, and small next steps.</span>
+        <span>Use Local Voices and guided questions to explore safely.</span>
+      `;
+    } else if (isInstructor) {
+      viewModeDescription.innerHTML = `
+        <span>See classroom snapshots, invite signals, and moderated questions in one teacher-managed view.</span>
+        <span>Track who students want to hear from and what pathways keep surfacing.</span>
+      `;
+    } else {
+      viewModeDescription.innerHTML = `
+<span>See the classroom-facing product, the AI reasoning layer, and the local research behind the prototype.</span>
+  <span>Reviewer mode explains why Hōʻike is built this way and how it stays school-safe.</span>
+`;
+    }
   if (isInstructor) {
     renderTeacherView(true);
+  }
+  if (!isExplainer) {
+    setExplainerCurtain(false);
   }
   persistState();
 }
@@ -904,7 +926,6 @@ function resetSession() {
   renderAll();
   persistState();
 }
-
 function getAssignmentKey() {
   return `${selectedAssignment.id}:${selectedAssignment.title}:${selectedAssignment.className}`;
 }
@@ -1295,16 +1316,17 @@ function renderTranslationLog() {
   }
 
   const log = selectedAssignment.translationLog;
-  const bestFitShort = (log.sectorLabel || "").replace(/^Local Growth Sector:\s*/i, "");
+ const bestFitShort = (log.sectorLabel || "").replace(/^Local Growth Sector:\s*/i, "");
   const strengths = (log.skillSignals || []).slice(0, 3).join(" • ");
   const signals = (log.matchedKeywords || []).slice(0, 3).join(" • ");
-
+  const voices = (log.localVoices || []).slice(0, 2).join(" • ");
+  
   translationLog.innerHTML = `
-    <div class="scan-minimal-card">
-      <div class="scan-minimal-row"><strong>Best fit:</strong> ${bestFitShort}</div>
+   <div class="scan-minimal-card">
+      <div class="scan-minimal-row"><strong>Best fit:</strong> ${bestFitShort || "—"}</div>
       <div class="scan-minimal-row"><strong>Signals:</strong> ${signals || "—"}</div>
       <div class="scan-minimal-row"><strong>Strengths:</strong> ${strengths || "—"}</div>
-      <div class="scan-minimal-row"><strong>Voices:</strong> ${(log.localVoices || []).join(" • ")}</div>
+      <div class="scan-minimal-row"><strong>Voices:</strong> ${voices || "—"}</div>
     </div>
   `;
 }
@@ -1896,6 +1918,13 @@ function setExplainerTab(tab) {
   });
 }
 
+  function setExplainerCurtain(isOpen) {
+  if (!explainerLogicCurtain) return;
+  explainerLogicCurtain.classList.toggle("is-open", isOpen);
+  explainerLogicCurtain.setAttribute("aria-hidden", String(!isOpen));
+  explainCurtainToggle?.setAttribute("aria-pressed", String(isOpen));
+}
+  
 async function runTranslation() {
   const rawTitle = titleInput.value.trim();
   const subject =
@@ -2003,7 +2032,12 @@ explainerViewButton.addEventListener("click", () => setViewMode("explainer"));
 explainerArchitectureTab?.addEventListener("click", () => setExplainerTab("architecture"));
 explainerReasoningTab?.addEventListener("click", () => setExplainerTab("reasoning"));
 explainerResearchTab?.addEventListener("click", () => setExplainerTab("research"));
-
+explainCurtainToggle?.addEventListener("click", () => {
+  const nextState = !explainerLogicCurtain?.classList.contains("is-open");
+  setExplainerCurtain(nextState);
+});
+explainCurtainClose?.addEventListener("click", () => setExplainerCurtain(false));
+  
 runTranslationButton.addEventListener("click", runTranslation);
 
 resetSessionButton?.addEventListener("click", resetSession);
@@ -2082,4 +2116,5 @@ titleInput.value = persistedState.assignmentTitleInput || selectedAssignment.tit
 questionBox.value = persistedState.questionDraft || "";
 setViewMode(currentViewMode);
 setExplainerTab("architecture");
+  setExplainerCurtain(false);
 renderAll();
