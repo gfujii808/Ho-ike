@@ -868,6 +868,25 @@ function setViewMode(mode) {
   if (hero) {
     hero.dataset.viewMode = mode;
   }
+function setViewMode(mode) {
+  currentViewMode = mode;
+  document.body.dataset.viewMode = mode;
+
+  const isStudent = mode === "student";
+  const isInstructor = mode === "instructor";
+  const isExplainer = mode === "explainer";
+
+  studentViewButton.classList.toggle("is-active", isStudent);
+  studentViewButton.setAttribute("aria-pressed", String(isStudent));
+  instructorViewButton.classList.toggle("is-active", isInstructor);
+  instructorViewButton.setAttribute("aria-pressed", String(isInstructor));
+  explainerViewButton.classList.toggle("is-active", isExplainer);
+  explainerViewButton.setAttribute("aria-pressed", String(isExplainer));
+
+  const hero = document.querySelector(".hero");
+  if (hero) {
+    hero.dataset.viewMode = mode;
+  }
 
   if (viewModeDescription) {
     if (isStudent) {
@@ -882,16 +901,19 @@ function setViewMode(mode) {
       `;
     } else {
       viewModeDescription.innerHTML = `
-<span>See the classroom-facing product, the AI reasoning layer, and the local research behind the prototype.</span>
-  <span>Reviewer mode explains why Hōʻike is built this way and how it stays school-safe.</span>
-`;
+        <span>See the classroom-facing product, the AI reasoning layer, and the local research behind the prototype.</span>
+        <span>Reviewer mode explains why Hōʻike is built this way and how it stays school-safe.</span>
+      `;
     }
+  }
+
   if (isInstructor) {
     renderTeacherView(true);
   }
   if (!isExplainer) {
     setExplainerCurtain(false);
   }
+
   persistState();
 }
 function syncIdentitySurfaces() {
