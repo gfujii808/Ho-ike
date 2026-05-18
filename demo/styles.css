@@ -5753,3 +5753,11 @@ body[data-view-mode="student"] .flow-band[data-view-surface="student-only"] .ban
     max-width: 100% !important;
   }
 }
+/* Fallback: if JS fails and data-view-mode is missing, default to student surfaces */
+body:not([data-view-mode]) .flow-band[data-view-surface="student-only"] {
+  display: block !important;
+}
+body:not([data-view-mode]) .flow-band[data-view-surface="explainer"],
+body:not([data-view-mode]) .flow-band[data-view-surface="instructor"] {
+  display: none !important;
+}
