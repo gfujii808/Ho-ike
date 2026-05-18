@@ -92,7 +92,7 @@ const sectorCatalog = {
     buildWhyBody: (title) =>
       `"${title}" is more than an academic exercise. In Hawaiʻi, the same habits show up in solar layout planning, energy auditing, battery sizing, and the cost models behind resilience projects.`,
     whyImpact:
-      "The translation is not only about a job title. It helps you see where analysis, design, and care for place can overlap in a future that serves home.",
+  "You can connect analysis, fieldwork, and care for place instead of seeing science as something only done somewhere else. Your local knowledge, relationships, and responsibilities are real strengths here.",
     localValueTokens: [
       "Hawaiʻi growth area",
       "clean energy and resilience work",
