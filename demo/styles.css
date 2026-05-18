@@ -5713,7 +5713,6 @@ body[data-view-mode="instructor"] .flow-band[data-view-surface="instructor"] {
 body[data-view-mode="explainer"] .flow-band[data-view-surface="explainer"] {
   display: block !important;
 }
-
 /* Preserve internal layout containers */
 body[data-view-mode="student"] .flow-band[data-view-surface="student-only"] .grid-two,
 body[data-view-mode="student"] .flow-band[data-view-surface="student-only"] .band-section-stack {
