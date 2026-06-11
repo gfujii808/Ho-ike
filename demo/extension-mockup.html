@@ -150,6 +150,13 @@
                 <span class="extension-brand-tag"><span class="material-symbols-outlined extension-inline-icon" aria-hidden="true">check_circle</span> Small steps</span>
                 <span class="extension-brand-tag"><span class="material-symbols-outlined extension-inline-icon" aria-hidden="true">location_on</span> Locally grounded</span>
               </div>
+              <div id="extension-privacy-badge" class="extension-privacy-badge is-pseudonymous" aria-live="polite">
+                <span class="material-symbols-outlined extension-inline-icon" aria-hidden="true">lock</span>
+                <span>
+                  <strong>Identity: Pseudonymous Student</strong>
+                  <small>PearlyPueo</small>
+                </span>
+              </div>
             </div>
             <div class="extension-mode">
               <input class="extension-mode-input" type="radio" name="extension-mode" id="extension-student" checked />
@@ -166,10 +173,10 @@
                     <span class="extension-summary-icon">⌄</span>
                   </summary>
                   <div class="extension-why-topbar">
-                    <span class="translation-pill">✨ Marine Biology Lab</span>
+                    <span class="translation-pill"><span class="material-symbols-outlined extension-inline-icon" aria-hidden="true">science</span> Marine Biology Lab</span>
                     <span class="translation-pill translation-pill-secondary">Hōʻike AI scan</span>
                   </div>
-                  <p class="extension-process-copy">How this works: Hōʻike reads the activity, matches Hawaiʻi-specific pathway logic, and surfaces local next steps.</p>
+                  <p class="extension-process-copy">Hōʻike turns classwork into local pathways and next steps.</p>
                   <div class="extension-why-grid">
                     <div class="extension-why-main">
                       <p class="extension-keyline">Science becomes place-based stewardship.</p>
@@ -328,7 +335,7 @@
                         <p class="extension-copy">Good for place-based science and stewardship.</p>
                         <div class="extension-actions">
                           <button class="primary-action" type="button">Watch intro</button>
-                          <button class="extension-chip-button" type="button">Use question starter</button>
+                          <button class="extension-chip-button extension-template-shortcut" type="button" data-template="voice" data-privacy="pseudonymous">Use question starter</button>
                           <button class="extension-chip-button" type="button">Vote to invite</button>
                         </div>
                       </div>
@@ -350,7 +357,7 @@
                         <p class="extension-copy">Good for resilience, planning, and helpful systems.</p>
                         <div class="extension-actions">
                           <button class="primary-action" type="button">Watch intro</button>
-                          <button class="extension-chip-button" type="button">Use question starter</button>
+                          <button class="extension-chip-button extension-template-shortcut" type="button" data-template="local-internships" data-privacy="pseudonymous">Use question starter</button>
                           <button class="extension-chip-button" type="button">Vote to invite</button>
                         </div>
                       </div>
@@ -372,11 +379,38 @@
                         <p class="extension-copy">Good for storytelling, design, and public education.</p>
                         <div class="extension-actions">
                           <button class="primary-action" type="button">Watch intro</button>
-                          <button class="extension-chip-button" type="button">Use question starter</button>
+                          <button class="extension-chip-button extension-template-shortcut" type="button" data-template="classroom-chat" data-privacy="transparent">Use question starter</button>
                           <button class="extension-chip-button" type="button">Vote to invite</button>
                         </div>
                       </div>
                     </div>
+                  </div>
+                  <div class="extension-message-frame">
+                    <div class="extension-message-header">
+                      <span class="panel-label">Teacher-approved starters</span>
+                      <span id="extension-draft-status" class="extension-draft-status">Choose one to draft</span>
+                    </div>
+                    <div class="extension-template-grid" aria-label="Prompt templates">
+                      <button class="extension-template-button" type="button" data-template="voice" data-privacy="pseudonymous">
+                        <span class="material-symbols-outlined extension-inline-icon" aria-hidden="true">forum</span>
+                        Ask a Local Voice
+                      </button>
+                      <button class="extension-template-button" type="button" data-template="local-internships" data-privacy="pseudonymous">
+                        <span class="material-symbols-outlined extension-inline-icon" aria-hidden="true">work</span>
+                        Ask about local exposure
+                      </button>
+                      <button class="extension-template-button" type="button" data-template="classroom-chat" data-privacy="transparent">
+                        <span class="material-symbols-outlined extension-inline-icon" aria-hidden="true">groups</span>
+                        Request classroom chat
+                      </button>
+                    </div>
+                    <label class="extension-message-draft" for="extension-message-box">
+                      <span class="panel-label">Guided message draft</span>
+                      <textarea id="extension-message-box" rows="5" placeholder="Choose a starter to draft a school-reviewed question."></textarea>
+                    </label>
+                    <button id="extension-send-request" class="primary-action extension-send-request" type="button" disabled>
+                      Send for instructor approval
+                    </button>
                   </div>
                 </details>
 
@@ -503,7 +537,7 @@
                   <div class="moderation-list">
                     <div class="moderation-item">
                       <div class="moderation-copy">
-                        <span class="voice-chip">CuriousPueo</span>
+                        <span class="voice-chip">PearlyPueo</span>
                         <span class="moderation-pill"><span class="material-symbols-outlined extension-inline-icon" aria-hidden="true">waves</span> Environmental Monitoring</span>
                         <p>“What should I try next if I care about reef health and community science?”</p>
                       </div>
@@ -515,7 +549,7 @@
                     </div>
                     <div class="moderation-item">
                       <div class="moderation-copy">
-                        <span class="voice-chip">BrightPueo</span>
+                        <span class="voice-chip">MoonlitPueo</span>
                         <span class="moderation-pill"><span class="material-symbols-outlined extension-inline-icon" aria-hidden="true">videocam</span> Local Voices prompt</span>
                         <p>“How did you first learn that this kind of job existed?”</p>
                       </div>
@@ -586,6 +620,96 @@
       });
 
       updateChecklistProgress();
+
+      const privacyBadge = document.getElementById('extension-privacy-badge');
+      const messageBox = document.getElementById('extension-message-box');
+      const sendRequestButton = document.getElementById('extension-send-request');
+      const draftStatus = document.getElementById('extension-draft-status');
+      const templateButtons = [
+        ...document.querySelectorAll('.extension-template-button, .extension-template-shortcut'),
+      ];
+      const extensionModeInputs = [...document.querySelectorAll('.extension-mode-input')];
+
+      const promptTemplates = {
+        voice:
+          'Aloha Chris K. Aloha,\n\nI used Hōʻike on my marine biology data lab and it connected my classwork to environmental monitoring. What should I try next in high school if I want to help communities make better decisions about places they care about?\n\nMahalo,\nPearlyPueo',
+        'local-internships':
+          'Aloha Maya N. Lei,\n\nI am exploring local pathways connected to reef monitoring, field data, and care for place. Are there school-safe clubs, volunteer projects, or beginner experiences in Hawaiʻi that would help me learn more before choosing a pathway?\n\nMahalo,\nPearlyPueo',
+        'classroom-chat':
+          'Hi teacher,\n\nCould our class invite a local professional for a moderated talk story about how environmental monitoring, storytelling, or agri-tech work can support Hawaiʻi communities? I think it would help us connect the assignment to real next steps.\n\nThank you,\nPearlyPueo',
+      };
+
+      const privacyStates = {
+        pseudonymous: {
+          icon: 'lock',
+          title: 'Identity: Pseudonymous Student',
+          detail: 'PearlyPueo',
+        },
+        transparent: {
+          icon: 'verified_user',
+          title: 'Identity: Classroom-visible',
+          detail: 'PearlyPueo',
+        },
+      };
+
+      const setPrivacyState = (stateName) => {
+        if (!privacyBadge) return;
+        const state = privacyStates[stateName] || privacyStates.pseudonymous;
+        privacyBadge.classList.toggle('is-transparent', stateName === 'transparent');
+        privacyBadge.classList.toggle('is-pseudonymous', stateName !== 'transparent');
+        privacyBadge.innerHTML = `
+          <span class="material-symbols-outlined extension-inline-icon" aria-hidden="true">${state.icon}</span>
+          <span>
+            <strong>${state.title}</strong>
+            <small>${state.detail}</small>
+          </span>
+        `;
+      };
+
+      const syncSendState = () => {
+        if (!messageBox || !sendRequestButton) return;
+        const hasMessage = messageBox.value.trim().length > 0;
+        sendRequestButton.disabled = !hasMessage;
+        sendRequestButton.textContent = hasMessage ? 'Send for instructor approval' : 'Choose a starter first';
+      };
+
+      templateButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          const templateKey = button.dataset.template;
+          const template = promptTemplates[templateKey];
+          if (!template || !messageBox) return;
+
+          templateButtons.forEach((candidate) => {
+            candidate.classList.toggle('is-selected', candidate.dataset.template === templateKey);
+          });
+          messageBox.value = template;
+          setPrivacyState(button.dataset.privacy || 'pseudonymous');
+          if (draftStatus) {
+            draftStatus.textContent =
+              button.dataset.privacy === 'transparent' ? 'Internal classroom note' : 'External, instructor-reviewed';
+          }
+          syncSendState();
+          messageBox.focus();
+        });
+      });
+
+      messageBox?.addEventListener('input', syncSendState);
+
+      sendRequestButton?.addEventListener('click', () => {
+        if (sendRequestButton.disabled) return;
+        sendRequestButton.textContent = 'Queued for instructor approval';
+        sendRequestButton.disabled = true;
+        if (draftStatus) draftStatus.textContent = 'Saved to moderation queue';
+      });
+
+      extensionModeInputs.forEach((input) => {
+        input.addEventListener('change', () => {
+          setPrivacyState(input.id === 'extension-instructor' ? 'transparent' : 'pseudonymous');
+          syncSendState();
+        });
+      });
+
+      syncSendState();
     </script>
   </body>
 </html>

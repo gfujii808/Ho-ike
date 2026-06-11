@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Lexend+Deca:wght@400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@400;500;600;700;800&family=Red+Hat+Display:wght@500;700;800;900&display=swap"
       rel="stylesheet"
     />
     <link
@@ -81,7 +81,7 @@
               <div class="student-profile-card">
                 <span class="panel-label">Student identity</span>
                 <div class="student-handle-row">
-                  <strong id="student-handle">CuriousPueo</strong>
+                  <strong id="student-handle">PearlyPueo</strong>
                   <button id="generate-handle" type="button" class="handle-refresh-button" aria-label="Refresh pseudonymous handle"><span class="material-symbols-outlined" aria-hidden="true">refresh</span></button>
                 </div>
                 <label class="mini-control" for="cohort-select">Class space</label>
@@ -226,7 +226,7 @@
                   </article>
                   <article class="explainer-summary-card">
                     <span class="panel-label">Extension direction</span>
-                    <strong>A credible Canvas-side deployment surface, isolated so the LMS cannot break the workflow.</strong>
+                    <strong>A credible Canvas-side home for Hōʻike, isolated so the LMS cannot break the workflow.</strong>
                   </article>
                 </div>
               </div>
@@ -439,7 +439,7 @@
                   Send question
                 </button>
                 <span id="question-status" class="status-text">
-                  School staff review questions before replies.
+                  Instructor reviews questions before replies.
                 </span>
               </div>
               <div id="prompt-list" class="prompt-list"></div>
@@ -481,7 +481,7 @@
               <h2>See where this workflow could live next.</h2>
             </div>
             <p class="section-copy">
-              This mockup shows Hōʻike as a Chrome extension overlay with a school assignment on the left and the Hōʻike panel on the right. The real extension direction is a Shadow DOM-mounted sidebar so Canvas styles cannot break Hōʻike or interfere with LMS behavior.
+              This mockup shows Hōʻike as a Chrome extension overlay with a school assignment on the left and the Hōʻike panel on the right. The real extension direction is an isolated extension panel so Canvas styles cannot break Hōʻike or interfere with LMS behavior.
             </p>
           </div>
 
@@ -501,6 +501,13 @@
     </dialog>
 
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <div class="demo-tools" aria-label="Demo tools">
+      <span id="demo-state-indicator" class="demo-state-indicator">Clean demo</span>
+      <button id="demo-reset-button" class="demo-reset-button" type="button">
+        <span class="material-symbols-outlined" aria-hidden="true">restart_alt</span>
+        Reset demo
+      </button>
+    </div>
 
     <script src="./app.js"></script>
   </body>

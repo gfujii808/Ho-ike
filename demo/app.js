@@ -431,7 +431,7 @@ const cohorts = [
     icon: "owl",
     iconLabel: "Pueo owl class icon",
     accent: "night-study, pattern spotting, and calm focus",
-    handles: ["CuriousPueo", "BoldPueo", "CalmPueo", "BrightPueo", "SteadyPueo", "SwiftPueo"]
+    handles: ["PearlyPueo", "MoonlitPueo", "MellowPueo", "BrightPueo", "SteadyPueo", "SwiftPueo"]
   },
   {
     name: "HonuHui",
@@ -452,15 +452,15 @@ const cohorts = [
     icon: "local_florist",
     iconLabel: "MangoGrove blossom icon",
     accent: "creative energy, expression, and community color",
-    handles: ["SunnyMango", "KindMango", "BraveMango", "FreshMango", "GoldenMango", "LivelyMango"]
+    handles: ["GroovyMango", "KindMango", "BraveMango", "FreshMango", "GoldenMango", "LivelyMango"]
   }
 ];
 
 const allHandles = cohorts.flatMap((cohort) => cohort.handles);
 const handleProfiles = {
-  CuriousPueo: ["being outdoors", "helping people", "storytelling"],
-  BoldPueo: ["sports", "coding", "helping people"],
-  CalmPueo: ["music", "storytelling", "being outdoors"],
+  PearlyPueo: ["being outdoors", "helping people", "storytelling"],
+  MoonlitPueo: ["sports", "coding", "helping people"],
+  MellowPueo: ["music", "storytelling", "being outdoors"],
   BrightPueo: ["coding", "gaming", "fixing things"],
   SteadyPueo: ["helping people", "being outdoors", "storytelling"],
   SwiftPueo: ["sports", "coding", "being outdoors"],
@@ -476,7 +476,7 @@ const handleProfiles = {
   SwiftPopoki: ["sports", "coding", "gaming"],
   KindPopoki: ["storytelling", "helping people", "being outdoors"],
   BoldPopoki: ["drawing and design", "coding", "storytelling"],
-  SunnyMango: ["drawing and design", "music", "helping people"],
+  GroovyMango: ["drawing and design", "music", "helping people"],
   KindMango: ["helping people", "storytelling", "being outdoors"],
   BraveMango: ["sports", "coding", "helping people"],
   FreshMango: ["being outdoors", "farming", "helping people"],
@@ -507,6 +507,7 @@ const interestList = document.getElementById("interest-list");
 const pathwayRoutes = document.getElementById("pathway-routes");
 const questionBox = document.getElementById("question-box");
 const questionStatus = document.getElementById("question-status");
+const submitQuestionButton = document.getElementById("submit-question");
 const studentHandle = document.getElementById("student-handle");
 const studentCohort = document.getElementById("student-cohort");
 const cohortSelect = document.getElementById("cohort-select");
@@ -537,6 +538,8 @@ const teacherTopVoice = document.getElementById("teacher-top-voice");
 const teacherTopVoiceDetail = document.getElementById("teacher-top-voice-detail");
 const teacherQuestionQueue = document.getElementById("teacher-question-queue");
 const toast = document.getElementById("toast");
+const demoResetButton = document.getElementById("demo-reset-button");
+const demoStateIndicator = document.getElementById("demo-state-indicator");
 const explainerArchitectureTab = document.getElementById("explainer-architecture-tab");
 const explainerReasoningTab = document.getElementById("explainer-reasoning-tab");
 const explainerResearchTab = document.getElementById("explainer-research-tab");
@@ -545,14 +548,140 @@ const explainerReasoningPanel = document.getElementById("explainer-reasoning-pan
 const explainerResearchPanel = document.getElementById("explainer-research-panel");
 
 const STORAGE_KEY = "hoike-demo-state-v1";
+const DEMO_STATE_VERSION = 1;
 const TRANSLATION_DELAY_MS = 700;
-const DEFAULT_QUESTION_STATUS = "School staff review questions before replies.";
+const DEFAULT_QUESTION_STATUS = "Instructor reviews questions before replies.";
+
+// Versioned client-side state keeps the public demo recoverable if browser storage is stale or malformed.
+let loadedStoredDemoState = false;
+let storageUnavailable = false;
+let isBootstrappingDemo = true;
+
+function isPlainObject(value) {
+  return Boolean(value) && typeof value === "object" && !Array.isArray(value);
+}
+
+function asArray(value) {
+  return Array.isArray(value) ? value : [];
+}
+
+function asEntryArray(value) {
+  return asArray(value).filter((entry) => Array.isArray(entry) && entry.length >= 2);
+}
+
+function asStringEntryArray(value) {
+  return asEntryArray(value).filter(
+    ([key, entryValue]) => typeof key === "string" && typeof entryValue === "string"
+  );
+}
+
+function asVoteEntryArray(value) {
+  return asEntryArray(value)
+    .filter(([key, entryValue]) => typeof key === "string" && Number.isFinite(Number(entryValue)))
+    .map(([key, entryValue]) => [key, Number(entryValue)]);
+}
+
+function asCohortSavedPathways(value) {
+  if (!isPlainObject(value)) return {};
+
+  return Object.fromEntries(
+    Object.entries(value)
+      .filter(([cohortName, savedPathways]) => isKnownCohort(cohortName) && Array.isArray(savedPathways))
+      .map(([cohortName, savedPathways]) => [
+        cohortName,
+        savedPathways.filter((pathwayKey) => typeof pathwayKey === "string")
+      ])
+  );
+}
+
+function isKnownViewMode(value) {
+  return ["student", "instructor", "explainer", "classroom"].includes(value);
+}
+
+function isKnownCohort(value) {
+  return cohorts.some((cohort) => cohort.name === value);
+}
+
+function buildDefaultDemoState() {
+  return {
+    version: DEMO_STATE_VERSION,
+    viewMode: "student",
+    selectedCohortName: cohorts[0].name,
+    completedSteps: [],
+    cohortSavedPathways: {},
+    classroomVotes: [],
+    handleVotes: [],
+    selectedPathways: [],
+    selectedVoices: [],
+    submittedQuestions: [],
+    selectedInterests: [],
+    teacherInviteRequests: [],
+    teacherPromptPreviews: [],
+    questionDraft: "",
+    assignmentTitleInput: ""
+  };
+}
+
+function normalizePersistedState(rawState) {
+  if (!isPlainObject(rawState) || rawState.version !== DEMO_STATE_VERSION) {
+    return buildDefaultDemoState();
+  }
+
+  const defaultState = buildDefaultDemoState();
+  const selectedCohortName = isKnownCohort(rawState.selectedCohortName)
+    ? rawState.selectedCohortName
+    : defaultState.selectedCohortName;
+  const currentCohortForState = cohorts.find((cohort) => cohort.name === selectedCohortName) || cohorts[0];
+  const customAssignment =
+    isPlainObject(rawState.customAssignment) && typeof rawState.customAssignment.title === "string"
+      ? buildGeneratedAssignment(
+          rawState.customAssignment.title.trim(),
+          typeof rawState.customAssignment.className === "string" ? rawState.customAssignment.className : "Other"
+        )
+      : null;
+  const selectedAssignmentId = assignments.some((assignment) => assignment.id === rawState.selectedAssignmentId)
+    ? rawState.selectedAssignmentId
+    : null;
+
+  return {
+    ...defaultState,
+    selectedAssignmentId,
+    customAssignment,
+    viewMode: isKnownViewMode(rawState.viewMode) ? rawState.viewMode : defaultState.viewMode,
+    completedSteps: asArray(rawState.completedSteps).filter((step) => typeof step === "string"),
+    cohortSavedPathways: asCohortSavedPathways(rawState.cohortSavedPathways),
+    classroomVotes: asVoteEntryArray(rawState.classroomVotes),
+    handleVotes: asArray(rawState.handleVotes).filter((vote) => typeof vote === "string"),
+    selectedPathways: asStringEntryArray(rawState.selectedPathways),
+    selectedVoices: asStringEntryArray(rawState.selectedVoices),
+    submittedQuestions: asArray(rawState.submittedQuestions).filter(isPlainObject),
+    selectedInterests: asArray(rawState.selectedInterests).filter((interest) => typeof interest === "string"),
+    teacherInviteRequests: asArray(rawState.teacherInviteRequests).filter((request) => typeof request === "string"),
+    teacherPromptPreviews: asArray(rawState.teacherPromptPreviews).filter((preview) => typeof preview === "string"),
+    studentHandle:
+      typeof rawState.studentHandle === "string" && currentCohortForState.handles.includes(rawState.studentHandle)
+        ? rawState.studentHandle
+        : "",
+    selectedCohortName,
+    questionDraft: typeof rawState.questionDraft === "string" ? rawState.questionDraft : "",
+    assignmentTitleInput: typeof rawState.assignmentTitleInput === "string" ? rawState.assignmentTitleInput : ""
+  };
+}
 
 function loadPersistedState() {
   try {
-    return JSON.parse(window.localStorage.getItem(STORAGE_KEY) || "{}");
+    const rawState = window.localStorage.getItem(STORAGE_KEY);
+    if (!rawState) {
+      loadedStoredDemoState = false;
+      return buildDefaultDemoState();
+    }
+    const parsedState = JSON.parse(rawState);
+    loadedStoredDemoState = isPlainObject(parsedState) && parsedState.version === DEMO_STATE_VERSION;
+    return normalizePersistedState(parsedState);
   } catch (_error) {
-    return {};
+    storageUnavailable = true;
+    loadedStoredDemoState = false;
+    return buildDefaultDemoState();
   }
 }
 
@@ -767,8 +896,8 @@ function renderStarterInterestProfile() {
   const starterInterests = getHandleInterests();
   starterInterestProfile.innerHTML = `
     <div class="starter-profile-intro">
-      <strong>Pick one way in.</strong>
-      <p>One interest, activity, or cause is enough to start.</p>
+      <strong>Profile starting points.</strong>
+      <p>These signals are already selected below from your handle.</p>
     </div>
     <div class="starter-profile-chips">
       ${starterInterests
@@ -788,6 +917,7 @@ function applyHandleInterestProfile() {
 
 function persistState() {
   const state = {
+    version: DEMO_STATE_VERSION,
     selectedAssignmentId: selectedAssignment.id === "generated" ? null : selectedAssignment.id,
     customAssignment: selectedAssignment.id === "generated" ? selectedAssignment : null,
     viewMode: currentViewMode,
@@ -807,7 +937,21 @@ function persistState() {
     assignmentTitleInput: titleInput.value
   };
 
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  if (isBootstrappingDemo) {
+    return;
+  }
+
+  try {
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (_error) {
+    if (!storageUnavailable) {
+      showToast("Demo changes will reset when you refresh.");
+    }
+    storageUnavailable = true;
+  }
+
+  loadedStoredDemoState = true;
+  updateDemoStateIndicator("Demo in progress");
 }
 
 function makeQuestionId() {
@@ -825,6 +969,26 @@ function showToast(message) {
     toast.classList.remove("is-actionable");
     toast.onclick = null;
   }, 2200);
+}
+
+function updateDemoStateIndicator(label = loadedStoredDemoState ? "Demo in progress" : "Clean demo") {
+  if (!demoStateIndicator) return;
+  demoStateIndicator.textContent = label;
+  demoStateIndicator.classList.toggle("is-progress", label === "Demo in progress");
+  demoStateIndicator.classList.toggle("is-resetting", label === "Resetting...");
+}
+
+function safeClearDemoState() {
+  try {
+    window.localStorage.removeItem(STORAGE_KEY);
+  } catch (_error) {
+    storageUnavailable = true;
+  }
+}
+
+function safeBind(element, eventName, handler, options) {
+  if (!element) return;
+  element.addEventListener(eventName, handler, options);
 }
 
 function showActionToast(message, onClick) {
@@ -1197,6 +1361,11 @@ function setQuestionStatus(message = DEFAULT_QUESTION_STATUS) {
   questionStatus.textContent = message;
 }
 
+function syncQuestionSubmitState() {
+  if (!submitQuestionButton) return;
+  submitQuestionButton.disabled = !questionBox.value.trim();
+}
+
 function renderAssignments() {
   assignmentList.innerHTML = "";
 
@@ -1463,6 +1632,8 @@ function openVoiceDialog(voice) {
 function useVoicePrompt(voice) {
   questionBox.value = `Aloha ${voice.name}, I just used Hōʻike on "${selectedAssignment.title}". What should I try in high school if I am curious about ${voice.tags[0]} and want to understand how it could help my community in Hawaiʻi?`;
   setQuestionStatus("Starter loaded. Make it yours.");
+  syncQuestionSubmitState();
+  persistState();
   questionBox.focus({ preventScroll: true });
   document.getElementById("step-5")?.scrollIntoView({ behavior: "smooth", block: "center" });
   showToast("Question starter loaded — scroll down to edit and send");
@@ -1727,6 +1898,8 @@ function renderPrompts() {
     chip.addEventListener("click", () => {
       questionBox.value = prompt;
       setQuestionStatus("Starter loaded. Make it yours.");
+      syncQuestionSubmitState();
+      persistState();
       questionBox.focus({ preventScroll: true });
       document.getElementById("step-5")?.scrollIntoView({ behavior: "smooth", block: "center" });
       showToast("Question starter loaded — scroll down to edit and send");
@@ -1927,25 +2100,31 @@ async function runTranslation() {
     element.classList.add("is-loading");
     element.setAttribute("data-loading-label", loadingLabels[element.id] || "Updating");
   });
-  selectedAssignment = await requestTranslation(rawTitle, subject);
-  pathwayFeedbackMode = "matched";
-  clearTimeout(pathwayFeedbackTimer);
-  loadingSections.forEach((element) => {
-    element.classList.remove("is-loading");
-    element.removeAttribute("data-loading-label");
-  });
-  renderAll();
-  translationStatus.textContent = `"${rawTitle}" now maps to ${selectedAssignment.translationLog.sectorLabel}.`;
-  runTranslationButton.disabled = false;
-  runTranslationButton.textContent = originalButtonLabel;
-  pathwayFeedbackTimer = setTimeout(() => {
-    pathwayFeedbackMode = "";
-    renderPathways();
-  }, 360);
-  persistState();
+  try {
+    selectedAssignment = await requestTranslation(rawTitle, subject);
+    pathwayFeedbackMode = "matched";
+    clearTimeout(pathwayFeedbackTimer);
+    renderAll();
+    translationStatus.textContent = `"${rawTitle}" now maps to ${selectedAssignment.translationLog.sectorLabel}.`;
+    pathwayFeedbackTimer = setTimeout(() => {
+      pathwayFeedbackMode = "";
+      renderPathways();
+    }, 360);
+    persistState();
+  } catch (_error) {
+    translationStatus.textContent = "Something hiccuped. Try translating again.";
+    showToast("Translation did not finish — nothing was sent or saved");
+  } finally {
+    loadingSections.forEach((element) => {
+      element.classList.remove("is-loading");
+      element.removeAttribute("data-loading-label");
+    });
+    runTranslationButton.disabled = false;
+    runTranslationButton.textContent = originalButtonLabel;
+  }
 }
 
-document.getElementById("generate-handle").addEventListener("click", () => {
+safeBind(document.getElementById("generate-handle"), "click", () => {
   const button = document.getElementById("generate-handle");
   button.classList.add("is-spinning");
   button.addEventListener("animationend", () => button.classList.remove("is-spinning"), { once: true });
@@ -1963,7 +2142,7 @@ document.getElementById("generate-handle").addEventListener("click", () => {
   persistState();
 });
 
-cohortSelect.addEventListener("change", () => {
+safeBind(cohortSelect, "change", () => {
   selectedCohortName = cohortSelect.value;
   currentHandle = getCurrentCohort().handles[0];
   applyHandleInterestProfile();
@@ -1978,9 +2157,10 @@ cohortSelect.addEventListener("change", () => {
   persistState();
 });
 
-document.getElementById("submit-question").addEventListener("click", () => {
+safeBind(submitQuestionButton, "click", () => {
   if (!questionBox.value.trim()) {
     setQuestionStatus("Add or select a question first so you are not sending a blank request.");
+    syncQuestionSubmitState();
     return;
   }
 
@@ -1993,37 +2173,39 @@ document.getElementById("submit-question").addEventListener("click", () => {
     text: questionBox.value.trim(),
     status: "pending"
   });
-  setQuestionStatus("Sent for review.");
+  setQuestionStatus("Sent for instructor approval.");
   questionBox.value = "";
+  syncQuestionSubmitState();
   renderTeacherView(true);
   persistState();
-  showToast("Message sent to moderator");
+  showToast("Question sent for instructor approval");
 });
-studentViewButton.addEventListener("click", () => setViewMode("student"));
-instructorViewButton.addEventListener("click", () => setViewMode("instructor"));
-explainerViewButton.addEventListener("click", () => setViewMode("explainer"));
-explainerArchitectureTab?.addEventListener("click", () => setExplainerTab("architecture"));
-explainerReasoningTab?.addEventListener("click", () => setExplainerTab("reasoning"));
-explainerResearchTab?.addEventListener("click", () => setExplainerTab("research"));
+safeBind(studentViewButton, "click", () => setViewMode("student"));
+safeBind(instructorViewButton, "click", () => setViewMode("instructor"));
+safeBind(explainerViewButton, "click", () => setViewMode("explainer"));
+safeBind(explainerArchitectureTab, "click", () => setExplainerTab("architecture"));
+safeBind(explainerReasoningTab, "click", () => setExplainerTab("reasoning"));
+safeBind(explainerResearchTab, "click", () => setExplainerTab("research"));
 
-runTranslationButton.addEventListener("click", runTranslation);
+safeBind(runTranslationButton, "click", runTranslation);
 
-questionBox.addEventListener("input", () => {
+safeBind(questionBox, "input", () => {
   if (questionStatus.textContent !== DEFAULT_QUESTION_STATUS) {
     setQuestionStatus();
   }
+  syncQuestionSubmitState();
   persistState();
 });
-titleInput.addEventListener("input", persistState);
+safeBind(titleInput, "input", persistState);
 
-titleInput.addEventListener("keydown", (event) => {
+safeBind(titleInput, "keydown", (event) => {
   if (event.key === "Enter") {
     event.preventDefault();
     runTranslation();
   }
 });
 
-dialog.addEventListener("click", (event) => {
+safeBind(dialog, "click", (event) => {
   const bounds = dialog.getBoundingClientRect();
   const inside =
     event.clientX >= bounds.left &&
@@ -2074,6 +2256,19 @@ window.addEventListener('scroll', () => {
 syncIdentitySurfaces();
 titleInput.value = persistedState.assignmentTitleInput || selectedAssignment.title;
 questionBox.value = persistedState.questionDraft || "";
+syncQuestionSubmitState();
 setViewMode(currentViewMode);
 setExplainerTab("architecture");
 renderAll();
+isBootstrappingDemo = false;
+updateDemoStateIndicator();
+if (storageUnavailable) {
+  showToast("Demo changes will reset when you refresh.");
+}
+
+safeBind(demoResetButton, "click", () => {
+  updateDemoStateIndicator("Resetting...");
+  safeClearDemoState();
+  showToast("Demo data reset — reloading clean state");
+  window.setTimeout(() => window.location.reload(), 450);
+});
