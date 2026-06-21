@@ -133,6 +133,52 @@
                     Finds strengths and local directions.
                   </span>
                 </div>
+                diff --git a/demo/index.html b/demo/index.html
+index 23100d0fe5cd409cb621dc3c8f2d71c185bcd986..c68bc008e6d6f6c4e0af41ab02ae345acd6e8833 100644
+--- a/demo/index.html
++++ b/demo/index.html
+@@ -111,50 +111,65 @@
+                   <p class="section-copy step-subcopy">
+                     Start with one thing you already did or care about.
+                   </p>
+                 </div>
+               </div>
+               <div class="generator-shell">
+                 <div class="generator-grid">
+                   <label class="generator-field" for="assignment-title-input">
+                     <span class="input-label">Assignment, activity, or interest</span>
+                     <input
+                       id="assignment-title-input"
+                       class="text-input"
+                       type="text"
+                       placeholder="Ex: Marine biology lab - reef health indicators"
+                     />
+                   </label>
+                 </div>
+                 <div class="generator-actions">
+                   <button id="run-translation" class="primary-action" type="button">
+                     Translate
+                   </button>
+                   <span id="translation-status" class="status-text">
+                     Finds strengths and local directions.
+                   </span>
+                 </div>
++                <div class="research-controls">
++                  <label class="research-toggle" for="research-mode-toggle">
++                    <input id="research-mode-toggle" type="checkbox" />
++                    <span>Research mode</span>
++                  </label>
++                  <label class="mini-control" for="scenario-select">Session scenario</label>
++                  <select id="scenario-select" class="select-input compact-select">
++                    <option value="">Choose a starter scenario</option>
++                    <option value="Marine biology lab - reef health indicators">Marine biology lab - reef health indicators</option>
++                    <option value="Essay on affordable housing and local community futures">Essay on affordable housing and local community futures</option>
++                    <option value="Coding project - wildfire alert dashboard">Coding project - wildfire alert dashboard</option>
++                    <option value="Yearbook media piece on student mental health">Yearbook media piece on student mental health</option>
++                  </select>
++                  <button id="reset-session" class="ghost-action" type="button">Reset session</button>
++                </div>
+              
               </div>
               <div class="step1-secondary-grid">
                 <div class="step1-secondary-block">
