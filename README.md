@@ -1,3 +1,37 @@
+# Hōʻike Explorer
+
+A research-informed prototype that helps Hawaiʻi middle and high school students see how what they already do (a class assignment, hobby, or community activity) connects to local futures and concrete next steps.
+
+**Live demo:** https://gfujii808.github.io/Ho-ike/
+**Status:** working prototype, not yet evaluated with students. Just a passion project for a small competition.
+
+## The problem
+Many students lack "hidden curriculum" knowledge: that certain pathways exist, and that they are worth taking. Young, educated Hawaiʻi-born residents are also disproportionately leaving the state. Hōʻike aims to make local futures legible. The Explainer view links the research behind it (DBEDT, JFF, ACT, and others).
+
+## What it does
+- **Student view:** enter an activity and get a "Professional Why," pathway options, Local Voices, and Small Steps.
+- **Instructor view:** class-level signals and a teacher moderation queue.
+- **Explainer view:** a visible scan log showing how an input becomes recommendations, plus the supporting research.
+- **Safety design:** pseudonymous student handles and teacher-reviewed questions.
+
+## How AI was used
+I built this through prompt-driven iteration with an AI coding assistant (OpenAI Codex) for the OpenAI x Handshake Codex Creator Challenge. All content and design decisions (research framings included) were manually verified. `AGENTS.md` records the guidance I gave the assistant.
+
+## What is real, simulated, and planned
+- **Works now:** in-browser activity translation and the scan log. 
+- **Simulated:** all Local Voices profiles, student and teacher data.
+- **Mockup only:** the Chrome extension overlay. The planned design mounts in Shadow DOM so LMS styles cannot break it; it is not built.
+
+## Open questions I would test next
+How would students and teachers engage with this tool? What features would be helpful? How would this student and teacher perceptions and outcomes of life beyond the classroom?
+
+## Repo guide
+- `demo/` the working demo and extension mockup
+- `submission/` competition documents
+- `AGENTS.md` assistant guidance
+- MIT licensed
+
+## Competition submission
 # Hōʻike Challenge Package
 
 Hōʻike Explorer is a Codex-built browser prototype for the OpenAI x Handshake Codex Creator Challenge. It is designed for HIDOE middle and high school students and shows how OpenAI Codex can translate assignments, hobbies, and community activities into local pathway exploration, safer professional discovery, and concrete next steps in Hawaiʻi. It is also designed as a credible starting point for a school-safe pilot and longer-term hidden-curriculum intervention in Hawaiʻi.
