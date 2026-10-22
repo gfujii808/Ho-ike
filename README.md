@@ -2,7 +2,7 @@
 
 A research-informed prototype that helps Hawaiʻi middle and high school students see how what they already do (a class assignment, hobby, or community activity) connects to local futures and concrete next steps.
 
-**Live demo:** https://gfujii808.github.io/Ho-ike/
+**Live demo:** [https://gfujii808.github.io/Ho-ike/](https://gfujii808.github.io/Ho-ike/demo/index.html)
 **Status:** working prototype, not yet evaluated with students. Just a passion project for a small competition.
 
 ## The problem
